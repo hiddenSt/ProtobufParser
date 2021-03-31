@@ -1,0 +1,8 @@
+BasedOnStyle: Google
+---
+Language: Cpp
+ColumnLimit: 100
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+DerivePointerAlignment: false
+PointerAlignment: Left
