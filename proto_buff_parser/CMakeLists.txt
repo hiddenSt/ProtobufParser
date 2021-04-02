@@ -3,7 +3,6 @@ get_filename_component(LIB_PATH "." ABSOLUTE)
 
 file(GLOB_RECURSE LIB_CXX_SOURCES ${LIB_PATH}/*.cpp)
 file(GLOB_RECURSE LIB_HEADERS ${LIB_PATH}/*.hpp)
-
 add_library(proto_buff_parser STATIC ${LIB_CXX_SOURCES} ${LIB_HEADERS})
 target_include_directories(proto_buff_parser PRIVATE ${LIB_INCLUDE_PATH})
 
