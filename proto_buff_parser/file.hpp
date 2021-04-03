@@ -10,7 +10,6 @@ namespace proto_buff_parser {
 
 class File {
  public:
-  
 };
 
 }  // namespace proto_buff_parser
