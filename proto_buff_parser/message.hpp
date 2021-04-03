@@ -11,7 +11,7 @@ namespace proto_buff_parser {
 
 class Message {
  public:
-  container::MessagesContainer GetInnerMessages();
+  container::MessagesContainer& GetInnerMessages();
 
 
 };
