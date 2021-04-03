@@ -18,8 +18,9 @@ class Package {
   Package& GetParentPackage();
   Message& GetMessage(const std::string& name);
 
-  iterator::FilesIterator GetFilesIterator();
-  iterator::MessagesIterator GetMessagesIterator();
+  iterator::FilesIterator& GetFilesIterator();
+  iterator::MessagesIterator& GetMessagesIterator();
+  container::MessagesContainer& GetMessages();
 
  private:
   container::FilesContainer& files_;

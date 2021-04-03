@@ -10,6 +10,16 @@ namespace proto_buff_parser {
 
 class File {
  public:
+  Package& GetPackage();
+  std::string GetName() const noexcept;
+  std::string GetPath() const noexcept;
+  container::MessagesContainer& GetMessages() const noexcept;
+
+ private:
+  std::string name_;
+  std::string path_;
+  Package& package_;
+  container::MessagesContainer& messages_container_;
 };
 
 }  // namespace proto_buff_parser
