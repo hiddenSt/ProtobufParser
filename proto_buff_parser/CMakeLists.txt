@@ -1,8 +1,28 @@
 get_filename_component(LIB_INCLUDE_PATH ".." ABSOLUTE)
 get_filename_component(LIB_PATH "." ABSOLUTE)
 
-set(LIB_CXX_SOURCES fake.cpp)
-set(LIB_HEADERS)
+set(LIB_CXX_SOURCES
+  field.cpp
+  message.cpp
+  field.cpp
+  package.cpp
+  enum.cpp
+  )
+
+set(LIB_HEADERS
+  field.hpp
+  message.hpp
+  file.hpp
+  package.hpp
+  enum.hpp
+  container/packages_container.hpp
+  container/files_container.hpp
+  container/messages_container.hpp
+  iterator/messages_iterator.hpp
+  iterator/files_iterator.hpp
+  iterator/packages_iterator.hpp
+  )
+
 add_library(proto_buff_parser STATIC ${LIB_CXX_SOURCES} ${LIB_HEADERS})
 target_include_directories(proto_buff_parser PRIVATE ${LIB_INCLUDE_PATH})
 
