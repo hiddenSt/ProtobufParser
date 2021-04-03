@@ -13,7 +13,7 @@ class MessagesContainer {
  public:
   virtual void AddMessage(const Message& message) = 0;
   virtual Message& GetMessage(std::string& name) = 0;
-  virtual iterator::MessagesIterator GetIterator() = 0;
+  virtual iterator::MessagesIterator& GetIterator() = 0;
 };
 
 }  // namespace container
