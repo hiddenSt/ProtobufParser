@@ -12,18 +12,18 @@ set(TESTS_SOURCES
   view/view_tests.cpp
   )
 
-add_executable(run_proto_buff_parser_tests "${TESTS_SOURCES}")
+add_executable(run_protobuf_parser_tests "${TESTS_SOURCES}")
 
-target_include_directories(run_proto_buff_parser_tests
+target_include_directories(run_protobuf_parser_tests
   PRIVATE
   "${gtest_SOURCE_DIR}/include"
   "${gtest_SOURCE_DIR}"
-  "${proto_buff_parser_SOURCE_DIR}"
+  "${protobuf_parser_SOURCE_DIR}"
   )
-target_link_libraries(run_proto_buff_parser_tests PRIVATE gtest gtest_main)
-target_link_libraries(run_proto_buff_parser_tests PRIVATE proto_buff_parser)
+target_link_libraries(run_protobuf_parser_tests PRIVATE gtest gtest_main)
+target_link_libraries(run_protobuf_parser_tests PRIVATE protobuf_parser)
 
-if (PROTO_BUFF_PARSER_DEVELOPER)
+if (PROTOBUF_PARSER_DEVELOPER)
 
   if(CLANG_FORMAT_TOOL)
     add_clang_format_target(tests_clang_format ${CMAKE_CURRENT_SOURCE_DIR} ${TESTS_SOURCES})
