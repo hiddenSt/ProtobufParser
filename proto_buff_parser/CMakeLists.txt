@@ -9,6 +9,7 @@ set(PROTO_BUFF_PARSER_CXX_SOURCES
   enum.cpp
   view/messages_view.cpp
   container/proto_buff_container.cpp
+  message_field_type.cpp
   )
 
 set(PROTO_BUFF_PARSER_HEADERS
@@ -28,6 +29,7 @@ set(PROTO_BUFF_PARSER_HEADERS
   iterator/packages_iterator.hpp
   iterator/fields_iterator.hpp
   view/messages_view.hpp
+  message_field_type.hpp
   )
 
 add_library(proto_buff_parser STATIC "${PROTO_BUFF_PARSER_CXX_SOURCES}" "${PROTO_BUFF_PARSER_HEADERS}")

@@ -2,8 +2,6 @@
 
 namespace proto_buff_parser {
 
-
-
 const std::string& Field::GetName() const {
   return name_;
 }
