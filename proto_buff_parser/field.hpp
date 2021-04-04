@@ -15,12 +15,12 @@ class Field {
   Field(Field&& other) noexcept;
 
   const std::string& GetName() const;
-  const std::string& GetType() const;
+  const FieldType& GetType() const;
   std::size_t GetNumber() const;
 
  private:
   std::string name_;
-  FieldType& field_type_;
+  FieldType& type_;
   std::size_t number_;
 };
 

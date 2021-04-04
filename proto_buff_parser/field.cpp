@@ -8,7 +8,7 @@ const std::string& Field::GetName() const {
   return name_;
 }
 
-const std::string& Field::GetType() const {
+const FieldType& Field::GetType() const {
   return type_;
 }
 
