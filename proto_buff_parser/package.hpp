@@ -7,14 +7,15 @@ namespace proto_buff_parser {
 
 class Package {
  public:
-  explicit Package(const std::string& name, Package& parent_package);
+  explicit Package(const std::string& name);
+  explicit Package(const std::string& name, Package* const parent_package);
 
-  Package& GetParentPackage();
+  const Package& GetParentPackage();
   const std::string& GetName() const;
 
  private:
   std::string name_;
-  Package& parent_package_;
+  Package* const parent_package_;
 };
 
 }  // namespace proto_buff_parser

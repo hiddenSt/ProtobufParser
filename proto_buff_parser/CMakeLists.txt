@@ -37,7 +37,7 @@ set(PROTO_BUFF_PARSER_HEADERS
   )
 
 add_library(proto_buff_parser STATIC "${PROTO_BUFF_PARSER_CXX_SOURCES}" "${PROTO_BUFF_PARSER_HEADERS}")
-target_include_directories(proto_buff_parser PRIVATE //${LIB_INCLUDE_PATH})
+target_include_directories(proto_buff_parser PRIVATE ${LIB_INCLUDE_PATH})
 
 # Linters
 
