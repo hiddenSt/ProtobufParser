@@ -12,7 +12,8 @@ namespace proto_buff_parser {
 
 class Message {
  public:
-  explicit Message(const std::string& name, const File& file, const Package& package, const Message& parent_message);
+  explicit Message(const std::string& name, const File& file, const Package& package,
+                   const Message& parent_message);
   explicit Message(const std::string& name, const File& file, const Package& package);
 
   const Package& GetPackage() const noexcept;

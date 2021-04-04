@@ -35,11 +35,11 @@ target_include_directories(proto_buff_parser PRIVATE //${LIB_INCLUDE_PATH})
 if(PROTO_BUFF_PARSER_DEVELOPER)
 
   if(CLANG_FORMAT_TOOL)
-    add_clang_format_target(proto_buff_parser_clang_format ${CMAKE_CURRENT_SOURCE_DIR} ${LIB_HEADERS} ${LIB_CXX_SOURCES})
+    add_clang_format_target(proto_buff_parser_clang_format ${CMAKE_CURRENT_SOURCE_DIR} ${PROTO_BUFF_PARSER_HEADERS} ${PROTO_BUFF_PARSER_CXX_SOURCES})
   endif()
 
   if(CLANG_TIDY_TOOL)
-    add_clang_tidy_target(proto_buff_parser_clang_tidy ${CMAKE_CURRENT_SOURCE_DIR} ${LIB_INCLUDE_PATH} ${LIB_HEADERS} ${LIB_CXX_SOURCES})
+    add_clang_tidy_target(proto_buff_parser_clang_tidy ${CMAKE_CURRENT_SOURCE_DIR} ${LIB_INCLUDE_PATH} ${PROTO_BUFF_PARSER_HEADERS} ${PROTO_BUFF_PARSER_CXX_SOURCES})
   endif()
 
 endif()

@@ -11,9 +11,7 @@ Field::Field(std::string&& name, const std::size_t number, std::string&& type) n
 }
 
 Field::Field(Field&& other) noexcept
-    : name_(std::move(other.name_)),
-      number_(other.number_),
-      type_(std::move(other.type_)) {
+    : name_(std::move(other.name_)), number_(other.number_), type_(std::move(other.type_)) {
   other.name_ = "";
   other.number_ = 0;
   other.type_ = "";

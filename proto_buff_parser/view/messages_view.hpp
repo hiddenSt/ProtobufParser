@@ -5,10 +5,8 @@
 
 namespace proto_buff_parser {
 
-class MessagesView {
-};
+class MessagesView {};
 
-}
-
+}  // namespace proto_buff_parser
 
 #endif  // PROTOBUFFPARSER_PROTO_BUFF_PARSER_VIEW_MESSAGES_VIEW_HPP_
