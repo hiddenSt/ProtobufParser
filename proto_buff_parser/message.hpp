@@ -22,7 +22,7 @@ class Message {
 
  private:
   std::string name_;
-  Message& parent_message_;
+  const Message& parent_message_;
   const File& file_;
   const Package& package_;
 };
