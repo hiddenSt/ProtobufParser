@@ -3,12 +3,14 @@
 
 #include <string>
 
+#include <proto_buff_parser/field_type.hpp>
+
 namespace proto_buff_parser {
 
 class Field {
  public:
-  explicit Field(std::string name, const std::size_t number, std::string type);
-  explicit Field(std::string&& name, const std::size_t number, std::string&& type) noexcept;
+  explicit Field(const std::string& name, const std::size_t number, const FieldType& type);
+  explicit Field(std::string&& name, const std::size_t number, FieldType&& type) noexcept;
   Field(const Field& other) = default;
   Field(Field&& other) noexcept;
 
@@ -18,7 +20,7 @@ class Field {
 
  private:
   std::string name_;
-  std::string type_;
+  FieldType& field_type_;
   std::size_t number_;
 };
 

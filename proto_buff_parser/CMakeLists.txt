@@ -17,6 +17,7 @@ set(PROTO_BUFF_PARSER_HEADERS
   file.hpp
   package.hpp
   enum.hpp
+  field_type.hpp
   container/packages_container.hpp
   container/files_container.hpp
   container/messages_container.hpp
