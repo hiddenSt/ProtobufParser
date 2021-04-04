@@ -2,16 +2,18 @@
 #define PROTOBUFFPARSER_PROTO_BUFF_PARSER_MESSAGE_HPP_
 
 #include <string>
+#include <vector>
 
-#include <proto_buff_parser/package.hpp>
-#include <proto_buff_parser/file.hpp>
-#include <proto_buff_parser/container/messages_container.hpp>
+#include <proto_buff_parser/field.hpp>
 
 namespace proto_buff_parser {
 
 class Message {
  public:
-  container::MessagesContainer& GetInnerMessages();
+  Message();
+
+ private:
+  std::string name_;
 };
 
 }  // namespace proto_buff_parser

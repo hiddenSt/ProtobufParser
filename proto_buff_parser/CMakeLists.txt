@@ -1,15 +1,15 @@
 get_filename_component(LIB_INCLUDE_PATH ".." ABSOLUTE)
 get_filename_component(LIB_PATH "." ABSOLUTE)
 
-set(LIB_CXX_SOURCES
+set(PROTO_BUFF_PARSER_CXX_SOURCES
   field.cpp
   message.cpp
-  field.cpp
+  file.cpp
   package.cpp
   enum.cpp
   )
 
-set(LIB_HEADERS
+set(PROTO_BUFF_PARSER_HEADERS
   field.hpp
   message.hpp
   file.hpp
@@ -23,8 +23,8 @@ set(LIB_HEADERS
   iterator/packages_iterator.hpp
   )
 
-add_library(proto_buff_parser STATIC ${LIB_CXX_SOURCES} ${LIB_HEADERS})
-target_include_directories(proto_buff_parser PRIVATE ${LIB_INCLUDE_PATH})
+add_library(proto_buff_parser STATIC "${PROTO_BUFF_PARSER_CXX_SOURCES}" "${PROTO_BUFF_PARSER_HEADERS}")
+target_include_directories(proto_buff_parser PRIVATE //${LIB_INCLUDE_PATH})
 
 # Linters
 
