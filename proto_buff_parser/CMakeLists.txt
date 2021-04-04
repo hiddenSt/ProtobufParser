@@ -7,6 +7,8 @@ set(PROTO_BUFF_PARSER_CXX_SOURCES
   file.cpp
   package.cpp
   enum.cpp
+  view/messages_view.cpp
+  container/proto_buff_container.cpp
   )
 
 set(PROTO_BUFF_PARSER_HEADERS
@@ -21,6 +23,8 @@ set(PROTO_BUFF_PARSER_HEADERS
   iterator/messages_iterator.hpp
   iterator/files_iterator.hpp
   iterator/packages_iterator.hpp
+  view/messages_view.hpp
+  container/proto_buff_container.hpp
   )
 
 add_library(proto_buff_parser STATIC "${PROTO_BUFF_PARSER_CXX_SOURCES}" "${PROTO_BUFF_PARSER_HEADERS}")

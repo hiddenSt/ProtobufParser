@@ -3,25 +3,20 @@
 
 #include <string>
 
-#include <proto_buff_parser/message.hpp>
-
 namespace proto_buff_parser {
 
 class Field {
  public:
-  explicit Field(std::string name, const std::size_t number, std::string type, Message& message);
-  explicit Field(std::string&& name, const std::size_t number, std::string&& type,
-                 Message& message) noexcept;
+  explicit Field(std::string name, const std::size_t number, std::string type);
+  explicit Field(std::string&& name, const std::size_t number, std::string&& type) noexcept;
   Field(const Field& other) = default;
   Field(Field&& other) noexcept;
 
   const std::string& GetName() const;
   const std::string& GetType() const;
   std::size_t GetNumber() const;
-  Message& GetMessage() const;
 
  private:
-  Message& message_;
   std::string name_;
   std::string type_;
   std::size_t number_;

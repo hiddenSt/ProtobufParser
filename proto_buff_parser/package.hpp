@@ -3,28 +3,17 @@
 
 #include <string>
 
-#include <proto_buff_parser/file.hpp>
-#include <proto_buff_parser/message.hpp>
-#include <proto_buff_parser/container/packages_container.hpp>
-#include <proto_buff_parser/container/messages_container.hpp>
-#include <proto_buff_parser/container/files_container.hpp>
-
 namespace proto_buff_parser {
 
 class Package {
  public:
-  void AddFile(const File& file);
+  explicit Package(const std::string& name, Package& parent_package);
 
   Package& GetParentPackage();
-  Message& GetMessage(const std::string& name);
-
-  iterator::FilesIterator& GetFilesIterator();
-  iterator::MessagesIterator& GetMessagesIterator();
-  container::MessagesContainer& GetMessages();
+  const std::string& GetName() const;
 
  private:
-  container::FilesContainer& files_;
-  container::MessagesContainer& messages_;
+  std::string name_;
   Package& parent_package_;
 };
 
