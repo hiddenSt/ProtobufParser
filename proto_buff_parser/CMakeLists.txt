@@ -20,11 +20,13 @@ set(PROTO_BUFF_PARSER_HEADERS
   container/packages_container.hpp
   container/files_container.hpp
   container/messages_container.hpp
+  container/proto_buff_container.hpp
+  container/fields_container.hpp
   iterator/messages_iterator.hpp
   iterator/files_iterator.hpp
   iterator/packages_iterator.hpp
+  iterator/fields_iterator.hpp
   view/messages_view.hpp
-  container/proto_buff_container.hpp
   )
 
 add_library(proto_buff_parser STATIC "${PROTO_BUFF_PARSER_CXX_SOURCES}" "${PROTO_BUFF_PARSER_HEADERS}")
