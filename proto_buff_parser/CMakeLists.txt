@@ -6,8 +6,10 @@ set(PROTO_BUFF_PARSER_CXX_SOURCES
   message.cpp
   file.cpp
   package.cpp
-  enum.cpp
+  enum_field_type.cpp
   view/messages_view.cpp
+  view/file_view.cpp
+  view/package_view.cpp
   container/proto_buff_container.cpp
   message_field_type.cpp
   )
@@ -17,7 +19,7 @@ set(PROTO_BUFF_PARSER_HEADERS
   message.hpp
   file.hpp
   package.hpp
-  enum.hpp
+  enum_field_type.hpp
   field_type.hpp
   container/packages_container.hpp
   container/files_container.hpp
@@ -29,6 +31,8 @@ set(PROTO_BUFF_PARSER_HEADERS
   iterator/packages_iterator.hpp
   iterator/fields_iterator.hpp
   view/messages_view.hpp
+  view/file_view.hpp
+  view/package_view.hpp
   message_field_type.hpp
   )
 
