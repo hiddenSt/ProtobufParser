@@ -4,8 +4,6 @@ set(TESTS_SOURCES
   field_tests.cpp
   package_tests.cpp
   container/files_container_tests.cpp
-  container/messages_container_tests.cpp
-  container/packages_container_tests.cpp
   iterator/files_iterator_tests.cpp
   iterator/messages_iterator_tests.cpp
   iterator/packages_iterator_tests.cpp

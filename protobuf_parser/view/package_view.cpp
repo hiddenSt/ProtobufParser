@@ -3,7 +3,7 @@
 namespace protobuf_parser {
 namespace view {
 
-PackageView::PackageView(const container::ProtoBuffContainer& proto_buff_container,
+PackageView::PackageView(const container::ProtobufStorage& proto_buff_container,
                          const Package& package)
     : proto_buff_container_(proto_buff_container), package_(package) {
   // TODO: need to create containers with right data

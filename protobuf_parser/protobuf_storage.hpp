@@ -9,9 +9,8 @@
 #include <protobuf_parser/parse_elements/file.hpp>
 
 namespace protobuf_parser {
-namespace container {
 
-class ProtoBuffContainer {
+class ProtobufStorage {
  public:
   const Message& GetMessage(std::size_t id);
   const Package& GetPackage(std::size_t id);
@@ -25,7 +24,6 @@ class ProtoBuffContainer {
   std::map<std::size_t, File> files_;
 };
 
-}  // namespace container
 }  // namespace protobuf_parser
 
 #endif  // PROTOBUFPARSER_PROTOBUF_PARSER_CONTAINER_PROTOBUF_CONTAINER_HPP_

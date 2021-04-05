@@ -3,7 +3,7 @@
 namespace protobuf_parser {
 namespace view {
 
-FileView::FileView(const container::ProtoBuffContainer& proto_buff_container, const File& file)
+FileView::FileView(const container::ProtobufStorage& proto_buff_container, const File& file)
     : proto_buff_container_(proto_buff_container), file_(file) {
   // TODO: need to create containers with right data
 }

@@ -3,6 +3,7 @@ get_filename_component(LIB_PATH "." ABSOLUTE)
 
 set(PROTOBUF_PARSER_CXX_SOURCES
   parse_element.cpp
+  protobuf_storage.cpp
   parse_elements/field.cpp
   parse_elements/message.cpp
   parse_elements/file.cpp
@@ -12,11 +13,11 @@ set(PROTOBUF_PARSER_CXX_SOURCES
   view/messages_view.cpp
   view/file_view.cpp
   view/package_view.cpp
-  container/protobuf_container.cpp
   )
 
 set(PROTOBUF_PARSER_HEADERS
   parse_element.hpp
+  protobuf_storage.hpp
   enum_field_type.hpp
   field_type.hpp
   message_field_type.hpp
@@ -26,7 +27,6 @@ set(PROTOBUF_PARSER_HEADERS
   parse_elements/package.hpp
   parse_elements/enum.hpp
   parse_elements/directory.hpp
-  container/protobuf_container.hpp
   iterator/messages_iterator.hpp
   iterator/files_iterator.hpp
   iterator/packages_iterator.hpp

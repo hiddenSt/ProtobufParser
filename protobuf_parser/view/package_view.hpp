@@ -5,14 +5,14 @@
 #include <protobuf_parser/iterator/messages_iterator.hpp>
 #include <protobuf_parser/container/messages_container.hpp>
 #include <protobuf_parser/container/packages_container.hpp>
-#include <protobuf_parser/container/protobuf_container.hpp>
+#include <protobuf_parser/container/protobuf_storage.hpp>
 
 namespace protobuf_parser {
 namespace view {
 
 class PackageView {
  public:
-  PackageView(const container::ProtoBuffContainer& proto_buff_container, const Package& package);
+  PackageView(const container::ProtobufStorage& proto_buff_container, const Package& package);
 
   iterator::PackagesIterator& GetPackagesIterator();
   iterator::MessagesIterator& GetMessagesIterator();
@@ -20,7 +20,7 @@ class PackageView {
  private:
   container::MessagesContainer* messages_container_;
   container::PackagesContainer* packages_container_;
-  const container::ProtoBuffContainer& proto_buff_container_;
+  const container::ProtobufStorage& proto_buff_container_;
   const Package& package_;
 };
 
