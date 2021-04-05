@@ -1,3 +1,12 @@
-//
-// Created by hiddenst on 04.04.2021.
-//
+#include <gtest/gtest.h>
+
+#include <protobuf_parser/message.hpp>
+
+namespace tests {
+
+TEST(MessageTest, CanGetMessageName) {
+
+}
+
+}
+

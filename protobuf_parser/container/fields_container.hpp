@@ -10,6 +10,7 @@ class FieldsContainer {
  public:
   virtual void AddField(const Field& field) = 0;
   virtual iterator::FieldsIterator& GetFieldsIterator() = 0;
+  virtual ~FieldsContainer() = 0;
 };
 
 }  // namespace container

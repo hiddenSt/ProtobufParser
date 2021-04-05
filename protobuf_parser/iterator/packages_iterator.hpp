@@ -12,6 +12,7 @@ class PackagesIterator {
   virtual void Next() = 0;
   virtual bool IsDone() = 0;
   virtual Package& CurrentPackage() = 0;
+  virtual ~PackagesIterator() = 0;
 };
 
 }  // namespace iterator

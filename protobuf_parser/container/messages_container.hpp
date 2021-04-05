@@ -14,6 +14,7 @@ class MessagesContainer {
   virtual void AddMessage(const Message& message) = 0;
   virtual Message& GetMessage(const std::string& name) = 0;
   virtual iterator::MessagesIterator& GetIterator() = 0;
+  virtual ~MessagesContainer() = 0;
 };
 
 }  // namespace container

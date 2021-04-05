@@ -18,6 +18,8 @@ class Message {
   explicit Message(const std::string& name, const File& file, const Package& package,
                    container::FieldsContainer& fields_container);
 
+  ~Message() = default;
+
   const Package& GetPackage() const noexcept;
   const File& GetFile() const noexcept;
   const Message& GetParentMessage() const noexcept;

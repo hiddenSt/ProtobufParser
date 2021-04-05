@@ -14,6 +14,7 @@ class FilesContainer {
   virtual void AddFile(const File& file) = 0;
   virtual File& GetFile(const std::string& name) = 0;
   virtual iterator::FilesIterator& GetIterator() = 0;
+  virtual ~FilesContainer() = 0;
 };
 
 }  // namespace container

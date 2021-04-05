@@ -12,6 +12,7 @@ class MessagesIterator {
   virtual void Next() = 0;
   virtual bool IsDone() = 0;
   virtual Message& CurrentMessage() = 0;
+  virtual ~MessagesIterator() = 0;
 };
 
 }  // namespace iterator

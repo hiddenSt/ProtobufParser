@@ -12,6 +12,7 @@ class FieldsIterator {
   virtual void Next() = 0;
   virtual bool IsDone() = 0;
   virtual const Field& CurrentField() = 0;
+  virtual ~FieldsIterator() = 0;
 };
 
 }  // namespace iterator

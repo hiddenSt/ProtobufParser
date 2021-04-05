@@ -12,6 +12,7 @@ class FilesIterator {
   virtual void Next() = 0;
   virtual bool IsDone() = 0;
   virtual File& GetCurrentFile() = 0;
+  virtual ~FilesIterator() = 0;
 };
 
 }  // namespace iterator

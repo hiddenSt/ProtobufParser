@@ -14,6 +14,7 @@ class PackagesContainer {
   virtual void AddPackage(const Package& package) = 0;
   virtual Package& GetPackage(const std::string& name) = 0;
   virtual iterator::PackagesIterator& GetIterator() = 0;
+  virtual ~PackagesContainer() = 0;
 };
 
 }  // namespace container

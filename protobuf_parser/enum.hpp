@@ -1,0 +1,10 @@
+#ifndef PROTOBUF_PARSER_PROTOBUF_PARSER_ENUM_HPP_
+#define PROTOBUF_PARSER_PROTOBUF_PARSER_ENUM_HPP_
+
+namespace protobuf_parser {
+
+class Enum {};
+
+}
+
+#endif  // PROTOBUF_PARSER_PROTOBUF_PARSER_ENUM_HPP_
