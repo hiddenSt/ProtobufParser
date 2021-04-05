@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <../protobuf_parser/package.hpp>
+#include <protobuf_parser/package.hpp>
 
 namespace tests {
 
@@ -23,7 +23,7 @@ TEST(PackageTests, CanGetParentPackage) {
   protobuf_parser::Package parent_package{parent_package_name};
 
   protobuf_parser::Package package{package_name, &parent_package};
-  ASSERT_EQ(package.GetParentPackage().GetName(), parent_package_name);
+  ASSERT_EQ(package.GetParentPackage(), &parent_package);
 }
 
 }  // namespace tests

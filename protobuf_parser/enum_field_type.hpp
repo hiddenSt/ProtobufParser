@@ -7,7 +7,7 @@ namespace protobuf_parser {
 
 class EnumFieldType : public FieldType {
  public:
-  const std::string& GetName() override;
+  const std::string& GetName() const override;
 
  private:
   std::string name_;

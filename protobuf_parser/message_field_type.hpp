@@ -8,14 +8,13 @@ namespace protobuf_parser {
 
 class MessageFieldType : public FieldType {
  public:
-  explicit MessageFieldType(const std::string name, const Message& message);
+  explicit MessageFieldType(const Message& message);
 
-  const std::string& GetName() override;
+  const std::string& GetName() const override;
 
   const Message& GetMessage() const;
 
  private:
-  std::string name_;
   const Message& message_;
 };
 

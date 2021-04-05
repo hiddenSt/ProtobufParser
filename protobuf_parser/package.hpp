@@ -9,8 +9,10 @@ class Package {
  public:
   explicit Package(const std::string& name);
   explicit Package(const std::string& name, Package* const parent_package);
+  explicit Package(const std::string&& name) noexcept;
+  explicit Package(std::string&& name, Package* const parent_package) noexcept;
 
-  const Package& GetParentPackage();
+  const Package* const GetParentPackage();
   const std::string& GetName() const;
 
  private:

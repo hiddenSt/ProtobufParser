@@ -13,20 +13,21 @@ namespace protobuf_parser {
 class Message {
  public:
   explicit Message(const std::string& name, const File& file, const Package& package,
-                   const container::FieldsContainer& fields_container,
-                   const Message& parent_message);
+                   container::FieldsContainer& fields_container,
+                   const Message* const parent_message);
   explicit Message(const std::string& name, const File& file, const Package& package,
-                   const container::FieldsContainer& fields_container);
+                   container::FieldsContainer& fields_container);
 
   const Package& GetPackage() const noexcept;
   const File& GetFile() const noexcept;
   const Message& GetParentMessage() const noexcept;
+  const std::string& GetName() const;
   iterator::FieldsIterator& GetFieldsIterator();
 
  private:
   std::string name_;
-  const Message& parent_message_;
-  const container::FieldsContainer& fields_container_;
+  const Message* const parent_message_;
+  container::FieldsContainer& fields_container_;
   const File& file_;
   const Package& package_;
 };

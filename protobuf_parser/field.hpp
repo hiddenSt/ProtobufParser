@@ -2,17 +2,15 @@
 #define PROTOBUFPARSER_PROTOBUF_PARSER_FIELD_HPP_
 
 #include <string>
-
 #include <protobuf_parser/field_type.hpp>
 
 namespace protobuf_parser {
 
 class Field {
  public:
-  explicit Field(const std::string& name, const std::size_t number, const FieldType& type);
-  explicit Field(std::string&& name, const std::size_t number, FieldType&& type) noexcept;
+  explicit Field(const std::string& name, std::size_t number, FieldType& type);
+  explicit Field(std::string&& name, std::size_t number, FieldType& type) noexcept;
   Field(const Field& other) = default;
-  Field(Field&& other) noexcept;
 
   const std::string& GetName() const;
   const FieldType& GetType() const;

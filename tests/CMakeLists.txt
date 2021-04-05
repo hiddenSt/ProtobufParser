@@ -12,7 +12,10 @@ set(TESTS_SOURCES
   view/view_tests.cpp
   )
 
-add_executable(run_protobuf_parser_tests "${TESTS_SOURCES}")
+set(UTIL_SOURCES
+  util/container/test_fields_container.hpp)
+
+add_executable(run_protobuf_parser_tests "${TESTS_SOURCES}" "${UTIL_SOURCES}")
 
 target_include_directories(run_protobuf_parser_tests
   PRIVATE
@@ -26,7 +29,7 @@ target_link_libraries(run_protobuf_parser_tests PRIVATE protobuf_parser)
 if (PROTOBUF_PARSER_DEVELOPER)
 
   if(CLANG_FORMAT_TOOL)
-    add_clang_format_target(tests_clang_format ${CMAKE_CURRENT_SOURCE_DIR} ${TESTS_SOURCES})
+    add_clang_format_target(tests_clang_format ${CMAKE_CURRENT_SOURCE_DIR} ${TESTS_SOURCES} ${UTIL_SOURCES})
   endif()
 
 endif()

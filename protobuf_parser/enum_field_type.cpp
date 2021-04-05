@@ -2,7 +2,7 @@
 
 namespace protobuf_parser {
 
-const std::string& EnumFieldType::GetName() {
+const std::string& EnumFieldType::GetName() const {
   return name_;
 }
 
