@@ -4,19 +4,17 @@
 #include <string>
 #include <vector>
 
-#include <protobuf_parser/file.hpp>
-#include <protobuf_parser/package.hpp>
-#include <protobuf_parser/container/fields_container.hpp>
+#include <protobuf_parser/parse_element.hpp>
+#include <protobuf_parser/parse_elements/file.hpp>
+#include <protobuf_parser/parse_elements/package.hpp>
 
 namespace protobuf_parser {
 
-class Message {
+class Message : public ParseElement {
  public:
   explicit Message(const std::string& name, const File& file, const Package& package,
-                   container::FieldsContainer& fields_container,
                    const Message* const parent_message);
-  explicit Message(const std::string& name, const File& file, const Package& package,
-                   container::FieldsContainer& fields_container);
+  explicit Message(const std::string& name, const File& file, const Package& package);
 
   ~Message() = default;
 
@@ -24,12 +22,10 @@ class Message {
   const File& GetFile() const noexcept;
   const Message& GetParentMessage() const noexcept;
   const std::string& GetName() const;
-  iterator::FieldsIterator& GetFieldsIterator();
 
  private:
   std::string name_;
   const Message* const parent_message_;
-  container::FieldsContainer& fields_container_;
   const File& file_;
   const Package& package_;
 };

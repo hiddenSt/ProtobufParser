@@ -2,10 +2,12 @@ get_filename_component(LIB_INCLUDE_PATH ".." ABSOLUTE)
 get_filename_component(LIB_PATH "." ABSOLUTE)
 
 set(PROTOBUF_PARSER_CXX_SOURCES
-  field.cpp
-  message.cpp
-  file.cpp
-  package.cpp
+  parse_element.cpp
+  parse_elements/field.cpp
+  parse_elements/message.cpp
+  parse_elements/file.cpp
+  parse_elements/package.cpp
+  parse_elements/directory.cpp
   message_field_type.cpp
   view/messages_view.cpp
   view/file_view.cpp
@@ -14,18 +16,17 @@ set(PROTOBUF_PARSER_CXX_SOURCES
   )
 
 set(PROTOBUF_PARSER_HEADERS
-  field.hpp
-  message.hpp
-  file.hpp
-  package.hpp
-  enum.hpp
+  parse_element.hpp
   enum_field_type.hpp
   field_type.hpp
-  container/packages_container.hpp
-  container/files_container.hpp
-  container/messages_container.hpp
+  message_field_type.hpp
+  parse_elements/field.hpp
+  parse_elements/message.hpp
+  parse_elements/file.hpp
+  parse_elements/package.hpp
+  parse_elements/enum.hpp
+  parse_elements/directory.hpp
   container/protobuf_container.hpp
-  container/fields_container.hpp
   iterator/messages_iterator.hpp
   iterator/files_iterator.hpp
   iterator/packages_iterator.hpp
@@ -33,7 +34,6 @@ set(PROTOBUF_PARSER_HEADERS
   view/messages_view.hpp
   view/file_view.hpp
   view/package_view.hpp
-  message_field_type.hpp
   )
 
 add_library(protobuf_parser STATIC "${PROTOBUF_PARSER_CXX_SOURCES}" "${PROTOBUF_PARSER_HEADERS}")

@@ -1,30 +1,28 @@
 #ifndef PROTOBUFPARSER_PROTOBUF_PARSER_CONTAINER_PROTOBUF_CONTAINER_HPP_
 #define PROTOBUFPARSER_PROTOBUF_PARSER_CONTAINER_PROTOBUF_CONTAINER_HPP_
 
-#include <protobuf_parser/container/messages_container.hpp>
-#include <protobuf_parser/container/packages_container.hpp>
-#include <protobuf_parser/container/files_container.hpp>
+#include <map>
+
+#include <protobuf_parser/parse_elements/directory.hpp>
+#include <protobuf_parser/parse_elements/message.hpp>
+#include <protobuf_parser/parse_elements/package.hpp>
+#include <protobuf_parser/parse_elements/file.hpp>
 
 namespace protobuf_parser {
 namespace container {
 
 class ProtoBuffContainer {
  public:
-  ProtoBuffContainer(MessagesContainer* messages_container, PackagesContainer* packages_container,
-                     FilesContainer* files_container);
-
-  iterator::MessagesIterator& GetMessagesIterator();
-  iterator::PackagesIterator& GetPackagesIterator();
-  iterator::FilesIterator& GetFilesIterator();
-
-  const Message& FindMessage() const;
-  const Package& FindPackage() const;
-  const File& FindFile() const;
+  const Message& GetMessage(std::size_t id);
+  const Package& GetPackage(std::size_t id);
+  const Directory& GetDirectory(std::size_t id);
+  const File& GetFile(std::size_t id);
 
  private:
-  MessagesContainer* messages_container_;
-  FilesContainer* files_container_;
-  PackagesContainer* packages_container_;
+  std::map<std::size_t, Message> messages_;
+  std::map<std::size_t, Package> packages_;
+  std::map<std::size_t, Directory> directories_;
+  std::map<std::size_t, File> files_;
 };
 
 }  // namespace container

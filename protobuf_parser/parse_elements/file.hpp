@@ -3,9 +3,11 @@
 
 #include <string>
 
+#include <protobuf_parser/parse_element.hpp>
+
 namespace protobuf_parser {
 
-class File {
+class File : public ParseElement {
  public:
   explicit File(const std::string& name, const std::string& path);
 

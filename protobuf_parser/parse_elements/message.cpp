@@ -3,20 +3,17 @@
 namespace protobuf_parser {
 
 Message::Message(const std::string& name, const File& file, const Package& package,
-                 container::FieldsContainer& fields_container, const Message* const parent_message)
+                 const Message* const parent_message)
     : name_(name),
       file_(file),
       package_(package),
-      fields_container_(fields_container),
       parent_message_(parent_message) {
 }
 
-Message::Message(const std::string& name, const File& file, const Package& package,
-                 container::FieldsContainer& fields_container)
+Message::Message(const std::string& name, const File& file, const Package& package)
     : name_(name),
       file_(file),
       package_(package),
-      fields_container_(fields_container),
       parent_message_(nullptr) {
 }
 
@@ -30,10 +27,6 @@ const File& Message::GetFile() const noexcept {
 
 const Message& Message::GetParentMessage() const noexcept {
   return *parent_message_;
-}
-
-iterator::FieldsIterator& Message::GetFieldsIterator() {
-  return fields_container_.GetFieldsIterator();
 }
 
 const std::string& Message::GetName() const {
