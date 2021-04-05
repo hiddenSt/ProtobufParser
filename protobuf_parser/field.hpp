@@ -8,8 +8,8 @@ namespace protobuf_parser {
 
 class Field {
  public:
-  explicit Field(const std::string& name, std::size_t number, FieldType& type);
-  explicit Field(std::string&& name, std::size_t number, FieldType& type) noexcept;
+  explicit Field(const std::string& name, std::size_t number, FieldType& type, bool repeated);
+  explicit Field(std::string&& name, std::size_t number, FieldType& type, bool repeated) noexcept;
   Field(const Field& other) = default;
 
   const std::string& GetName() const;
@@ -20,6 +20,7 @@ class Field {
   std::string name_;
   FieldType& type_;
   std::size_t number_;
+  bool repeated_;
 };
 
 }  // namespace protobuf_parser
