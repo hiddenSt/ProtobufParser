@@ -6,12 +6,11 @@ set(PROTOBUF_PARSER_CXX_SOURCES
   message.cpp
   file.cpp
   package.cpp
-  enum_field_type.cpp
+  message_field_type.cpp
   view/messages_view.cpp
   view/file_view.cpp
   view/package_view.cpp
   container/protobuf_container.cpp
-  message_field_type.cpp
   )
 
 set(PROTOBUF_PARSER_HEADERS
