@@ -6,7 +6,6 @@ set(PROTOBUF_PARSER_CXX_SOURCES
   message.cpp
   file.cpp
   package.cpp
-  enum.cpp
   enum_field_type.cpp
   view/messages_view.cpp
   view/file_view.cpp
