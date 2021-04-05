@@ -9,25 +9,25 @@ namespace protobuf_parser {
 template <int size>
 class Enum {
  public:
-  explicit Enum(const std::string& name, std::array<std::string, size> nums);
+  explicit Enum(const std::string& name, std::array<std::string, size> values);
   ~Enum() = default;
 
-  std::string GetNum(size_t index);
+  std::string GetValuesize_t index);
   const std::string& GetName() const;
 
  private:
-  std::array<std::string, size> nums_;
+  std::array<std::string, size> values_;
   std::string name_;
 };
 
 template <int size>
-Enum<size>::Enum(const std::string& name, std::array<std::string, size> nums)
-    : name_(name), nums_(nums) {
+Enum<size>::Enum(const std::string& name, std::array<std::string, size> values)
+    : name_(name), values_(values) {
 }
 
 template <int size>
-std::string Enum<size>::GetNum(size_t index) {
-  return nums_[index];
+std::string Enum<size>::GetValue(size_t index) {
+  return values_[index];
 }
 
 template <int size>
