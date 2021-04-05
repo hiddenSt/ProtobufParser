@@ -12,7 +12,7 @@ class Enum {
   explicit Enum(const std::string& name, std::array<std::string, size> values);
   ~Enum() = default;
 
-  std::string GetValuesize_t index);
+  std::string GetValue(size_t index);
   const std::string& GetName() const;
 
  private:
