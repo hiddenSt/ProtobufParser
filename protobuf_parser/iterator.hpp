@@ -28,7 +28,7 @@ class Iterator {
   friend bool operator== (const T& a, const T& b);
   friend bool operator!= (const T& a, const T& b);
 
-  std::vector<Message> GetMessages() const;
+  const Message& GetMessage() const;
 
  private:
   std::vector<std::vector<size_t>> adjacency_list_;
