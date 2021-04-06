@@ -19,7 +19,6 @@ set(PROTOBUF_PARSER_HEADERS
   enum_field_type.hpp
   field_type.hpp
   message_field_type.hpp
-  iterator.hpp
   parse_elements/field.hpp
   parse_elements/message.hpp
   parse_elements/file.hpp

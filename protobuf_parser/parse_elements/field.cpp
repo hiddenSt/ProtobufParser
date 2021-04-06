@@ -24,8 +24,8 @@ std::size_t Field::GetNumber() const {
 
 Field& Field::operator=(const Field& other) {
   name_ = other.name_;
-  number_ = number_;
-  repeated_fields_ = repeated_fields_;
+  number_ = other.number_;
+  repeated_fields_ = other.repeated_fields_;
   // TODO: type pointer copy
   return *this;
 }

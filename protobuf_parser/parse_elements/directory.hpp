@@ -4,7 +4,6 @@
 #include <string>
 
 #include <protobuf_parser/parse_element.hpp>
-#include <protobuf_parser/iterator.hpp>
 
 namespace protobuf_parser {
 
