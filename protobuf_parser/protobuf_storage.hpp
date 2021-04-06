@@ -12,6 +12,14 @@ namespace protobuf_parser {
 
 class ProtobufStorage {
  public:
+  ProtobufStorage() = default;
+  ~ProtobufStorage() = default;
+
+  void AddMessage(const Message& message);
+  void AddPackage(const Package& package);
+  void AddDirectory(const Directory& directory);
+  void AddFile(const File& file);
+
   const Message& GetMessage(std::size_t id);
   const Package& GetPackage(std::size_t id);
   const Directory& GetDirectory(std::size_t id);

@@ -10,9 +10,6 @@ set(PROTOBUF_PARSER_CXX_SOURCES
   parse_elements/package.cpp
   parse_elements/directory.cpp
   message_field_type.cpp
-  view/messages_view.cpp
-  view/file_view.cpp
-  view/package_view.cpp
   )
 
 set(PROTOBUF_PARSER_HEADERS
@@ -31,9 +28,6 @@ set(PROTOBUF_PARSER_HEADERS
   iterator/files_iterator.hpp
   iterator/packages_iterator.hpp
   iterator/fields_iterator.hpp
-  view/messages_view.hpp
-  view/file_view.hpp
-  view/package_view.hpp
   )
 
 add_library(protobuf_parser STATIC "${PROTOBUF_PARSER_CXX_SOURCES}" "${PROTOBUF_PARSER_HEADERS}")

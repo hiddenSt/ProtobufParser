@@ -1,17 +1,12 @@
 set(TESTS_SOURCES
-  message_tests.cpp
   file_tests.cpp
   field_tests.cpp
   package_tests.cpp
-  container/files_container_tests.cpp
-  iterator/files_iterator_tests.cpp
-  iterator/messages_iterator_tests.cpp
-  iterator/packages_iterator_tests.cpp
   view/view_tests.cpp
   )
 
 set(UTIL_SOURCES
-  util/container/test_fields_container.hpp)
+  )
 
 add_executable(run_protobuf_parser_tests "${TESTS_SOURCES}" "${UTIL_SOURCES}")
 
