@@ -10,8 +10,6 @@ set(PROTOBUF_PARSER_CXX_SOURCES
   parse_elements/file.cpp
   parse_elements/package.cpp
   parse_elements/directory.cpp
-  iterator/directory_iterator.cpp
-  iterator/package_iterator.cpp
   )
 
 set(PROTOBUF_PARSER_HEADERS
@@ -20,6 +18,7 @@ set(PROTOBUF_PARSER_HEADERS
   enum_field_type.hpp
   field_type.hpp
   message_field_type.hpp
+  iterator.hpp
   parse_elements/field.hpp
   parse_elements/message.hpp
   parse_elements/file.hpp
@@ -27,8 +26,6 @@ set(PROTOBUF_PARSER_HEADERS
   parse_elements/enum.hpp
   parse_elements/directory.hpp
   view/view.hpp
-  iterator/directory_iterator.hpp
-  iterator/package_iterator.hpp
   )
 
 add_library(protobuf_parser STATIC "${PROTOBUF_PARSER_CXX_SOURCES}" "${PROTOBUF_PARSER_HEADERS}")

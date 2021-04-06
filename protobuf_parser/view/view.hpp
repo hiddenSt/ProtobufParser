@@ -15,6 +15,7 @@ class View {
  private:
   Serializer serializer_;
 };
+
 template <typename MessagesIterator, typename Serializer>
 View<MessagesIterator, Serializer>::View(const MessagesIterator& messages_iterator,
                                          const Serializer& serializer) {

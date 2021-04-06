@@ -8,7 +8,7 @@
 #include <protobuf_parser/parse_elements/package.hpp>
 #include <protobuf_parser/parse_elements/file.hpp>
 
-#include <protobuf_parser/iterator/directory_iterator.hpp>
+#include <protobuf_parser/iterator/iterator.hpp>
 
 namespace protobuf_parser {
 
