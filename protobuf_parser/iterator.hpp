@@ -25,8 +25,8 @@ class Iterator {
   pointer operator->();
   T& operator++();
   T operator++(int);
-  friend bool operator== (const T& a, const T& b);
-  friend bool operator!= (const T& a, const T& b);
+  friend bool operator== (const Iterator<T>& a, const Iterator<T>& b);
+  friend bool operator!= (const Iterator<T>& a, const Iterator<T>& b);
 
   const Message& GetMessage() const;
 
