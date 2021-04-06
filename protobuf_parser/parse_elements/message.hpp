@@ -7,6 +7,7 @@
 #include <protobuf_parser/parse_element.hpp>
 #include <protobuf_parser/parse_elements/file.hpp>
 #include <protobuf_parser/parse_elements/package.hpp>
+#include <protobuf_parser/parse_elements/field.hpp>
 
 namespace protobuf_parser {
 
@@ -14,9 +15,9 @@ class Message : public ParseElement {
  public:
   Message();
   Message(const Message& other);
-  explicit Message(const std::string& name, const File& file, const Package& package,
-                   const Message* const parent_message);
-  explicit Message(const std::string& name, const File& file, const Package& package);
+  explicit Message(const std::string& name, File* file, Package* package,
+                   Message* parent_message);
+  explicit Message(const std::string& name, File* file, Package* package);
 
   Message& operator=(const Message& other);
 
@@ -29,9 +30,10 @@ class Message : public ParseElement {
 
  private:
   std::string name_;
-  const Message* const parent_message_;
-  const File& file_;
-  const Package& package_;
+  Message* parent_message_;
+  File* file_;
+  Package* package_;
+  std::vector<Field> fields_;
 };
 
 }  // namespace protobuf_parser

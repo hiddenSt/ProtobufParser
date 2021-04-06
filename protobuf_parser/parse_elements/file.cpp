@@ -30,4 +30,17 @@ bool File::operator!=(const File& other) const noexcept {
   return !(*this == other);
 }
 
+File& File::operator=(const File& other) {
+  name_ = other.name_;
+  path_ = other.path_;
+  directory_ = other.directory_;
+  return *this;
+}
+
+File::File(const File& other) {
+  name_ = other.name_;
+  path_ = other.path_;
+  directory_ = other.directory_;
+}
+
 }  // namespace protobuf_parser

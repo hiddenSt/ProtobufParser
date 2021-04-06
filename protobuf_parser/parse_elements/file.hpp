@@ -19,11 +19,12 @@ class File : public ParseElement {
 
   bool operator==(const File& other) const noexcept;
   bool operator!=(const File& other) const noexcept;
+  File& operator=(const File& other);
 
  private:
   std::string name_;
   std::string path_;
-  const Directory& directory_;
+  Directory* directory_;
 };
 
 }  // namespace protobuf_parser

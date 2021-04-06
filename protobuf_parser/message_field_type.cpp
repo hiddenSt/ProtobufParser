@@ -5,7 +5,7 @@ namespace protobuf_parser {
 MessageFieldType::MessageFieldType(const Message& message) : message_(message) {
 }
 
-const std::string& MessageFieldType::GetName() const {
+const std::string& MessageFieldType::GetTypeName() const {
   return message_.GetName();
 }
 

@@ -19,9 +19,9 @@ TEST(FieldTests, CanGetFieldType) {
 
   protobuf_parser::File file{file_name, path_name};
   protobuf_parser::Package package{path_name};
-  protobuf_parser::Message message{message_name, file, package};
+  protobuf_parser::Message message{message_name, &file, &package};
   protobuf_parser::MessageFieldType message_field_type{message};
-  protobuf_parser::Field field{field_name, number, message_field_type, false};
+  protobuf_parser::Field field{field_name, number, &message_field_type, false};
 
   ASSERT_NO_THROW(field.GetType());
 }
@@ -37,11 +37,11 @@ TEST(FieldTests, ReturnsCorrectMessageTypeName) {
 
   protobuf_parser::File file{file_name, path_name};
   protobuf_parser::Package package{path_name};
-  protobuf_parser::Message message{message_name, file, package};
+  protobuf_parser::Message message{message_name, &file, &package};
   protobuf_parser::MessageFieldType message_field_type{message};
-  protobuf_parser::Field field{field_name, number, message_field_type, false};
+  protobuf_parser::Field field{field_name, number, &message_field_type, false};
 
-  ASSERT_EQ(field.GetType().GetName(), message.GetName());
+  ASSERT_EQ(field.GetType().GetTypeName(), message.GetName());
 }
 
 TEST(FieldTests, ReturnsCorrectNumber) {
@@ -54,9 +54,9 @@ TEST(FieldTests, ReturnsCorrectNumber) {
 
   protobuf_parser::File file{file_name, path_name};
   protobuf_parser::Package package{path_name};
-  protobuf_parser::Message message{message_name, file, package};
+  protobuf_parser::Message message{message_name, &file, &package};
   protobuf_parser::MessageFieldType message_field_type{message};
-  protobuf_parser::Field field{field_name, number, message_field_type, false};
+  protobuf_parser::Field field{field_name, number, &message_field_type, false};
 
   ASSERT_EQ(field.GetNumber(), number);
 }
@@ -71,9 +71,9 @@ TEST(FieldTests, ReturnsCorrectName) {
 
   protobuf_parser::File file{file_name, path_name};
   protobuf_parser::Package package{path_name};
-  protobuf_parser::Message message{message_name, file, package};
+  protobuf_parser::Message message{message_name, &file, &package};
   protobuf_parser::MessageFieldType message_field_type{message};
-  protobuf_parser::Field field{field_name, number, message_field_type, false};
+  protobuf_parser::Field field{field_name, number, &message_field_type, false};
 
   ASSERT_EQ(field.GetName(), field_name);
 }

@@ -11,7 +11,7 @@ class MessageFieldType : public FieldType {
   explicit MessageFieldType(const Message& message);
   ~MessageFieldType() override = default;
 
-  const std::string& GetName() const override;
+  const std::string& GetTypeName() const override;
 
   const Message& GetMessage() const;
 
