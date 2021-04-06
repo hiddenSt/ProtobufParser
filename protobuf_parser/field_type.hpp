@@ -8,7 +8,7 @@ namespace protobuf_parser {
 class FieldType {
  public:
   virtual const std::string& GetName() const = 0;
-  virtual ~FieldType() = 0;
+  virtual ~FieldType() = default;
 };
 
 }  // namespace protobuf_parser
