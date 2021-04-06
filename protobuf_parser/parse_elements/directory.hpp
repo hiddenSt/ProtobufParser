@@ -4,14 +4,20 @@
 #include <string>
 
 #include <protobuf_parser/parse_element.hpp>
+#include <protobuf_parser/iterator.hpp>
 
 namespace protobuf_parser {
 
 class Directory : public ParseElement {
  public:
+  Directory();
+  Directory(const Directory& other);
   explicit Directory(const std::string& names);
   explicit Directory(const std::string& name, Directory* parent_directory);
   const std::string& GetName() const;
+
+  bool operator==(const Directory& other) const noexcept;
+  bool operator!=(const Directory& other) const noexcept;
 
  private:
   std::string name_;

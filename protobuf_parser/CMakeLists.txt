@@ -13,6 +13,7 @@ set(PROTOBUF_PARSER_CXX_SOURCES
   )
 
 set(PROTOBUF_PARSER_HEADERS
+  identifier.hpp
   parse_element.hpp
   protobuf_storage.hpp
   enum_field_type.hpp

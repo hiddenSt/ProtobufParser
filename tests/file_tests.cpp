@@ -18,4 +18,10 @@ TEST(FileTests, CanGetFilePath) {
   ASSERT_EQ(file.GetPath(), file_path);
 }
 
+TEST(RemoveThisTest, LambdasTests) {
+  decltype(auto) lambda = [](const int &a, const int& b){ return a - b > a*b; };
+  std::vector<int> arr{10, 20, 5, -2, 5};
+  std::sort(arr.begin(), arr.end(), lambda);
+}
+
 }  // namespace tests

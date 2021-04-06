@@ -1,20 +1,19 @@
 #ifndef PROTOBUFPARSER_PROTOBUF_PARSER_CONTAINER_PROTOBUF_CONTAINER_HPP_
 #define PROTOBUFPARSER_PROTOBUF_PARSER_CONTAINER_PROTOBUF_CONTAINER_HPP_
 
-#include <map>
+#include <string>
 
 #include <protobuf_parser/parse_elements/directory.hpp>
 #include <protobuf_parser/parse_elements/message.hpp>
 #include <protobuf_parser/parse_elements/package.hpp>
 #include <protobuf_parser/parse_elements/file.hpp>
 
-#include <protobuf_parser/iterator/iterator.hpp>
 
 namespace protobuf_parser {
 
 class ProtobufStorage {
  public:
-  ProtobufStorage() = default;
+  ProtobufStorage(std::size_t n_messages, std::size_t n_packages, std::size_t n_files, std::size_t n_directories);
   ~ProtobufStorage() = default;
 
   void AddMessage(const Message& message);
@@ -27,19 +26,11 @@ class ProtobufStorage {
   const Directory& GetDirectory(std::size_t id);
   const File& GetFile(std::size_t id);
 
-  iterator::DirectoryIterator begin();
-  iterator::DirectoryIterator end();
-
-  iterator::PackageIterator begin();
-  iterator::PackageIterator end();
-
-
-
  private:
-  std::map<std::size_t, Message> messages_;
-  std::map<std::size_t, Package> packages_;
-  std::map<std::size_t, Directory> directories_;
-  std::map<std::size_t, File> files_;
+  std::vector<Message> messages_;
+  std::vector<File> files_;
+  std::vector<Package> packages_;
+  std::vector<Directory> directories_;
 };
 
 }  // namespace protobuf_parser

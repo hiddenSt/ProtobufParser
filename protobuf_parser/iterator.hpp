@@ -6,7 +6,7 @@
 #include <vector>
 #include <cstddef>
 
-#include <protobuf_parser/parse_elements/message.hpp>
+//#include <protobuf_parser/parse_elements/message.hpp>
 
 namespace protobuf_parser {
 
@@ -19,22 +19,27 @@ class Iterator {
   using pointer = T*;
   using reference = T&;
 
-  explicit Iterator(std::vector<std::vector<std::size_t>>& adjacency_list_);
+  explicit Iterator(value_type& element, std::vector<std::vector<std::size_t>>& adjacency_list_);
 
   reference operator*() const;
   pointer operator->();
-  T& operator++();
-  T operator++(int);
-  friend bool operator== (const Iterator<T>& a, const Iterator<T>& b);
-  friend bool operator!= (const Iterator<T>& a, const Iterator<T>& b);
+  value_type& operator++();
+  value_type operator++(int);
+  friend bool operator== (const Iterator<value_type>& a, const Iterator<value_type>& b);
+  friend bool operator!= (const Iterator<value_type>& a, const Iterator<value_type>& b);
 
-  const Message& GetMessage() const;
+  //const Message& GetMessage() const;
 
  private:
   std::vector<std::vector<size_t>> adjacency_list_;
   std::queue<std::size_t> white_edges_;
   std::vector<char> vertex_color_;
+  value_type& element_;
 };
+
+template <typename T>
+Iterator<T>::Iterator(T& element, std::vector<std::vector<std::size_t>>& adjacency_list_): element_(element)  {
+}
 
 }
 
