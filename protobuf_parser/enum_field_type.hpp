@@ -2,7 +2,7 @@
 #define PROTOBUFPARSER_PROTOBUF_PARSER_ENUM_FIELD_TYPE_HPP_
 
 #include <protobuf_parser/field_type.hpp>
-#include <protobuf_parser/enum.hpp>
+#include <protobuf_parser/parse_elements/enum.hpp>
 
 namespace protobuf_parser {
 
@@ -14,10 +14,8 @@ class EnumFieldType : public FieldType {
   const std::string& GetName() const override;
 
  private:
-
   Enum<size>& an_enum_;
 };
-
 
 }  // namespace protobuf_parser
 

@@ -16,6 +16,6 @@ class ParseElement {
   std::size_t id_;
 };
 
-}
+}  // namespace protobuf_parser
 
 #endif  // PROTOBUF_PARSER__PARSE_ELEMENT_HPP_

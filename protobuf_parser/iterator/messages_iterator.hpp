@@ -1,7 +1,7 @@
 #ifndef PROTOBUFPARSER_PROTOBUF_PARSER_ITERATOR_MESSAGES_ITERATOR_HPP_
 #define PROTOBUFPARSER_PROTOBUF_PARSER_ITERATOR_MESSAGES_ITERATOR_HPP_
 
-#include <protobuf_parser/message.hpp>
+#include <protobuf_parser/parse_elements/message.hpp>
 
 namespace protobuf_parser {
 namespace iterator {

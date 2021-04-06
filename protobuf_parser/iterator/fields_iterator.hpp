@@ -1,7 +1,7 @@
 #ifndef PROTOBUFPARSER_PROTOBUF_PARSER_ITERATOR_FIELDS_ITERATOR_HPP_
 #define PROTOBUFPARSER_PROTOBUF_PARSER_ITERATOR_FIELDS_ITERATOR_HPP_
 
-#include <protobuf_parser/field.hpp>
+#include <protobuf_parser/parse_elements/field.hpp>
 
 namespace protobuf_parser {
 namespace iterator {

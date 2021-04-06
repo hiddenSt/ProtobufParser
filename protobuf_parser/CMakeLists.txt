@@ -28,6 +28,7 @@ set(PROTOBUF_PARSER_HEADERS
   iterator/files_iterator.hpp
   iterator/packages_iterator.hpp
   iterator/fields_iterator.hpp
+  view/view.hpp
   )
 
 add_library(protobuf_parser STATIC "${PROTOBUF_PARSER_CXX_SOURCES}" "${PROTOBUF_PARSER_HEADERS}")

@@ -18,6 +18,6 @@ class Directory : public ParseElement {
   Directory* parent_directory_;
 };
 
-}
+}  // namespace protobuf_parser
 
 #endif  // PROTOBUF_PARSER_PROTOBUF_PARSER_PARSE_ELEMENTS_DIRECTORY_HPP_
