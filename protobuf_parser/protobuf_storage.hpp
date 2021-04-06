@@ -8,6 +8,8 @@
 #include <protobuf_parser/parse_elements/package.hpp>
 #include <protobuf_parser/parse_elements/file.hpp>
 
+#include <protobuf_parser/iterator/directory_iterator.hpp>
+
 namespace protobuf_parser {
 
 class ProtobufStorage {
@@ -24,6 +26,14 @@ class ProtobufStorage {
   const Package& GetPackage(std::size_t id);
   const Directory& GetDirectory(std::size_t id);
   const File& GetFile(std::size_t id);
+
+  iterator::DirectoryIterator begin();
+  iterator::DirectoryIterator end();
+
+  iterator::PackageIterator begin();
+  iterator::PackageIterator end();
+
+
 
  private:
   std::map<std::size_t, Message> messages_;
