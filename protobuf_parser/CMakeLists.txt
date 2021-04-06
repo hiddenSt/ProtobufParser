@@ -24,10 +24,6 @@ set(PROTOBUF_PARSER_HEADERS
   parse_elements/package.hpp
   parse_elements/enum.hpp
   parse_elements/directory.hpp
-  iterator/messages_iterator.hpp
-  iterator/files_iterator.hpp
-  iterator/packages_iterator.hpp
-  iterator/fields_iterator.hpp
   view/view.hpp
   )
 
