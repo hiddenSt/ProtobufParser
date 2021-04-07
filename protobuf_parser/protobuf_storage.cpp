@@ -6,34 +6,26 @@ ProtobufStorage::ProtobufStorage()
     : messages_(),
       packages_(),
       files_(),
-      directories_(),
-      messages_count_(0),
-      packages_count_(0),
-      directories_count_(0),
-      files_count_(0) {
+      directories_() {
 }
 void ProtobufStorage::AddMessage(const Message& message) {
   messages_.push_back(message);
-  messages_[messages_count_].SetId(messages_count_);
-  ++messages_count_;
+  messages_[messages_.size() - 1].SetId(messages_.size() - 1);
 }
 
 void ProtobufStorage::AddPackage(const Package& package) {
   packages_.push_back(package);
-  packages_[packages_count_].SetId(packages_count_);
-  ++packages_count_;
+  packages_[packages_.size() - 1].SetId(packages_.size() - 1);
 }
 
 void ProtobufStorage::AddDirectory(const Directory& directory) {
   directories_.push_back(directory);
-  directories_[directories_count_].SetId(directories_count_);
-  ++directories_count_;
+  directories_[directories_.size() - 1].SetId(directories_.size() - 1);
 }
 
 void ProtobufStorage::AddFile(const File& file) {
   files_.push_back(file);
-  files_[files_count_].SetId(files_count_);
-  ++files_count_;
+  files_[files_.size() - 1].SetId(files_.size() - 1);
 }
 
 template <>

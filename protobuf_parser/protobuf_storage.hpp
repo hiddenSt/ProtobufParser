@@ -11,7 +11,7 @@
 #include <protobuf_parser/parse_elements/file.hpp>
 
 namespace protobuf_parser {
-
+// WARNING THERE IS A BUG!!!! Need to change references in child elements to their parents
 class ProtobufStorage {
  public:
   template <typename T>
@@ -66,10 +66,6 @@ class ProtobufStorage {
   std::vector<File> files_;
   std::vector<Package> packages_;
   std::vector<Directory> directories_;
-  std::size_t messages_count_;
-  std::size_t files_count_;
-  std::size_t packages_count_;
-  std::size_t directories_count_;
 };
 
 template <typename T>
