@@ -82,6 +82,13 @@ class ProtobufStorage {
   Directory* GetDirectory(std::size_t id);
   File* GetFile(std::size_t id);
 
+  DirectoryIterator DirectoryBegin(Directory* directory);
+  DirectoryIterator DirectoryEnd(Directory* directory);
+
+  PackageIterator PackageBegin(Package* package);
+  PackageIterator PackageEnd(Package* package);
+
+
  private:
   std::vector<Message> messages_;
   std::vector<File> files_;

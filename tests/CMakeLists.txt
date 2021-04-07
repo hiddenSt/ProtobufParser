@@ -4,6 +4,7 @@ set(TESTS_SOURCES
   directory_tests.cpp
   package_tests.cpp
   message_tests.cpp
+  protobuf_storage_tests.cpp
   view/view_tests.cpp
   iterator/directory_iterator_tests.cpp
   iterator/package_iterator_tests.cpp
