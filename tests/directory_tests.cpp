@@ -12,6 +12,4 @@ TEST(DirectoryTests, CanGetParentDirectory) {
   ASSERT_EQ(dir.GetParentDirectory()->GetName(), parent_dir_name);
 }
 
-
-
-}
+}  // namespace tests

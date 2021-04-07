@@ -38,7 +38,8 @@ const File& ProtobufStorage::GetFile(std::size_t id) {
   return files_[id];
 }
 
-ProtobufStorage::PackageIterator::PackageIterator(Package* root_package, ProtobufStorage* storage): storage_(storage), index_(0) {
+ProtobufStorage::PackageIterator::PackageIterator(Package* root_package, ProtobufStorage* storage)
+    : storage_(storage), index_(0) {
   packages_queue_.emplace(root_package);
   for (auto& message : storage_->messages_) {
     if (*message.GetPackage() == *root_package) {
@@ -71,7 +72,8 @@ void ProtobufStorage::PackageIterator::Iterate() {
       }
     }
 
-    current_package_messages_.erase(current_package_messages_.begin(), current_package_messages_.end());
+    current_package_messages_.erase(current_package_messages_.begin(),
+                                    current_package_messages_.end());
     index_ = 0;
 
     for (auto& message : storage_->messages_) {
@@ -117,7 +119,8 @@ bool operator!=(const ProtobufStorage::PackageIterator& a,
 }
 
 ProtobufStorage::DirectoryIterator::DirectoryIterator(Directory* root_directory,
-                                                      ProtobufStorage* storage): storage_(storage) {
+                                                      ProtobufStorage* storage)
+    : storage_(storage) {
   directories_queue_.emplace(root_directory);
   for (auto& message : storage_->messages_) {
     if (*message.GetDirectory() == *root_directory) {
@@ -150,7 +153,8 @@ void ProtobufStorage::DirectoryIterator::Iterate() {
       }
     }
 
-    current_directory_messages_.erase(current_directory_messages_.begin(), current_directory_messages_.end());
+    current_directory_messages_.erase(current_directory_messages_.begin(),
+                                      current_directory_messages_.end());
     index_ = 0;
 
     for (auto& message : storage_->messages_) {

@@ -4,6 +4,8 @@ set(TESTS_SOURCES
   directory_tests.cpp
   package_tests.cpp
   view/view_tests.cpp
+  iterator/directory_iterator_tests.cpp
+  iterator/package_iterator_tests.cpp
   )
 
 set(UTIL_SOURCES

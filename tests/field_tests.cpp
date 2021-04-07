@@ -25,7 +25,6 @@ TEST(FieldTests, CanGetFieldType) {
   ASSERT_NO_THROW(field.GetType());
 }
 
-
 TEST(FieldTests, ReturnsCorrectMessageTypeName) {
   std::string message_name{"simple_name"};
   std::string file_name{"file_name"};

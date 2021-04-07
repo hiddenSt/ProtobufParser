@@ -2,7 +2,7 @@
 
 namespace protobuf_parser {
 
-File::File(): name_(), path_(), directory_(nullptr) {
+File::File() : name_(), path_(), directory_(nullptr) {
 }
 
 protobuf_parser::File::File(const std::string& name, const std::string& path)
@@ -49,6 +49,5 @@ File::File(const File& other) {
 Directory* File::GetDirectory() {
   return directory_;
 }
-
 
 }  // namespace protobuf_parser

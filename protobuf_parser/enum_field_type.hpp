@@ -11,7 +11,7 @@ class EnumFieldType : public FieldType {
  public:
   explicit EnumFieldType(const Enum<size>& an_enum);
 
-  const std::string& GetName() const override;
+  const std::string& GetTypeName() const override;
 
  private:
   Enum<size>& an_enum_;

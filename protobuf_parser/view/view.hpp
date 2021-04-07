@@ -20,12 +20,13 @@ class View {
 
 template <typename MessagesIterator, typename Serializer>
 View<MessagesIterator, Serializer>::View(const MessagesIterator& messages_iterator,
-                                         const Serializer& serializer): serializer_(serializer), iterator_(messages_iterator) {
+                                         const Serializer& serializer)
+    : serializer_(serializer), iterator_(messages_iterator) {
 }
 
 template <typename MessagesIterator, typename Serializer>
 std::string View<MessagesIterator, Serializer>::Serialize() {
-  for(auto& message: iterator_) {
+  for (auto& message : iterator_) {
     serializer_.AddMessage(message);
   }
   return serializer_.Serialize();
