@@ -74,5 +74,8 @@ bool Message::operator!=(const Message& other) {
 Directory* Message::GetDirectory() {
   return file_->GetDirectory();
 }
+void Message::AddField(const Field& field) {
+  fields_.push_back(field);
+}
 
 }  // namespace protobuf_parser

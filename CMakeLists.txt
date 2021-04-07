@@ -11,6 +11,8 @@ add_subdirectory(third-party)
 
 add_subdirectory(protobuf_parser)
 
+add_subdirectory(example)
+
 if (PROTOBUF_PARSER_TESTS OR PROTOBUF_PARSER_DEVELOPER)
   add_subdirectory(tests)
 endif ()

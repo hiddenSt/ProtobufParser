@@ -27,7 +27,7 @@ View<MessagesIterator, Serializer>::View(const MessagesIterator& messages_iterat
 template <typename MessagesIterator, typename Serializer>
 std::string View<MessagesIterator, Serializer>::Serialize() {
   for (auto& message : iterator_) {
-    serializer_.AddMessage(message);
+    serializer_.AddMessage(*message);
   }
   return serializer_.Serialize();
 }

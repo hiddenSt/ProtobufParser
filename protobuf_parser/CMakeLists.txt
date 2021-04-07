@@ -10,6 +10,7 @@ set(PROTOBUF_PARSER_CXX_SOURCES
   parse_elements/file.cpp
   parse_elements/package.cpp
   parse_elements/directory.cpp
+  serializers/json_serializer.cpp
   )
 
 set(PROTOBUF_PARSER_HEADERS
@@ -25,10 +26,12 @@ set(PROTOBUF_PARSER_HEADERS
   parse_elements/enum.hpp
   parse_elements/directory.hpp
   view/view.hpp
+  serializers/json_serializer.hpp
   )
 
 add_library(protobuf_parser STATIC "${PROTOBUF_PARSER_CXX_SOURCES}" "${PROTOBUF_PARSER_HEADERS}")
 target_include_directories(protobuf_parser PRIVATE "${LIB_INCLUDE_PATH}")
+target_link_libraries(protobuf_parser PRIVATE nlohmann_json::nlohmann_json)
 
 # Linters
 

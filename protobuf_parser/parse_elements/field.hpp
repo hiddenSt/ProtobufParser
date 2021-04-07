@@ -24,7 +24,6 @@ class Field {
   std::string name_;
   FieldType* type_;
   std::size_t number_;
-  std::vector<Field> repeated_fields_;
   bool repeated_;
 };
 

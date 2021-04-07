@@ -28,6 +28,7 @@ class Message : public ParseElement {
   Directory* GetDirectory();
   Message* GetParentMessage() const noexcept;
   const std::string& GetName() const;
+  void AddField(const Field& field);
 
  private:
   std::string name_;
