@@ -29,6 +29,8 @@ class Message : public ParseElement {
   Message* GetParentMessage() const noexcept;
   const std::string& GetName() const;
   void AddField(const Field& field);
+  const std::vector<Field>& GetFields() const;
+  const std::vector<Message*>& GetNestedMessages() const;
 
  private:
   std::string name_;

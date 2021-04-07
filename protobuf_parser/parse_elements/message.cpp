@@ -78,4 +78,12 @@ void Message::AddField(const Field& field) {
   fields_.push_back(field);
 }
 
+const std::vector<Field>& Message::GetFields() const {
+  return fields_;
+}
+
+const std::vector<Message*>& Message::GetNestedMessages() const {
+  return nested_messages_;
+}
+
 }  // namespace protobuf_parser
