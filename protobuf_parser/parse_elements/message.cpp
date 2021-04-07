@@ -15,7 +15,8 @@ Message::Message(const std::string& name, File* file, Package* package)
 }
 
 Message::Message(const Message& other)
-    : name_(other.name_),
+    : ParseElement(other),
+      name_(other.name_),
       parent_message_(other.parent_message_),
       file_(other.file_),
       package_(other.package_),
@@ -36,15 +37,6 @@ Message* Message::GetParentMessage() const noexcept {
 
 const std::string& Message::GetName() const {
   return name_;
-}
-
-Message& Message::operator=(const Message& other) {
-  name_ = other.name_;
-  parent_message_ = other.parent_message_;
-  file_ = other.file_;
-  package_ = other.package_;
-  fields_ = other.fields_;
-  return *this;
 }
 
 bool Message::operator==(const Message& other) {

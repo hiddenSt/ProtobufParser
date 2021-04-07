@@ -15,7 +15,6 @@ class Package : public ParseElement {
   explicit Package(std::string&& name) noexcept;
   explicit Package(std::string&& name, Package* parent_package) noexcept;
 
-  Package& operator=(const Package& other);
   bool operator==(const Package& other);
   bool operator!=(const Package& other);
 

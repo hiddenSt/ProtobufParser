@@ -10,4 +10,6 @@ ParseElement::ParseElement() {
 std::size_t ParseElement::GetId() const noexcept {
   return id_;
 }
+ParseElement::ParseElement(const ParseElement& other): id_(other.id_) {
+}
 }  // namespace protobuf_parser

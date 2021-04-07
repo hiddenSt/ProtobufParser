@@ -21,7 +21,6 @@ class File : public ParseElement {
 
   bool operator==(const File& other) const noexcept;
   bool operator!=(const File& other) const noexcept;
-  File& operator=(const File& other);
 
  private:
   std::string name_;

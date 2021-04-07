@@ -26,11 +26,6 @@ Package* Package::GetParentPackage() {
 const std::string& Package::GetName() const {
   return name_;
 }
-Package& Package::operator=(const Package& other) {
-  name_ = other.name_;
-  parent_package_ = other.parent_package_;
-  return *this;
-}
 
 bool Package::operator==(const Package& other) {
   if (name_ != other.name_) {

@@ -19,7 +19,6 @@ class Message : public ParseElement {
   explicit Message(const std::string& name, File* file, Package* package);
   ~Message() = default;
 
-  Message& operator=(const Message& other);
   bool operator==(const Message& other);
   bool operator!=(const Message& other);
 

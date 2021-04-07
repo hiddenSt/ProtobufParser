@@ -8,6 +8,7 @@ namespace protobuf_parser {
 class ParseElement {
  public:
   ParseElement();
+  ParseElement(const ParseElement& other);
 
   std::size_t GetId() const noexcept;
 
