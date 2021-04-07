@@ -8,7 +8,6 @@
 
 namespace tests {
 
-
 TEST(FieldTests, CanGetFieldType) {
   std::string message_name{"simple_name"};
   std::string file_name{"file_name"};

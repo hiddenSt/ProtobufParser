@@ -11,6 +11,7 @@ set(PROTOBUF_PARSER_CXX_SOURCES
   parse_elements/package.cpp
   parse_elements/directory.cpp
   iterator/package_iterator.cpp
+  iterator/directory_iterator.cpp
   )
 
 set(PROTOBUF_PARSER_HEADERS
@@ -27,6 +28,7 @@ set(PROTOBUF_PARSER_HEADERS
   parse_elements/enum.hpp
   parse_elements/directory.hpp
   iterator/package_iterator.hpp
+  iterator/directory_iterator.hpp
   view/view.hpp
   )
 

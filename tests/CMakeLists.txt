@@ -1,6 +1,7 @@
 set(TESTS_SOURCES
   file_tests.cpp
   field_tests.cpp
+  directory_tests.cpp
   package_tests.cpp
   view/view_tests.cpp
   )
