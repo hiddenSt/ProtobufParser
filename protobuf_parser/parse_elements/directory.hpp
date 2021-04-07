@@ -9,10 +9,12 @@ namespace protobuf_parser {
 
 class Directory : public ParseElement {
  public:
-  Directory();
+  Directory() = default;
   Directory(const Directory& other);
   explicit Directory(const std::string& names);
   explicit Directory(const std::string& name, Directory* parent_directory);
+  ~Directory() = default;
+
   const std::string& GetName() const;
 
   bool operator==(const Directory& other) const noexcept;

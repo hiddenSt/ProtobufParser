@@ -2,6 +2,9 @@
 
 namespace protobuf_parser {
 
+Message::Message(): name_(), package_(nullptr), file_(nullptr), parent_message_(nullptr), fields_() {
+}
+
 Message::Message(const std::string& name, File* file, Package* package, Message* parent_message)
     : name_(name), file_(file), package_(package), parent_message_(parent_message) {
 }
@@ -36,6 +39,30 @@ Message& Message::operator=(const Message& other) {
   package_ = other.package_;
   fields_ = other.fields_;
   return *this;
+}
+
+bool Message::operator==(const Message& other) {
+  if (name_ != other.name_) {
+    return false;
+  }
+
+  if (file_ != other.file_) {
+    return false;
+  }
+
+  if (package_ != other.package_) {
+    return false;
+  }
+
+  if (parent_message_ != other.parent_message_) {
+    return false;
+  }
+
+  return true;
+}
+
+bool Message::operator!=(const Message& other) {
+  return !(*this == other);
 }
 
 }  // namespace protobuf_parser

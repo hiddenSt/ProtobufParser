@@ -2,6 +2,9 @@
 
 namespace protobuf_parser {
 
+Package::Package() : name_(), parent_package_(nullptr) {
+}
+
 Package::Package(const std::string& name) : name_(name), parent_package_(nullptr) {
 }
 
@@ -28,6 +31,22 @@ Package& Package::operator=(const Package& other) {
   name_ = other.name_;
   parent_package_ = other.parent_package_;
   return *this;
+}
+
+bool Package::operator==(const Package& other) {
+  if (name_ != other.name_) {
+    return false;
+  }
+
+  if (parent_package_ != other.parent_package_) {
+    return false;
+  }
+
+  return true;
+}
+
+bool Package::operator!=(const Package& other) {
+  return !(*this == other);
 }
 
 }  // namespace protobuf_parser

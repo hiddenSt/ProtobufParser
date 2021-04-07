@@ -10,9 +10,10 @@ namespace protobuf_parser {
 
 class File : public ParseElement {
  public:
-  File();
+  File() = default;
   File(const File& other);
   explicit File(const std::string& name, const std::string& path);
+  ~File() = default;
 
   const std::string& GetName() const noexcept;
   const std::string& GetPath() const noexcept;

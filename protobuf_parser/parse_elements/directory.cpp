@@ -9,9 +9,13 @@ Directory::Directory(const std::string& name, protobuf_parser::Directory* parent
     : name_(name), parent_directory_(parent_directory) {
 }
 
+Directory::Directory(const Directory& other): name_(other.name_), parent_directory_(other.parent_directory_) {
+}
+
 const std::string& Directory::GetName() const {
   return name_;
 }
+
 bool Directory::operator==(const Directory& other) const noexcept {
   if (name_ != other.name_) {
     return false;
