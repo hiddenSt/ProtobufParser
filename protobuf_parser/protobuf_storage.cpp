@@ -36,22 +36,6 @@ void ProtobufStorage::AddFile(const File& file) {
   ++files_count_;
 }
 
-Message* ProtobufStorage::GetMessage(std::size_t id) {
-  return &messages_[id];
-}
-
-Package* ProtobufStorage::GetPackage(std::size_t id) {
-  return &packages_[id];
-}
-
-Directory* ProtobufStorage::GetDirectory(std::size_t id) {
-  return &directories_[id];
-}
-
-File* ProtobufStorage::GetFile(std::size_t id) {
-  return &files_[id];
-}
-
 template <>
 ProtobufStorage::MessagesIterator<Directory>::MessagesIterator(Directory* root,
                                                                ProtobufStorage* storage)

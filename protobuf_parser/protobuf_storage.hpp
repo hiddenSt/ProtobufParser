@@ -55,11 +55,6 @@ class ProtobufStorage {
   void AddDirectory(const Directory& directory);
   void AddFile(const File& file);
 
-  Message* GetMessage(std::size_t id);
-  Package* GetPackage(std::size_t id);
-  Directory* GetDirectory(std::size_t id);
-  File* GetFile(std::size_t id);
-
   template <typename T>
   MessagesIterator<T> Begin(T* root);
 
