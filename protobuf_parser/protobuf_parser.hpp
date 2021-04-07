@@ -11,6 +11,7 @@ namespace protobuf_parser {
 template <typename Serializer>
 class ProtobufParser {
  public:
+  ProtobufParser() = delete;
   explicit ProtobufParser(const std::string& path);
 
   std::string SerializeDirectory(const std::string& dir_path);
