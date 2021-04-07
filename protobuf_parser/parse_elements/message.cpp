@@ -22,7 +22,7 @@ Message::Message(const Message& other)
       fields_(other.fields_) {
 }
 
-Package* Message::GetPackage() noexcept {
+Package* Message::GetPackage() const noexcept {
   return package_;
 }
 

@@ -23,7 +23,7 @@ class Message : public ParseElement {
   bool operator==(const Message& other);
   bool operator!=(const Message& other);
 
-  Package* GetPackage() noexcept;
+  Package* GetPackage() const noexcept;
   File* GetFile() const noexcept;
   Directory* GetDirectory();
   Message* GetParentMessage() const noexcept;
