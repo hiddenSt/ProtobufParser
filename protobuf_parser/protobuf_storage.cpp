@@ -38,6 +38,12 @@ File* ProtobufStorage::GetFile(std::size_t id) {
   return &files_[id];
 }
 
+
+// Code for DirectoryIterator
+
+ProtobufStorage::DirectoryIterator::DirectoryIterator(ProtobufStorage* storage): storage_(storage) {
+}
+
 ProtobufStorage::DirectoryIterator::DirectoryIterator(Directory* root_directory,
                                                       ProtobufStorage* storage)
     : storage_(storage) {
@@ -118,6 +124,20 @@ bool operator!=(const ProtobufStorage::DirectoryIterator& a,
   return !(a == b);
 }
 
+ProtobufStorage::DirectoryIterator ProtobufStorage::DirectoryBegin(Directory* directory) {
+  return DirectoryIterator{directory, this};
+}
+
+ProtobufStorage::DirectoryIterator ProtobufStorage::DirectoryEnd() {
+  return DirectoryIterator{this};
+}
+
+
+// Code for PackageIterator
+
+ProtobufStorage::PackageIterator::PackageIterator(ProtobufStorage* storage): storage_(storage) {
+}
+
 ProtobufStorage::PackageIterator::PackageIterator(Package* root_package, ProtobufStorage* storage)
     : storage_(storage), index_(0) {
   packages_queue_.emplace(root_package);
@@ -174,6 +194,10 @@ ProtobufStorage::PackageIterator::pointer ProtobufStorage::PackageIterator::oper
 
 bool operator==(const ProtobufStorage::PackageIterator& a,
                 const ProtobufStorage::PackageIterator& b) {
+  if (a.packages_queue_.empty() && b.packages_queue_.empty() && a.storage_ == b.storage_) {
+    return true;
+  }
+
   if (a.packages_queue_ != b.packages_queue_) {
     return false;
   }
@@ -196,6 +220,14 @@ bool operator==(const ProtobufStorage::PackageIterator& a,
 bool operator!=(const ProtobufStorage::PackageIterator& a,
                 const ProtobufStorage::PackageIterator& b) {
   return !(a == b);
+}
+
+ProtobufStorage::PackageIterator ProtobufStorage::PackageBegin(Package* package) {
+  return PackageIterator{package, this};
+}
+
+ProtobufStorage::PackageIterator ProtobufStorage::PackageEnd() {
+  return PackageIterator{this};
 }
 
 }  // namespace protobuf_parser

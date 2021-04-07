@@ -23,6 +23,7 @@ class ProtobufStorage {
     using reference = Message&;
 
     DirectoryIterator(Directory* root_directory, ProtobufStorage* storage);
+    DirectoryIterator(ProtobufStorage* storage);
 
     reference operator*() const;
     pointer operator->();
@@ -48,6 +49,7 @@ class ProtobufStorage {
     using pointer = Message*;
     using reference = Message&;
 
+    PackageIterator(ProtobufStorage* storage);
     PackageIterator(Package* root_package, ProtobufStorage* storage);
 
     reference operator*() const;
@@ -83,11 +85,10 @@ class ProtobufStorage {
   File* GetFile(std::size_t id);
 
   DirectoryIterator DirectoryBegin(Directory* directory);
-  DirectoryIterator DirectoryEnd(Directory* directory);
+  DirectoryIterator DirectoryEnd();
 
   PackageIterator PackageBegin(Package* package);
-  PackageIterator PackageEnd(Package* package);
-
+  PackageIterator PackageEnd();
 
  private:
   std::vector<Message> messages_;
