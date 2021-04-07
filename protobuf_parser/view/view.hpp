@@ -9,6 +9,7 @@ template <typename MessagesIterator, typename Serializer>
 class View {
  public:
   explicit View(const MessagesIterator& messages_iterator, const Serializer& serializer);
+  ~View() = default;
 
   std::string Serialize();
 

@@ -18,10 +18,34 @@ TEST(FileTests, CanGetFilePath) {
   ASSERT_EQ(file.GetPath(), file_path);
 }
 
-TEST(RemoveThisTest, LambdasTests) {
-  decltype(auto) lambda = [](const int &a, const int& b){ return a - b > a*b; };
-  std::vector<int> arr{10, 20, 5, -2, 5};
-  std::sort(arr.begin(), arr.end(), lambda);
+TEST(FileTests, ReturnsTrueIfCompareEqualFiles) {
+  std::string file_name{"FileName1"};
+  std::string file_path{"FilePath1"};
+  protobuf_parser::File file{file_name, file_path};
+  protobuf_parser::File file2{file};
+  ASSERT_TRUE(file == file2);
+}
+
+TEST(FileTests, ReturnsFalseIfCompareFilesWithDifferentNames) {
+  std::string file_name{"FileName1"};
+  std::string file_path{"FilePath1"};
+  protobuf_parser::File file{file_name, file_path};
+
+  std::string file_name2{"File"};
+  protobuf_parser::File file2{file_name2, file_path};
+
+  ASSERT_FALSE(file == file2);
+}
+
+TEST(FileTests, ReturnsFalseIfCompareFilesWithDifferentPaths) {
+  std::string file_name{"FileName1"};
+  std::string file_path{"FilePath1"};
+  protobuf_parser::File file{file_name, file_path};
+
+  std::string file_path2{"DifferentFilePath"};
+  protobuf_parser::File file2{file_name, file_path2};
+
+  ASSERT_TRUE(file != file2);
 }
 
 }  // namespace tests
