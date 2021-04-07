@@ -19,7 +19,6 @@ set(PROTOBUF_PARSER_HEADERS
   parse_elements/message.hpp
   parse_elements/file.hpp
   parse_elements/package.hpp
-  parse_elements/enum.hpp
   parse_elements/directory.hpp
   view/view.hpp
   serializers/json_serializer.hpp
