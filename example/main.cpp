@@ -1,26 +1,17 @@
 #include <iostream>
 #include <string>
 
-#include <protobuf_parser/protobuf_parser.hpp>
-#include <protobuf_parser/serializers/json_serializer.hpp>
+#include <argparse/argparse.hpp>
 
 int main(int argc, char* argv[]) {
-  if (argc < 3) {
-    std::cerr << "At least 2 parameters required";
+  argparse::ArgumentParser program{"protobuf_parser"};
+  program.add_argument("-p", "--package").help("parse package with given name").default_value("false").implicit_value("true");
+  try {
+    program.parse_args(argc, argv);
+  } catch (const std::runtime_error& err) {
+    std::cerr << err.what() << std::endl;
+    std::cerr << program;
     return 1;
   }
-  protobuf_parser::ProtobufParser<protobuf_parser::serializer::JsonSerializer> parser{std::string{argv[2]}};
-
-  if (argv[1] == "--package") {
-    std::cout << parser.Serializepackage(std::string{argv[2]});
-    return 0;
-  }
-
-  if (argv[1] == "--directory") {
-    std::cout << parser.SerializeDirectory(std::string{argv[2]});
-    return 0;
-  }
-
-  std::cerr << "Error";
-  return 1;
+  return 0;
 }
