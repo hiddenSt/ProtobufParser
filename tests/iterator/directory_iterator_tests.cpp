@@ -3,5 +3,7 @@
 #include <protobuf_parser/protobuf_storage.hpp>
 
 namespace tests {
-namespace iterator {}
+namespace iterator {
+
+}
 }  // namespace tests
