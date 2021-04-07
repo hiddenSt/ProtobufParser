@@ -15,20 +15,6 @@ namespace protobuf_parser {
 
 class ProtobufStorage {
  public:
-  ProtobufStorage(std::size_t n_messages, std::size_t n_packages, std::size_t n_files,
-                  std::size_t n_directories);
-  ~ProtobufStorage() = default;
-
-  void AddMessage(const Message& message);
-  void AddPackage(const Package& package);
-  void AddDirectory(const Directory& directory);
-  void AddFile(const File& file);
-
-  const Message& GetMessage(std::size_t id);
-  const Package& GetPackage(std::size_t id);
-  const Directory& GetDirectory(std::size_t id);
-  const File& GetFile(std::size_t id);
-
   class DirectoryIterator {
    public:
     using iterator_category = std::forward_iterator_tag;
@@ -80,6 +66,21 @@ class ProtobufStorage {
     ProtobufStorage* storage_;
     std::size_t index_;
   };
+
+ public:
+  ProtobufStorage(std::size_t n_messages, std::size_t n_packages, std::size_t n_files,
+                  std::size_t n_directories);
+  ~ProtobufStorage() = default;
+
+  void AddMessage(const Message& message);
+  void AddPackage(const Package& package);
+  void AddDirectory(const Directory& directory);
+  void AddFile(const File& file);
+
+  const Message& GetMessage(std::size_t id);
+  const Package& GetPackage(std::size_t id);
+  const Directory& GetDirectory(std::size_t id);
+  const File& GetFile(std::size_t id);
 
  private:
   std::vector<Message> messages_;
