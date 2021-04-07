@@ -23,12 +23,14 @@ class Message : public ParseElement {
   bool operator==(const Message& other);
   bool operator!=(const Message& other);
 
+  void AddField(const Field& field);
+  void AddNestedMessage(Message* message);
+
   Package* GetPackage() const noexcept;
   File* GetFile() const noexcept;
   Directory* GetDirectory();
   Message* GetParentMessage() const noexcept;
   const std::string& GetName() const;
-  void AddField(const Field& field);
   const std::vector<Field>& GetFields() const;
   const std::vector<Message*>& GetNestedMessages() const;
 

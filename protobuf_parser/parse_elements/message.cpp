@@ -86,4 +86,8 @@ const std::vector<Message*>& Message::GetNestedMessages() const {
   return nested_messages_;
 }
 
+void Message::AddNestedMessage(Message* message) {
+  nested_messages_.push_back(message);
+}
+
 }  // namespace protobuf_parser
