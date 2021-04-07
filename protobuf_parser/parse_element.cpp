@@ -2,14 +2,15 @@
 
 namespace protobuf_parser {
 
-std::size_t ParseElement::elements_count_ = 0;
-
 ParseElement::ParseElement() {
-  id_ = ++elements_count_;
 }
 std::size_t ParseElement::GetId() const noexcept {
   return id_;
 }
 ParseElement::ParseElement(const ParseElement& other) : id_(other.id_) {
+}
+
+void ParseElement::SetId(std::size_t id) {
+  id_ = id;
 }
 }  // namespace protobuf_parser

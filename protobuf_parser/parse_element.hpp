@@ -11,9 +11,9 @@ class ParseElement {
   ParseElement(const ParseElement& other);
 
   std::size_t GetId() const noexcept;
+  void SetId(std::size_t id);
 
  private:
-  static std::size_t elements_count_;
   std::size_t id_;
 };
 

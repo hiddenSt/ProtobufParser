@@ -29,7 +29,7 @@ View<T, Serializer>::View(T* root, ProtobufStorage& storage, const Serializer& s
 
 template <typename T, typename Serializer>
 std::string View<T, Serializer>::Serialize() {
-  for (auto& message = storage_.Begin(root_); message != storage_.End<T>(); ++message) {
+  for (auto message = storage_.Begin(root_); message != storage_.End<T>(); ++message) {
     serializer_.AddMessage(*message);
   }
   return serializer_.Serialize();

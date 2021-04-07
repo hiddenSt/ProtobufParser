@@ -2,24 +2,38 @@
 
 namespace protobuf_parser {
 
-ProtobufStorage::ProtobufStorage(std::size_t n_messages, std::size_t n_packages,
-                                 std::size_t n_files, std::size_t n_directories)
-    : messages_(n_messages), packages_(n_packages), files_(n_files), directories_(n_directories) {
+ProtobufStorage::ProtobufStorage()
+    : messages_(),
+      packages_(),
+      files_(),
+      directories_(),
+      messages_count_(0),
+      packages_count_(0),
+      directories_count_(0),
+      files_count_(0) {
 }
 void ProtobufStorage::AddMessage(const Message& message) {
-  messages_[message.GetId()] = message;
+  messages_.push_back(message);
+  messages_[messages_count_].SetId(messages_count_);
+  ++messages_count_;
 }
 
 void ProtobufStorage::AddPackage(const Package& package) {
-  packages_[package.GetId()] = package;
+  packages_.push_back(package);
+  packages_[packages_count_].SetId(packages_count_);
+  ++packages_count_;
 }
 
 void ProtobufStorage::AddDirectory(const Directory& directory) {
-  directories_[directory.GetId()] = directory;
+  directories_.push_back(directory);
+  directories_[directories_count_].SetId(directories_count_);
+  ++directories_count_;
 }
 
 void ProtobufStorage::AddFile(const File& file) {
-  files_[file.GetId()] = file;
+  files_.push_back(file);
+  files_[files_count_].SetId(files_count_);
+  ++files_count_;
 }
 
 Message* ProtobufStorage::GetMessage(std::size_t id) {
@@ -52,7 +66,7 @@ ProtobufStorage::MessagesIterator<Directory>::MessagesIterator(Directory* root,
 
 template <>
 ProtobufStorage::MessagesIterator<Package>::MessagesIterator(Package* root,
-                                                               ProtobufStorage* storage)
+                                                             ProtobufStorage* storage)
     : storage_(storage), index_(0) {
   queue_.emplace(root);
   for (auto& message : storage_->messages_) {
@@ -81,7 +95,7 @@ void ProtobufStorage::MessagesIterator<Package>::Iterate() {
     index_ = 0;
 
     for (auto& message : storage_->messages_) {
-      if (*message.GetPackage() == *package && message.GetParentMessage() == nullptr) {
+      if (message.GetPackage() == package && message.GetParentMessage() == nullptr) {
         current_element_messages_.push_back(&message);
       }
     }
@@ -97,7 +111,7 @@ void ProtobufStorage::MessagesIterator<Directory>::Iterate() {
     queue_.pop();
 
     for (auto& child_directory : storage_->directories_) {
-      if (*child_directory.GetParentDirectory() == *directory) {
+      if (child_directory.GetParentDirectory() == directory) {
         queue_.emplace(&child_directory);
       }
     }

@@ -31,8 +31,11 @@ class ProtobufStorage {
     MessagesIterator<T>& operator++();
     MessagesIterator<T> operator++(int);
 
-    friend bool operator==(const MessagesIterator<T>& a, const MessagesIterator<T>& b);
-    friend bool operator!=(const MessagesIterator<T>& a, const MessagesIterator<T>& b);
+    template <typename Y>
+    friend bool operator==(const MessagesIterator<Y>& a, const MessagesIterator<Y>& b);
+
+    template <typename Y>
+    friend bool operator!=(const MessagesIterator<Y>& a, const MessagesIterator<Y>& b);
 
    private:
     void Iterate();
@@ -44,10 +47,8 @@ class ProtobufStorage {
   };
 
  public:
-  ProtobufStorage(std::size_t n_messages, std::size_t n_packages, std::size_t n_files,
-                  std::size_t n_directories);
+  ProtobufStorage();
   ~ProtobufStorage() = default;
-  ProtobufStorage() = delete;
 
   void AddMessage(const Message& message);
   void AddPackage(const Package& package);
@@ -70,9 +71,12 @@ class ProtobufStorage {
   std::vector<File> files_;
   std::vector<Package> packages_;
   std::vector<Directory> directories_;
+  std::size_t messages_count_;
+  std::size_t files_count_;
+  std::size_t packages_count_;
+  std::size_t directories_count_;
 };
 
-// Directory specialization
 template <typename T>
 ProtobufStorage::MessagesIterator<T>::MessagesIterator(ProtobufStorage* storage)
     : storage_(storage), index_(0) {

@@ -4,7 +4,7 @@
 namespace tests {
 
 TEST(ProtobufStorageTests, CanCreateStorage) {
-  protobuf_parser::ProtobufStorage{10, 20, 30, 40};
+  protobuf_parser::ProtobufStorage{};
 }
 
 }
