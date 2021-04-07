@@ -12,7 +12,7 @@ class File : public ParseElement {
  public:
   File();
   File(const File& other);
-  explicit File(const std::string& name, const std::string& path);
+  explicit File(const std::string& name, Directory* directory);
   ~File() = default;
 
   const std::string& GetName() const noexcept;

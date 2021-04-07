@@ -1,12 +1,24 @@
 #include "file.hpp"
 
+#include <algorithm>
+
 namespace protobuf_parser {
 
 File::File() : name_(), path_(), directory_(nullptr) {
 }
 
-protobuf_parser::File::File(const std::string& name, const std::string& path)
-    : name_(name), path_(path) {
+protobuf_parser::File::File(const std::string& name, Directory* directory)
+    : name_(name), directory_(directory), path_("/") {
+  auto* tmp_dir = directory_;
+  std::string path_element;
+  while (tmp_dir->GetParentDirectory() != nullptr) {
+    path_element = tmp_dir->GetName();
+    std::reverse(path_element.begin(), path_element.end());
+    path_ += "/" + path_element;
+    tmp_dir = tmp_dir->GetParentDirectory();
+  }
+
+  std::reverse(path_.begin(), path_.end());
 }
 
 const std::string& File::GetName() const noexcept {
