@@ -2,11 +2,7 @@
 
 namespace protobuf_parser {
 
-ProtobufStorage::ProtobufStorage()
-    : messages_(),
-      packages_(),
-      files_(),
-      directories_() {
+ProtobufStorage::ProtobufStorage() : messages_(), packages_(), files_(), directories_() {
 }
 void ProtobufStorage::AddMessage(const Message& message) {
   messages_.push_back(message);

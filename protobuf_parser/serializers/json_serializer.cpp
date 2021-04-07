@@ -1,16 +1,21 @@
 #include "json_serializer.hpp"
 
-protobuf_parser::serializer::JsonSerializer::JsonSerializer() {
+namespace protobuf_parser {
+namespace serializer {
+
+JsonSerializer::JsonSerializer() {
   json_representation_["messages"] = nlohmann::json::array();
 }
 
-void protobuf_parser::serializer::JsonSerializer::AddMessage(
-    const protobuf_parser::Message& message) {
+void JsonSerializer::AddMessage(const Message& message) {
   json_representation_["messages"]["name"] = message.GetName();
   json_representation_["messages"]["file"] = message.GetFile()->GetName();
   json_representation_["messages"]["package"] = message.GetPackage()->GetName();
 }
 
-std::string protobuf_parser::serializer::JsonSerializer::Serialize() {
+std::string JsonSerializer::Serialize() {
   return json_representation_.dump();
 }
+
+}  // namespace serializer
+}  // namespace protobuf_parser
