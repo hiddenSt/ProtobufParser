@@ -2,6 +2,7 @@
 #define PROTOBUF_PARSER_PROTOBUF_PARSER_ITERATOR_PACKAGE_ITERATOR_HPP_
 
 #include <protobuf_parser/parse_elements/package.hpp>
+#include <protobuf_parser/parse_elements/message.hpp>
 namespace protobuf_parser {
 namespace iterator {
 

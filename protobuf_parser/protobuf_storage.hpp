@@ -26,6 +26,42 @@ class ProtobufStorage {
   const Directory& GetDirectory(std::size_t id);
   const File& GetFile(std::size_t id);
 
+  class DirectoryIterator {
+   public:
+    using iterator_category = std::forward_iterator_tag;
+    using difference_type = std::ptrdiff_t;
+    using value_type = Message;
+    using pointer = Message*;
+    using reference = Message&;
+
+    DirectoryIterator(Directory* directory);
+
+    reference operator*() const;
+    pointer operator->();
+    DirectoryIterator& operator++();
+    DirectoryIterator operator++(int);
+    friend bool operator==(const DirectoryIterator& a, const DirectoryIterator& b);
+    friend bool operator!=(const DirectoryIterator& a, const DirectoryIterator& b);
+  };
+
+  class PackageIterator {
+   public:
+    using iterator_category = std::forward_iterator_tag;
+    using difference_type = std::ptrdiff_t;
+    using value_type = Message;
+    using pointer = Message*;
+    using reference = Message&;
+
+    PackageIterator(Package* package);
+
+    reference operator*() const;
+    pointer operator->();
+    PackageIterator& operator++();
+    PackageIterator operator++(int);
+    friend bool operator==(const PackageIterator& a, const PackageIterator& b);
+    friend bool operator!=(const PackageIterator& a, const PackageIterator& b);
+  };
+
  private:
   std::vector<Message> messages_;
   std::vector<File> files_;
