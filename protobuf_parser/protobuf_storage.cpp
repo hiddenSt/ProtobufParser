@@ -38,196 +38,80 @@ File* ProtobufStorage::GetFile(std::size_t id) {
   return &files_[id];
 }
 
-
-// Code for DirectoryIterator
-
-ProtobufStorage::DirectoryIterator::DirectoryIterator(ProtobufStorage* storage): storage_(storage) {
-}
-
-ProtobufStorage::DirectoryIterator::DirectoryIterator(Directory* root_directory,
-                                                      ProtobufStorage* storage)
-    : storage_(storage) {
-  directories_queue_.emplace(root_directory);
-  for (auto& message : storage_->messages_) {
-    if (*message.GetDirectory() == *root_directory && message.GetParentMessage() == nullptr) {
-      current_directory_messages_.push_back(&message);
-    }
-  }
-}
-
-ProtobufStorage::DirectoryIterator& ProtobufStorage::DirectoryIterator::operator++() {
-  Iterate();
-  return *this;
-}
-
-ProtobufStorage::DirectoryIterator ProtobufStorage::DirectoryIterator::operator++(int) {
-  DirectoryIterator tmp = *this;
-  Iterate();
-  return tmp;
-}
-
-void ProtobufStorage::DirectoryIterator::Iterate() {
-  if (index_ < current_directory_messages_.size() - 1) {
-    ++index_;
-  } else {
-    auto* directory = directories_queue_.front();
-    directories_queue_.pop();
-
-    for (auto& child_directory : storage_->directories_) {
-      if (*child_directory.GetParentDirectory() == *directory) {
-        directories_queue_.emplace(&child_directory);
-      }
-    }
-
-    current_directory_messages_.erase(current_directory_messages_.begin(),
-                                      current_directory_messages_.end());
-    index_ = 0;
-
-    for (auto& message : storage_->messages_) {
-      if (*message.GetDirectory() == *directory && message.GetParentMessage() == nullptr) {
-        current_directory_messages_.push_back(&message);
-      }
-    }
-  }
-}
-Message& ProtobufStorage::DirectoryIterator::operator*() const {
-  return *current_directory_messages_[index_];
-}
-
-ProtobufStorage::DirectoryIterator::pointer ProtobufStorage::DirectoryIterator::operator->() {
-  return current_directory_messages_[index_];
-}
-
-bool operator==(const ProtobufStorage::DirectoryIterator& a,
-                const ProtobufStorage::DirectoryIterator& b) {
-  if (a.directories_queue_ != b.directories_queue_) {
-    return false;
-  }
-
-  if (a.current_directory_messages_ != b.current_directory_messages_) {
-    return false;
-  }
-
-  if (a.storage_ != b.storage_) {
-    return false;
-  }
-
-  if (a.index_ != b.index_) {
-    return false;
-  }
-
-  return true;
-}
-
-bool operator!=(const ProtobufStorage::DirectoryIterator& a,
-                const ProtobufStorage::DirectoryIterator& b) {
-  return !(a == b);
-}
-
-ProtobufStorage::DirectoryIterator ProtobufStorage::DirectoryBegin(Directory* directory) {
-  return DirectoryIterator{directory, this};
-}
-
-ProtobufStorage::DirectoryIterator ProtobufStorage::DirectoryEnd() {
-  return DirectoryIterator{this};
-}
-
-
-// Code for PackageIterator
-
-ProtobufStorage::PackageIterator::PackageIterator(ProtobufStorage* storage): storage_(storage) {
-}
-
-ProtobufStorage::PackageIterator::PackageIterator(Package* root_package, ProtobufStorage* storage)
+template <>
+ProtobufStorage::MessagesIterator<Directory>::MessagesIterator(Directory* root,
+                                                               ProtobufStorage* storage)
     : storage_(storage), index_(0) {
-  packages_queue_.emplace(root_package);
+  queue_.emplace(root);
   for (auto& message : storage_->messages_) {
-    if (*message.GetPackage() == *root_package && message.GetParentMessage() == nullptr) {
-      current_package_messages_.push_back(&message);
+    if (*message.GetDirectory() == *root && message.GetParentMessage() == nullptr) {
+      current_element_messages_.push_back(&message);
     }
   }
 }
 
-ProtobufStorage::PackageIterator& ProtobufStorage::PackageIterator::operator++() {
-  Iterate();
-  return *this;
+template <>
+ProtobufStorage::MessagesIterator<Package>::MessagesIterator(Package* root,
+                                                               ProtobufStorage* storage)
+    : storage_(storage), index_(0) {
+  queue_.emplace(root);
+  for (auto& message : storage_->messages_) {
+    if (*message.GetPackage() == *root && message.GetParentMessage() == nullptr) {
+      current_element_messages_.push_back(&message);
+    }
+  }
 }
 
-ProtobufStorage::PackageIterator ProtobufStorage::PackageIterator::operator++(int) {
-  PackageIterator tmp = *this;
-  Iterate();
-  return tmp;
-}
-
-void ProtobufStorage::PackageIterator::Iterate() {
-  if (index_ < current_package_messages_.size() - 1) {
+template <>
+void ProtobufStorage::MessagesIterator<Package>::Iterate() {
+  if (index_ < current_element_messages_.size() - 1) {
     ++index_;
   } else {
-    auto* package = packages_queue_.front();
-    packages_queue_.pop();
+    auto* package = queue_.front();
+    queue_.pop();
 
     for (auto& child_package : storage_->packages_) {
       if (*child_package.GetParentPackage() == *package) {
-        packages_queue_.emplace(&child_package);
+        queue_.emplace(&child_package);
       }
     }
 
-    current_package_messages_.erase(current_package_messages_.begin(),
-                                    current_package_messages_.end());
+    current_element_messages_.erase(current_element_messages_.begin(),
+                                    current_element_messages_.end());
     index_ = 0;
 
     for (auto& message : storage_->messages_) {
       if (*message.GetPackage() == *package && message.GetParentMessage() == nullptr) {
-        current_package_messages_.push_back(&message);
+        current_element_messages_.push_back(&message);
       }
     }
   }
 }
 
-Message& ProtobufStorage::PackageIterator::operator*() const {
-  return *current_package_messages_[index_];
-}
+template <>
+void ProtobufStorage::MessagesIterator<Directory>::Iterate() {
+  if (index_ < current_element_messages_.size() - 1) {
+    ++index_;
+  } else {
+    auto* directory = queue_.front();
+    queue_.pop();
 
-ProtobufStorage::PackageIterator::pointer ProtobufStorage::PackageIterator::operator->() {
-  return current_package_messages_[index_];
-}
+    for (auto& child_directory : storage_->directories_) {
+      if (*child_directory.GetParentDirectory() == *directory) {
+        queue_.emplace(&child_directory);
+      }
+    }
 
-bool operator==(const ProtobufStorage::PackageIterator& a,
-                const ProtobufStorage::PackageIterator& b) {
-  if (a.packages_queue_.empty() && b.packages_queue_.empty() && a.storage_ == b.storage_) {
-    return true;
+    current_element_messages_.erase(current_element_messages_.begin(),
+                                    current_element_messages_.end());
+    index_ = 0;
+
+    for (auto& message : storage_->messages_) {
+      if (*message.GetDirectory() == *directory && message.GetParentMessage() == nullptr) {
+        current_element_messages_.push_back(&message);
+      }
+    }
   }
-
-  if (a.packages_queue_ != b.packages_queue_) {
-    return false;
-  }
-
-  if (a.current_package_messages_ != b.current_package_messages_) {
-    return false;
-  }
-
-  if (a.storage_ != b.storage_) {
-    return false;
-  }
-
-  if (a.index_ != b.index_) {
-    return false;
-  }
-
-  return true;
-}
-
-bool operator!=(const ProtobufStorage::PackageIterator& a,
-                const ProtobufStorage::PackageIterator& b) {
-  return !(a == b);
-}
-
-ProtobufStorage::PackageIterator ProtobufStorage::PackageBegin(Package* package) {
-  return PackageIterator{package, this};
-}
-
-ProtobufStorage::PackageIterator ProtobufStorage::PackageEnd() {
-  return PackageIterator{this};
 }
 
 }  // namespace protobuf_parser

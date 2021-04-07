@@ -2,32 +2,34 @@
 #define PROTOBUF_PARSER_PROTOBUF_PARSER_VIEW_VIEW_HPP_
 
 #include <string>
+#include <protobuf_parser/protobuf_storage.hpp>
+
 namespace protobuf_parser {
 namespace view {
 
-template <typename MessagesIterator, typename Serializer>
+template <typename T, typename Serializer>
 class View {
  public:
   View() = delete;
-  explicit View(const MessagesIterator& messages_iterator, const Serializer& serializer);
+  explicit View(T* root, ProtobufStorage& storage, const Serializer& serializer);
   ~View() = default;
 
   std::string Serialize();
 
  private:
   Serializer serializer_;
-  MessagesIterator iterator_;
+  ProtobufStorage& storage_;
+  T* root_;
 };
 
-template <typename MessagesIterator, typename Serializer>
-View<MessagesIterator, Serializer>::View(const MessagesIterator& messages_iterator,
-                                         const Serializer& serializer)
-    : serializer_(serializer), iterator_(messages_iterator) {
+template <typename T, typename Serializer>
+View<T, Serializer>::View(T* root, ProtobufStorage& storage, const Serializer& serializer)
+    : root_(root), serializer_(serializer), storage_(storage) {
 }
 
-template <typename MessagesIterator, typename Serializer>
-std::string View<MessagesIterator, Serializer>::Serialize() {
-  for (auto& message : iterator_) {
+template <typename T, typename Serializer>
+std::string View<T, Serializer>::Serialize() {
+  for (auto& message = storage_.Begin(root_); message != storage_.End<T>(); ++message) {
     serializer_.AddMessage(*message);
   }
   return serializer_.Serialize();

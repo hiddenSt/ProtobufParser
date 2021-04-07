@@ -14,7 +14,8 @@ namespace protobuf_parser {
 
 class ProtobufStorage {
  public:
-  class DirectoryIterator {
+  template <typename T>
+  class MessagesIterator {
    public:
     using iterator_category = std::forward_iterator_tag;
     using difference_type = std::ptrdiff_t;
@@ -22,48 +23,22 @@ class ProtobufStorage {
     using pointer = Message*;
     using reference = Message&;
 
-    DirectoryIterator(Directory* root_directory, ProtobufStorage* storage);
-    DirectoryIterator(ProtobufStorage* storage);
+    MessagesIterator(T* root, ProtobufStorage* storage);
+    MessagesIterator(ProtobufStorage* storage);
 
     reference operator*() const;
     pointer operator->();
-    DirectoryIterator& operator++();
-    DirectoryIterator operator++(int);
-    friend bool operator==(const DirectoryIterator& a, const DirectoryIterator& b);
-    friend bool operator!=(const DirectoryIterator& a, const DirectoryIterator& b);
+    MessagesIterator<T>& operator++();
+    MessagesIterator<T> operator++(int);
+
+    friend bool operator==(const MessagesIterator<T>& a, const MessagesIterator<T>& b);
+    friend bool operator!=(const MessagesIterator<T>& a, const MessagesIterator<T>& b);
 
    private:
     void Iterate();
 
-    std::queue<Directory*> directories_queue_;
-    std::vector<Message*> current_directory_messages_;
-    ProtobufStorage* storage_;
-    std::size_t index_;
-  };
-
-  class PackageIterator {
-   public:
-    using iterator_category = std::forward_iterator_tag;
-    using difference_type = std::ptrdiff_t;
-    using value_type = Message;
-    using pointer = Message*;
-    using reference = Message&;
-
-    PackageIterator(ProtobufStorage* storage);
-    PackageIterator(Package* root_package, ProtobufStorage* storage);
-
-    reference operator*() const;
-    pointer operator->();
-    PackageIterator& operator++();
-    PackageIterator operator++(int);
-    friend bool operator==(const PackageIterator& a, const PackageIterator& b);
-    friend bool operator!=(const PackageIterator& a, const PackageIterator& b);
-
-   private:
-    void Iterate();
-
-    std::queue<Package*> packages_queue_;
-    std::vector<Message*> current_package_messages_;
+    std::queue<T*> queue_;
+    std::vector<Message*> current_element_messages_;
     ProtobufStorage* storage_;
     std::size_t index_;
   };
@@ -84,11 +59,11 @@ class ProtobufStorage {
   Directory* GetDirectory(std::size_t id);
   File* GetFile(std::size_t id);
 
-  DirectoryIterator DirectoryBegin(Directory* directory);
-  DirectoryIterator DirectoryEnd();
+  template <typename T>
+  MessagesIterator<T> Begin(T* root);
 
-  PackageIterator PackageBegin(Package* package);
-  PackageIterator PackageEnd();
+  template <typename T>
+  MessagesIterator<T> End();
 
  private:
   std::vector<Message> messages_;
@@ -96,6 +71,78 @@ class ProtobufStorage {
   std::vector<Package> packages_;
   std::vector<Directory> directories_;
 };
+
+// Directory specialization
+template <typename T>
+ProtobufStorage::MessagesIterator<T>::MessagesIterator(ProtobufStorage* storage)
+    : storage_(storage), index_(0) {
+}
+
+template <typename T>
+Message& ProtobufStorage::MessagesIterator<T>::operator*() const {
+  return *current_element_messages_[index_];
+}
+
+template <typename T>
+typename ProtobufStorage::MessagesIterator<T>::pointer
+ProtobufStorage::MessagesIterator<T>::operator->() {
+  return current_element_messages_[index_];
+}
+
+template <typename T>
+ProtobufStorage::MessagesIterator<T>& ProtobufStorage::MessagesIterator<T>::operator++() {
+  Iterate();
+  return *this;
+}
+
+template <typename T>
+ProtobufStorage::MessagesIterator<T> ProtobufStorage::MessagesIterator<T>::operator++(int) {
+  MessagesIterator<T> tmp = this;
+  Iterate();
+  return tmp;
+}
+
+template <typename T>
+bool operator==(const ProtobufStorage::MessagesIterator<T>& a,
+                const ProtobufStorage::MessagesIterator<T>& b) {
+  if (a.queue_.empty() && b.queue_.empty() && a.storage_ == b.storage_) {
+    return true;
+  }
+
+  if (a.queue_ != b.queue_) {
+    return false;
+  }
+
+  if (a.current_element_messages_ != b.current_element_messages_) {
+    return false;
+  }
+
+  if (a.storage_ != b.storage_) {
+    return false;
+  }
+
+  if (a.index_ != b.index_) {
+    return false;
+  }
+
+  return true;
+}
+
+template <typename T>
+bool operator!=(const ProtobufStorage::MessagesIterator<T>& a,
+                const ProtobufStorage::MessagesIterator<T>& b) {
+  return !(a == b);
+}
+
+template <typename T>
+ProtobufStorage::MessagesIterator<T> ProtobufStorage::Begin(T* root) {
+  return MessagesIterator<T>{root, this};
+}
+
+template <typename T>
+ProtobufStorage::MessagesIterator<T> ProtobufStorage::End() {
+  return MessagesIterator<T>{this};
+}
 
 }  // namespace protobuf_parser
 
