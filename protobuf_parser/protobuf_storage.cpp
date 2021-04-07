@@ -38,7 +38,6 @@ File* ProtobufStorage::GetFile(std::size_t id) {
   return &files_[id];
 }
 
-
 ProtobufStorage::DirectoryIterator::DirectoryIterator(Directory* root_directory,
                                                       ProtobufStorage* storage)
     : storage_(storage) {

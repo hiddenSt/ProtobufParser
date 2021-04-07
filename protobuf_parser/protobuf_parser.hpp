@@ -31,16 +31,18 @@ ProtobufParser<Serializer>::ProtobufParser(const std::string& path) : path_(path
 template <typename Serializer>
 std::string ProtobufParser<Serializer>::SerializeDirectory(const std::string& dir_path) {
   ProtobufStorage::DirectoryIterator directory_iterator{storage_.GetDirectory(), &storage_};
-  view::View<ProtobufStorage::DirectoryIterator, Serializer> directory_view{directory_iterator, serializer_};
+  view::View<ProtobufStorage::DirectoryIterator, Serializer> directory_view{directory_iterator,
+                                                                            serializer_};
   return directory_view.Serialize();
 }
 
 template <typename Serializer>
 std::string ProtobufParser<Serializer>::SerializePackage(const std::string& package_name) {
   ProtobufStorage::PackageIterator package_iterator{storage_.GetPackage(), &storage_};
-  view::View<ProtobufStorage::PackageIterator, Serializer> package_view{package_iterator, serializer_};
+  view::View<ProtobufStorage::PackageIterator, Serializer> package_view{package_iterator,
+                                                                        serializer_};
 }
 
-}
+}  // namespace protobuf_parser
 
 #endif  // PROTOBUF_PARSER_PROTOBUF_PARSER_PROTOBUF_PARSER_HPP_

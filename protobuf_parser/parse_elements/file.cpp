@@ -8,15 +8,17 @@ File::File() : name_(), path_(), directory_(nullptr) {
 }
 
 protobuf_parser::File::File(const std::string& name, Directory* directory)
-    : name_(name), directory_(directory), path_("/") {
+    : name_(name), directory_(directory), path_() {
   auto* tmp_dir = directory_;
   std::string path_element;
-  while (tmp_dir->GetParentDirectory() != nullptr) {
+  while (tmp_dir != nullptr) {
     path_element = tmp_dir->GetName();
     std::reverse(path_element.begin(), path_element.end());
     path_ += "/" + path_element;
     tmp_dir = tmp_dir->GetParentDirectory();
   }
+
+  path_ += "/";
 
   std::reverse(path_.begin(), path_.end());
 }

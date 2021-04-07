@@ -17,7 +17,7 @@ TEST(FileTests, CanGetFilePath) {
   protobuf_parser::Directory inner_dir{"inner", &outer_dir};
   protobuf_parser::File file{file_name, &inner_dir};
 
-  std::string file_path = "/" + outer_dir.GetName() + "/" + inner_dir.GetName();
+  std::string file_path = "/" + outer_dir.GetName() + "/" + inner_dir.GetName() + "/";
   ASSERT_EQ(file.GetPath(), file_path);
 }
 
