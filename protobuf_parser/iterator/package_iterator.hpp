@@ -8,11 +8,11 @@ namespace iterator {
 class PackageIterator {
  public:
   PackageIterator();
+
  private:
 };
 
-}
-}
-
+}  // namespace iterator
+}  // namespace protobuf_parser
 
 #endif  // PROTOBUF_PARSER_PROTOBUF_PARSER_ITERATOR_PACKAGE_ITERATOR_HPP_

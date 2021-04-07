@@ -5,7 +5,6 @@ namespace protobuf_parser {
 ProtobufStorage::ProtobufStorage(std::size_t n_messages, std::size_t n_packages,
                                  std::size_t n_files, std::size_t n_directories)
     : messages_(n_messages), packages_(n_packages), files_(n_files), directories_(n_directories) {
-
 }
 void ProtobufStorage::AddMessage(const Message& message) {
   messages_[message.GetId()] = message;

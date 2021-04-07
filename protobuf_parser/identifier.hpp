@@ -21,6 +21,6 @@ class Identifier {
 
 template <typename T>
 std::size_t Identifier<T>::type_elements_count_ = 0;
-}
+}  // namespace protobuf_parser
 
 #endif  // PROTOBUF_PARSER_PROTOBUF_PARSER_IDENTIFIER_HPP_

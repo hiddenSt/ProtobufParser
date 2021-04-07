@@ -23,7 +23,6 @@ View<MessagesIterator, Serializer>::View(const MessagesIterator& messages_iterat
 
 template <typename MessagesIterator, typename Serializer>
 std::string View<MessagesIterator, Serializer>::Serialize() {
-
 }
 
 }  // namespace view

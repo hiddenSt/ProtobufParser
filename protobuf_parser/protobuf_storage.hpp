@@ -8,12 +8,12 @@
 #include <protobuf_parser/parse_elements/package.hpp>
 #include <protobuf_parser/parse_elements/file.hpp>
 
-
 namespace protobuf_parser {
 
 class ProtobufStorage {
  public:
-  ProtobufStorage(std::size_t n_messages, std::size_t n_packages, std::size_t n_files, std::size_t n_directories);
+  ProtobufStorage(std::size_t n_messages, std::size_t n_packages, std::size_t n_files,
+                  std::size_t n_directories);
   ~ProtobufStorage() = default;
 
   void AddMessage(const Message& message);

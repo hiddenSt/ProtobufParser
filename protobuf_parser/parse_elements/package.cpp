@@ -12,8 +12,7 @@ Package::Package(const std::string& name, Package* parent_package)
     : name_(name), parent_package_(parent_package) {
 }
 
-Package::Package(std::string&& name) noexcept
-    : name_(std::move(name)), parent_package_(nullptr) {
+Package::Package(std::string&& name) noexcept : name_(std::move(name)), parent_package_(nullptr) {
 }
 
 Package::Package(std::string&& name, Package* parent_package) noexcept

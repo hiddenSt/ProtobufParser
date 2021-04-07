@@ -15,8 +15,7 @@ class Message : public ParseElement {
  public:
   Message();
   Message(const Message& other);
-  explicit Message(const std::string& name, File* file, Package* package,
-                   Message* parent_message);
+  explicit Message(const std::string& name, File* file, Package* package, Message* parent_message);
   explicit Message(const std::string& name, File* file, Package* package);
   ~Message() = default;
 
