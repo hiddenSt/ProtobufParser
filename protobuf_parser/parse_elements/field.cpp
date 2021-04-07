@@ -2,20 +2,21 @@
 
 namespace protobuf_parser {
 
-Field::Field(const std::string& name, std::size_t number, FieldType* type, bool repeated)
-    : name_(name), number_(number), type_(type), repeated_(repeated) {
+Field::Field(const std::string& name, std::size_t number, const std::string& type, bool optional)
+    : name_(name), number_(number), type_(type), optional_(optional) {
 }
 
-Field::Field(std::string&& name, std::size_t number, FieldType* type, bool repeated) noexcept
-    : name_(std::move(name)), number_(number), type_(type), repeated_(repeated) {
+Field::Field(std::string&& name, std::size_t number, const std::string& type,
+             bool optional) noexcept
+    : name_(std::move(name)), number_(number), type_(type), optional_(optional) {
 }
 
 const std::string& Field::GetName() const {
   return name_;
 }
 
-const FieldType& Field::GetType() const {
-  return *type_;
+const std::string& Field::GetType() const {
+  return type_;
 }
 
 std::size_t Field::GetNumber() const {
@@ -25,13 +26,12 @@ std::size_t Field::GetNumber() const {
 Field& Field::operator=(const Field& other) {
   name_ = other.name_;
   number_ = other.number_;
-  repeated_fields_ = other.repeated_fields_;
-  // TODO: type pointer copy
+  type_ = other.type_;
   return *this;
 }
 
-bool Field::IsRepeated() const noexcept {
-  return repeated_;
+bool Field::IsOptional() const noexcept {
+  return optional_;
 }
 
 }  // namespace protobuf_parser

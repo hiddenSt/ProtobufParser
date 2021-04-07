@@ -35,6 +35,7 @@ class Message : public ParseElement {
   Message* parent_message_;
   File* file_;
   Package* package_;
+  std::vector<Message*> nested_messages_;
   std::vector<Field> fields_;
 };
 

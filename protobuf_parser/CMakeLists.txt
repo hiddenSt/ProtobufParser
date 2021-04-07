@@ -4,7 +4,6 @@ get_filename_component(LIB_PATH "." ABSOLUTE)
 set(PROTOBUF_PARSER_CXX_SOURCES
   parse_element.cpp
   protobuf_storage.cpp
-  message_field_type.cpp
   parse_elements/field.cpp
   parse_elements/message.cpp
   parse_elements/file.cpp
@@ -16,9 +15,6 @@ set(PROTOBUF_PARSER_CXX_SOURCES
 set(PROTOBUF_PARSER_HEADERS
   parse_element.hpp
   protobuf_storage.hpp
-  enum_field_type.hpp
-  field_type.hpp
-  message_field_type.hpp
   parse_elements/field.hpp
   parse_elements/message.hpp
   parse_elements/file.hpp

@@ -22,7 +22,7 @@ class JsonSerializer {
   nlohmann::json json_representation_;
 };
 
-}
-}
+}  // namespace serializer
+}  // namespace protobuf_parser
 
 #endif  // PROTOBUF_PARSER_PROTOBUF_PARSER_SERIALIZERS_JSON_SERIALIZER_HPP_

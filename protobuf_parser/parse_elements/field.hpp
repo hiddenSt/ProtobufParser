@@ -3,28 +3,29 @@
 
 #include <string>
 #include <vector>
-#include <protobuf_parser/field_type.hpp>
 
 namespace protobuf_parser {
 
 class Field {
  public:
-  explicit Field(const std::string& name, std::size_t number, FieldType* type, bool repeated);
-  explicit Field(std::string&& name, std::size_t number, FieldType* type, bool repeated) noexcept;
+  explicit Field(const std::string& name, std::size_t number, const std::string& type,
+                 bool optional);
+  explicit Field(std::string&& name, std::size_t number, const std::string& type,
+                 bool optional) noexcept;
   Field(const Field& other) = default;
 
   const std::string& GetName() const;
-  const FieldType& GetType() const;
+  const std::string& GetType() const;
   std::size_t GetNumber() const;
-  bool IsRepeated() const noexcept;
+  bool IsOptional() const noexcept;
 
   Field& operator=(const Field& other);
 
  private:
   std::string name_;
-  FieldType* type_;
+  std::string type_;
   std::size_t number_;
-  bool repeated_;
+  bool optional_;
 };
 
 }  // namespace protobuf_parser
