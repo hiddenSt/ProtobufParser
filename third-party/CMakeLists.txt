@@ -28,3 +28,7 @@ if (NOT ${nlohmann_json}_POPULATED)
   FetchContent_Populate(nlohmann_json)
   add_subdirectory(${nlohmann_json_SOURCE_DIR} ${nlohmann_json_BINARY_DIR})
 endif()
+
+# Protobuf
+include("${CMAKE_BINARY_DIR}/conanbuildinfo.cmake")
+conan_basic_setup()

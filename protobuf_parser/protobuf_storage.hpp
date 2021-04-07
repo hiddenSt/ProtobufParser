@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 #include <queue>
-#include <unordered_map>
 
 #include <protobuf_parser/parse_elements/directory.hpp>
 #include <protobuf_parser/parse_elements/message.hpp>
@@ -71,6 +70,7 @@ class ProtobufStorage {
   ProtobufStorage(std::size_t n_messages, std::size_t n_packages, std::size_t n_files,
                   std::size_t n_directories);
   ~ProtobufStorage() = default;
+  ProtobufStorage() = delete;
 
   void AddMessage(const Message& message);
   void AddPackage(const Package& package);
