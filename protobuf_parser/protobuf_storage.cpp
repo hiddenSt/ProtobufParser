@@ -38,4 +38,82 @@ const File& ProtobufStorage::GetFile(std::size_t id) {
   return files_[id];
 }
 
+ProtobufStorage::PackageIterator::PackageIterator(Package* root_package, ProtobufStorage* storage): storage_(storage), index_(0) {
+  packages_queue_.emplace(root_package);
+  for (auto& message : storage_->messages_) {
+    if (*message.GetPackage() == *root_package) {
+      current_package_messages_.push_back(&message);
+    }
+  }
+}
+
+ProtobufStorage::PackageIterator& ProtobufStorage::PackageIterator::operator++() {
+  Iterate();
+  return *this;
+}
+
+ProtobufStorage::PackageIterator ProtobufStorage::PackageIterator::operator++(int) {
+  PackageIterator tmp = *this;
+  Iterate();
+  return tmp;
+}
+
+void ProtobufStorage::PackageIterator::Iterate() {
+  if (index_ < current_package_messages_.size() - 1) {
+    ++index_;
+  } else {
+    auto* package = packages_queue_.front();
+    packages_queue_.pop();
+
+    for (auto& child_package : storage_->packages_) {
+      if (*child_package.GetParentPackage() == *package) {
+        packages_queue_.emplace(&child_package);
+      }
+    }
+
+    current_package_messages_.erase(current_package_messages_.begin(), current_package_messages_.end());
+    index_ = 0;
+
+    for (auto& message : storage_->messages_) {
+      if (*message.GetPackage() == *package) {
+        current_package_messages_.push_back(&message);
+      }
+    }
+  }
+}
+
+Message& ProtobufStorage::PackageIterator::operator*() const {
+  return *current_package_messages_[index_];
+}
+
+ProtobufStorage::PackageIterator::pointer ProtobufStorage::PackageIterator::operator->() {
+  return current_package_messages_[index_];
+}
+
+bool operator==(const ProtobufStorage::PackageIterator& a,
+                const ProtobufStorage::PackageIterator& b) {
+  if (a.packages_queue_ != b.packages_queue_) {
+    return false;
+  }
+
+  if (a.current_package_messages_ != b.current_package_messages_) {
+    return false;
+  }
+
+  if (a.storage_ != b.storage_) {
+    return false;
+  }
+
+  if (a.index_ != b.index_) {
+    return false;
+  }
+
+  return true;
+}
+
+bool operator!=(const ProtobufStorage::PackageIterator& a,
+                const ProtobufStorage::PackageIterator& b) {
+  return !(a == b);
+}
+
 }  // namespace protobuf_parser

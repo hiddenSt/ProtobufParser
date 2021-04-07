@@ -22,8 +22,8 @@ Message::Message(const Message& other)
       fields_(other.fields_) {
 }
 
-const Package& Message::GetPackage() const noexcept {
-  return *package_;
+Package* Message::GetPackage() noexcept {
+  return package_;
 }
 
 const File& Message::GetFile() const noexcept {

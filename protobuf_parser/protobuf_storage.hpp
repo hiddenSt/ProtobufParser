@@ -2,6 +2,9 @@
 #define PROTOBUFPARSER_PROTOBUF_PARSER_CONTAINER_PROTOBUF_CONTAINER_HPP_
 
 #include <string>
+#include <vector>
+#include <queue>
+#include <unordered_map>
 
 #include <protobuf_parser/parse_elements/directory.hpp>
 #include <protobuf_parser/parse_elements/message.hpp>
@@ -52,7 +55,7 @@ class ProtobufStorage {
     using pointer = Message*;
     using reference = Message&;
 
-    PackageIterator(Package* package);
+    PackageIterator(Package* package, ProtobufStorage* storage);
 
     reference operator*() const;
     pointer operator->();
@@ -60,6 +63,14 @@ class ProtobufStorage {
     PackageIterator operator++(int);
     friend bool operator==(const PackageIterator& a, const PackageIterator& b);
     friend bool operator!=(const PackageIterator& a, const PackageIterator& b);
+
+   private:
+    void Iterate();
+
+    std::queue<Package*> packages_queue_;
+    std::vector<Message*> current_package_messages_;
+    ProtobufStorage* storage_;
+    std::size_t index_;
   };
 
  private:
