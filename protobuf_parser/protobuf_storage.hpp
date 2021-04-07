@@ -37,7 +37,7 @@ class ProtobufStorage {
     using pointer = Message*;
     using reference = Message&;
 
-    DirectoryIterator(Directory* directory);
+    DirectoryIterator(Directory* root_directory, ProtobufStorage* storage);
 
     reference operator*() const;
     pointer operator->();
@@ -45,6 +45,14 @@ class ProtobufStorage {
     DirectoryIterator operator++(int);
     friend bool operator==(const DirectoryIterator& a, const DirectoryIterator& b);
     friend bool operator!=(const DirectoryIterator& a, const DirectoryIterator& b);
+
+   private:
+    void Iterate();
+
+    std::queue<Directory*> directories_queue_;
+    std::vector<Message*> current_directory_messages_;
+    ProtobufStorage* storage_;
+    std::size_t index_;
   };
 
   class PackageIterator {
@@ -55,7 +63,7 @@ class ProtobufStorage {
     using pointer = Message*;
     using reference = Message&;
 
-    PackageIterator(Package* package, ProtobufStorage* storage);
+    PackageIterator(Package* root_package, ProtobufStorage* storage);
 
     reference operator*() const;
     pointer operator->();

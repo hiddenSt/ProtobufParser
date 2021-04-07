@@ -24,8 +24,9 @@ class Message : public ParseElement {
   bool operator!=(const Message& other);
 
   Package* GetPackage() noexcept;
-  const File& GetFile() const noexcept;
-  const Message& GetParentMessage() const noexcept;
+  File* GetFile() const noexcept;
+  Directory* GetDirectory();
+  Message* GetParentMessage() const noexcept;
   const std::string& GetName() const;
 
  private:

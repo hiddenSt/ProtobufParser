@@ -26,12 +26,12 @@ Package* Message::GetPackage() noexcept {
   return package_;
 }
 
-const File& Message::GetFile() const noexcept {
-  return *file_;
+File* Message::GetFile() const noexcept {
+  return file_;
 }
 
-const Message& Message::GetParentMessage() const noexcept {
-  return *parent_message_;
+Message* Message::GetParentMessage() const noexcept {
+  return parent_message_;
 }
 
 const std::string& Message::GetName() const {
@@ -69,6 +69,10 @@ bool Message::operator==(const Message& other) {
 
 bool Message::operator!=(const Message& other) {
   return !(*this == other);
+}
+
+Directory* Message::GetDirectory() {
+  return file_->GetDirectory();
 }
 
 }  // namespace protobuf_parser
