@@ -22,20 +22,20 @@ void ProtobufStorage::AddFile(const File& file) {
   files_[file.GetId()] = file;
 }
 
-const Message& ProtobufStorage::GetMessage(std::size_t id) {
-  return messages_[id];
+Message* ProtobufStorage::GetMessage(std::size_t id) {
+  return &messages_[id];
 }
 
-const Package& ProtobufStorage::GetPackage(std::size_t id) {
-  return packages_[id];
+Package* ProtobufStorage::GetPackage(std::size_t id) {
+  return &packages_[id];
 }
 
-const Directory& ProtobufStorage::GetDirectory(std::size_t id) {
-  return directories_[id];
+Directory* ProtobufStorage::GetDirectory(std::size_t id) {
+  return &directories_[id];
 }
 
-const File& ProtobufStorage::GetFile(std::size_t id) {
-  return files_[id];
+File* ProtobufStorage::GetFile(std::size_t id) {
+  return &files_[id];
 }
 
 

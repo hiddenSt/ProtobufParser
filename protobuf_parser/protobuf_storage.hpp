@@ -77,10 +77,10 @@ class ProtobufStorage {
   void AddDirectory(const Directory& directory);
   void AddFile(const File& file);
 
-  const Message& GetMessage(std::size_t id);
-  const Package& GetPackage(std::size_t id);
-  const Directory& GetDirectory(std::size_t id);
-  const File& GetFile(std::size_t id);
+  Message* GetMessage(std::size_t id);
+  Package* GetPackage(std::size_t id);
+  Directory* GetDirectory(std::size_t id);
+  File* GetFile(std::size_t id);
 
  private:
   std::vector<Message> messages_;

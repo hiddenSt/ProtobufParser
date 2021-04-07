@@ -8,6 +8,7 @@ namespace view {
 template <typename MessagesIterator, typename Serializer>
 class View {
  public:
+  View() = delete;
   explicit View(const MessagesIterator& messages_iterator, const Serializer& serializer);
   ~View() = default;
 

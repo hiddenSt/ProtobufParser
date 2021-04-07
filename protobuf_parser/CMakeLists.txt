@@ -15,6 +15,7 @@ set(PROTOBUF_PARSER_CXX_SOURCES
 set(PROTOBUF_PARSER_HEADERS
   parse_element.hpp
   protobuf_storage.hpp
+  protobuf_parser.hpp
   parse_elements/field.hpp
   parse_elements/message.hpp
   parse_elements/file.hpp
