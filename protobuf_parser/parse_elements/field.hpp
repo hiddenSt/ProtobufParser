@@ -16,6 +16,7 @@ class Field {
   const std::string& GetName() const;
   const FieldType& GetType() const;
   std::size_t GetNumber() const;
+  bool IsRepeated() const noexcept;
 
   Field& operator=(const Field& other);
 

@@ -16,6 +16,7 @@ class Directory : public ParseElement {
   ~Directory() = default;
 
   const std::string& GetName() const;
+  Directory* GetParentDirectory();
 
   bool operator==(const Directory& other) const noexcept;
   bool operator!=(const Directory& other) const noexcept;

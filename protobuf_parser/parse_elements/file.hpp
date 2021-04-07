@@ -10,13 +10,14 @@ namespace protobuf_parser {
 
 class File : public ParseElement {
  public:
-  File() = default;
+  File();
   File(const File& other);
   explicit File(const std::string& name, const std::string& path);
   ~File() = default;
 
   const std::string& GetName() const noexcept;
   const std::string& GetPath() const noexcept;
+  Directory* GetDirectory();
 
   bool operator==(const File& other) const noexcept;
   bool operator!=(const File& other) const noexcept;

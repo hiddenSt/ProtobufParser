@@ -30,4 +30,8 @@ Field& Field::operator=(const Field& other) {
   return *this;
 }
 
+bool Field::IsRepeated() const noexcept {
+  return repeated_;
+}
+
 }  // namespace protobuf_parser

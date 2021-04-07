@@ -33,4 +33,8 @@ bool Directory::operator!=(const Directory& other) const noexcept {
   return !(*this == other);
 }
 
+Directory* Directory::GetParentDirectory() {
+  return parent_directory_;
+}
+
 }  // namespace protobuf_parser

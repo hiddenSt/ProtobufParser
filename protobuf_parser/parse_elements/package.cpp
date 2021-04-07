@@ -19,7 +19,7 @@ Package::Package(std::string&& name, Package* parent_package) noexcept
     : name_(std::move(name)), parent_package_(parent_package) {
 }
 
-const Package* const Package::GetParentPackage() {
+Package* Package::GetParentPackage() {
   return parent_package_;
 }
 
