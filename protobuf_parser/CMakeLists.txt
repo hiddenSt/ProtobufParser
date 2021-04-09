@@ -25,19 +25,20 @@ set(PROTOBUF_PARSER_HEADERS
   serializers/json_serializer.hpp
   )
 
-add_library(protobuf_parser STATIC "${PROTOBUF_PARSER_CXX_SOURCES}" "${PROTOBUF_PARSER_HEADERS}")
+add_library(protobuf_parser STATIC "${PROTOBUF_PARSER_HEADERS}" "${PROTOBUF_PARSER_CXX_SOURCES}")
 target_include_directories(protobuf_parser PRIVATE "${LIB_INCLUDE_PATH}")
-target_link_libraries(protobuf_parser PRIVATE nlohmann_json::nlohmann_json "${CONAN_LIBS}")
+target_link_libraries(protobuf_parser PRIVATE nlohmann_json::nlohmann_json)
+target_link_libraries(protobuf_parser PRIVATE CONAN_PKG::protobuf)
 
 # Linters
 
-if(PROTOBUF_PARSER_DEVELOPER)
+if (PROTOBUF_PARSER_DEVELOPER)
 
-  if(CLANG_FORMAT_TOOL)
+  if (CLANG_FORMAT_TOOL)
     add_clang_format_target(protobuf_parser_clang_format ${CMAKE_CURRENT_SOURCE_DIR} ${PROTOBUF_PARSER_HEADERS} ${PROTOBUF_PARSER_CXX_SOURCES})
   endif()
 
-  if(CLANG_TIDY_TOOL)
+  if (CLANG_TIDY_TOOL)
     add_clang_tidy_target(protobuf_parser_clang_tidy ${CMAKE_CURRENT_SOURCE_DIR} ${LIB_INCLUDE_PATH} ${PROTOBUF_PARSER_HEADERS} ${PROTOBUF_PARSER_CXX_SOURCES})
   endif()
 

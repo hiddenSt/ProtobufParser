@@ -2,10 +2,12 @@
 #include <string>
 
 #include <argparse/argparse.hpp>
+#include <protobuf_parser/protobuf_parser.hpp>
+#include <protobuf_parser/serializers/json_serializer.hpp>
 
 int main(int argc, char* argv[]) {
   argparse::ArgumentParser program{"protobuf_parser"};
-  program.add_argument("-p", "--package").help("parse package with given name").default_value("false").implicit_value("true");
+
   try {
     program.parse_args(argc, argv);
   } catch (const std::runtime_error& err) {
@@ -13,5 +15,8 @@ int main(int argc, char* argv[]) {
     std::cerr << program;
     return 1;
   }
+
+  protobuf_parser::ProtobufParser<protobuf_parser::serializer::JsonSerializer> parser(program.get<std::string>("source"));
+  std::cout << parser.SerializeDirectory();
   return 0;
 }
