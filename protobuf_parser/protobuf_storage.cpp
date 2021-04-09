@@ -29,6 +29,7 @@ ProtobufStorage::MessagesIterator<Directory>::MessagesIterator(Directory* root,
                                                                ProtobufStorage* storage)
     : storage_(storage), index_(0) {
   queue_.emplace(root);
+  // TODO: take out in a separate method
   for (auto& message : storage_->messages_) {
     if (*message.GetDirectory() == *root && message.GetParentMessage() == nullptr) {
       current_element_messages_.push_back(&message);
@@ -41,6 +42,7 @@ ProtobufStorage::MessagesIterator<Package>::MessagesIterator(Package* root,
                                                              ProtobufStorage* storage)
     : storage_(storage), index_(0) {
   queue_.emplace(root);
+  // TODO: take out in a separate method
   for (auto& message : storage_->messages_) {
     if (*message.GetPackage() == *root && message.GetParentMessage() == nullptr) {
       current_element_messages_.push_back(&message);
@@ -56,6 +58,7 @@ void ProtobufStorage::MessagesIterator<Package>::Iterate() {
     auto* package = queue_.front();
     queue_.pop();
 
+    // TODO: take out in a separate method
     for (auto& child_package : storage_->packages_) {
       if (*child_package.GetParentPackage() == *package) {
         queue_.emplace(&child_package);
@@ -66,6 +69,7 @@ void ProtobufStorage::MessagesIterator<Package>::Iterate() {
                                     current_element_messages_.end());
     index_ = 0;
 
+    // TODO: take out in a separate method
     for (auto& message : storage_->messages_) {
       if (message.GetPackage() == package && message.GetParentMessage() == nullptr) {
         current_element_messages_.push_back(&message);
@@ -82,6 +86,7 @@ void ProtobufStorage::MessagesIterator<Directory>::Iterate() {
     auto* directory = queue_.front();
     queue_.pop();
 
+    // TODO: take out in a separate method
     for (auto& child_directory : storage_->directories_) {
       if (child_directory.GetParentDirectory() == directory) {
         queue_.emplace(&child_directory);
@@ -92,6 +97,7 @@ void ProtobufStorage::MessagesIterator<Directory>::Iterate() {
                                     current_element_messages_.end());
     index_ = 0;
 
+    // TODO: take out in a separate method
     for (auto& message : storage_->messages_) {
       if (*message.GetDirectory() == *directory && message.GetParentMessage() == nullptr) {
         current_element_messages_.push_back(&message);
