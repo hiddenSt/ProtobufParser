@@ -5,7 +5,7 @@
 
 #include <protobuf_parser/protobuf_storage.hpp>
 #include <protobuf_parser/view/view.hpp>
-
+#include <google/protobuf/compiler/importer.h>
 
 namespace protobuf_parser {
 
@@ -26,6 +26,7 @@ class ProtobufParser {
 
 template <typename Serializer>
 ProtobufParser<Serializer>::ProtobufParser(const std::string& path) : path_(path) {
+  google::protobuf::compiler::Importer importer{/*TODO: add source tree*/};
 }
 
 template <typename Serializer>

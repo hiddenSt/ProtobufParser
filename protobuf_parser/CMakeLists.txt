@@ -1,6 +1,10 @@
 get_filename_component(LIB_INCLUDE_PATH ".." ABSOLUTE)
 get_filename_component(LIB_PATH "." ABSOLUTE)
 
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup(TARGETS)
+
+
 set(PROTOBUF_PARSER_CXX_SOURCES
   parse_element.cpp
   protobuf_storage.cpp
@@ -28,7 +32,7 @@ set(PROTOBUF_PARSER_HEADERS
 add_library(protobuf_parser STATIC "${PROTOBUF_PARSER_HEADERS}" "${PROTOBUF_PARSER_CXX_SOURCES}")
 target_include_directories(protobuf_parser PRIVATE "${LIB_INCLUDE_PATH}")
 target_link_libraries(protobuf_parser PRIVATE nlohmann_json::nlohmann_json)
-target_link_libraries(protobuf_parser PRIVATE CONAN_PKG::protobuf)
+target_link_libraries(protobuf_parser INTERFACE CONAN_PKG::protobuf)
 
 # Linters
 
