@@ -8,6 +8,7 @@ conan_basic_setup(TARGETS)
 set(PROTOBUF_PARSER_CXX_SOURCES
   parse_element.cpp
   protobuf_storage.cpp
+  stub_multiple_error_collector.cpp
   parse_elements/field.cpp
   parse_elements/message.cpp
   parse_elements/file.cpp
@@ -20,6 +21,7 @@ set(PROTOBUF_PARSER_HEADERS
   parse_element.hpp
   protobuf_storage.hpp
   protobuf_parser.hpp
+  stub_multiple_error_collector.hpp
   parse_elements/field.hpp
   parse_elements/message.hpp
   parse_elements/file.hpp
@@ -32,7 +34,7 @@ set(PROTOBUF_PARSER_HEADERS
 add_library(protobuf_parser STATIC "${PROTOBUF_PARSER_HEADERS}" "${PROTOBUF_PARSER_CXX_SOURCES}")
 target_include_directories(protobuf_parser PRIVATE "${LIB_INCLUDE_PATH}")
 target_link_libraries(protobuf_parser PRIVATE nlohmann_json::nlohmann_json)
-target_link_libraries(protobuf_parser INTERFACE CONAN_PKG::protobuf)
+target_link_libraries(protobuf_parser PUBLIC CONAN_PKG::protobuf)
 
 # Linters
 
