@@ -19,6 +19,8 @@ class ProtobufParser {
   std::string SerializePackage(const std::string& package_name);
 
  private:
+  google::protobuf::compiler::DiskSourceTree disk_source_tree_;
+  google::protobuf::compiler::MultiFileErrorCollector* error_collector_;
   std::string path_;
   Serializer serializer_;
   ProtobufStorage storage_;
@@ -26,15 +28,18 @@ class ProtobufParser {
 
 template <typename Serializer>
 ProtobufParser<Serializer>::ProtobufParser(const std::string& path) : path_(path) {
-  google::protobuf::compiler::Importer importer{/*TODO: add source tree*/};
+  disk_source_tree_.MapPath(std::string{}, path_);
+  google::protobuf::compiler::Importer importer{&disk_source_tree_, error_collector_};
 }
 
 template <typename Serializer>
 std::string ProtobufParser<Serializer>::SerializeDirectory(const std::string& dir_path) {
+  /*TODO: add realization*/
 }
 
 template <typename Serializer>
 std::string ProtobufParser<Serializer>::SerializePackage(const std::string& package_name) {
+  /*TODO: add realization*/
 }
 
 }  // namespace protobuf_parser
