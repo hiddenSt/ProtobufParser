@@ -4,6 +4,9 @@
 #include <string>
 #include <vector>
 #include <queue>
+#include <set>
+
+#include <google/protobuf/descriptor.h>
 
 #include <protobuf_parser/parse_elements/directory.hpp>
 #include <protobuf_parser/parse_elements/message.hpp>
@@ -50,10 +53,10 @@ class ProtobufStorage {
   ProtobufStorage();
   ~ProtobufStorage() = default;
 
-  void AddMessages(std::vector<Message>&& messages);
-  void AddPackages(std::vector<Package>&& packages);
-  void AddDirectories(std::vector<Directory>&& directories);
-  void AddFiles(std::vector<File>&& files);
+  void StoreDescriptorPool(const google::protobuf::DescriptorPool* descriptor_pool,
+                           const std::set<std::string>& files,
+                           const std::set<std::string>& directories,
+                           const std::set<std::string>& packages);
 
   Directory* FindDirectory(const std::string& directory_path);
   Package* FindPackage(const std::string& package_name);

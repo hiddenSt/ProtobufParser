@@ -3,6 +3,7 @@
 
 #include <string>
 #include <filesystem>
+#include <set>
 
 #include <protobuf_parser/protobuf_storage.hpp>
 #include <protobuf_parser/view/view.hpp>
@@ -37,20 +38,21 @@ ProtobufParser<Serializer>::ProtobufParser(const std::string& path) : path_(path
   google::protobuf::compiler::Importer importer{&disk_source_tree_, &error_collector_};
   std::filesystem::recursive_directory_iterator recursive_directory_iterator{path_};
 
-  std::vector<Message> messages;
-  std::vector<Package> packages;
-  std::vector<Directory> directories;
-  std::vector<File> files;
+  std::set<std::string> directories_names{};
+  std::set<std::string> packages_names;
+  std::set<std::string> files_names;
 
   for (auto& dir_entry : recursive_directory_iterator) {
     if (dir_entry.is_regular_file() && dir_entry.path().extension() == ".proto") {
+      std::string file_full_name;  // TODO:
+      auto* file_descriptor = importer.Import(file_full_name);
+      directories_names.insert(dir_entry.path().parent_path().string());
+      packages_names.insert(file_descriptor->package());
+      files_names.insert(file_full_name);
     }
   }
 
-  storage_.AddDirectories(std::move(directories));
-  storage_.AddFiles(std::move(files));
-  storage_.AddPackages(std::move(packages));
-  storage_.AddMessages(std::move(messages));
+  storage_.StoreDescriptorPool(importer.pool(), files_names, directories_names, packages_names);
 }
 
 template <typename Serializer>

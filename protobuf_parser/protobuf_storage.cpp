@@ -5,22 +5,6 @@ namespace protobuf_parser {
 ProtobufStorage::ProtobufStorage() : messages_(), packages_(), files_(), directories_() {
 }
 
-void ProtobufStorage::AddMessages(std::vector<Message>&& messages) {
-  messages_ = std::move(messages);
-}
-
-void ProtobufStorage::AddPackages(std::vector<Package>&& packages) {
-  packages_ = std::move(packages);
-}
-
-void ProtobufStorage::AddDirectories(std::vector<Directory>&& directories) {
-  directories_ = std::move(directories);
-}
-
-void ProtobufStorage::AddFiles(std::vector<File>&& files) {
-  files_ = std::move(files);
-}
-
 Directory* ProtobufStorage::FindDirectory(const std::string& directory_path) {
   for (auto& directory : directories_) {
     if (directory.GetName() == directory_path) {
