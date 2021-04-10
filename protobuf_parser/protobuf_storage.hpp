@@ -68,6 +68,11 @@ class ProtobufStorage {
   MessagesIterator<T> End();
 
  private:
+  void AddDirectories(const std::set<std::string>& directories);
+  void AddPackages(const std::set<std::string>& packages);
+  void AddFiles(const google::protobuf::DescriptorPool* descriptor_pool, const std::set<std::string>& files);
+  void AddMessagesFromFiles(const google::protobuf::DescriptorPool* descriptor_pool);
+
   std::vector<Message> messages_;
   std::vector<File> files_;
   std::vector<Package> packages_;

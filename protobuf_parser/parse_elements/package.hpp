@@ -19,6 +19,7 @@ class Package : public ParseElement {
   bool operator!=(const Package& other);
 
   Package* GetParentPackage();
+  void SetParentPackage(Package* parent);
   const std::string& GetName() const;
 
  private:

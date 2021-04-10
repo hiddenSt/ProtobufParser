@@ -37,4 +37,8 @@ Directory* Directory::GetParentDirectory() {
   return parent_directory_;
 }
 
+void Directory::SetParentDirectory(Directory* directory) {
+  parent_directory_ = directory;
+}
+
 }  // namespace protobuf_parser

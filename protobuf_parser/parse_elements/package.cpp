@@ -43,4 +43,8 @@ bool Package::operator!=(const Package& other) {
   return !(*this == other);
 }
 
+void Package::SetParentPackage(Package* parent) {
+  parent_package_ = parent;
+}
+
 }  // namespace protobuf_parser
