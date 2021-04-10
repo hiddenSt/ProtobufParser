@@ -11,7 +11,7 @@ namespace protobuf_parser {
 
 class File : public ParseElement {
  public:
-  File();
+  File() = delete;
   File(const File& other);
   explicit File(const std::string& name, Directory* directory, Package* package);
   ~File() = default;

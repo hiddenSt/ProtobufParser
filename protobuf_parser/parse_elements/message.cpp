@@ -2,9 +2,6 @@
 
 namespace protobuf_parser {
 
-Message::Message() : name_(), file_(nullptr), parent_message_(nullptr), fields_() {
-}
-
 Message::Message(const std::string& name, File* file, Message* parent_message)
     : name_(name), file_(file), parent_message_(parent_message) {
 }

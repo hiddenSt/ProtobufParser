@@ -2,9 +2,6 @@
 
 namespace protobuf_parser {
 
-Package::Package() : name_(), parent_package_(nullptr) {
-}
-
 Package::Package(const std::string& name) : name_(name), parent_package_(nullptr) {
 }
 

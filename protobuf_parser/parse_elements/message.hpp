@@ -13,7 +13,7 @@ namespace protobuf_parser {
 
 class Message : public ParseElement {
  public:
-  Message();
+  Message() = delete;
   Message(const Message& other);
   explicit Message(const std::string& name, File* file, Message* parent_message);
   explicit Message(const std::string& name, File* file);

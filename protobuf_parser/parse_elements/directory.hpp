@@ -9,7 +9,7 @@ namespace protobuf_parser {
 
 class Directory : public ParseElement {
  public:
-  Directory() = default;
+  Directory() = delete;
   Directory(const Directory& other);
   explicit Directory(const std::string& names);
   explicit Directory(const std::string& name, Directory* parent_directory);

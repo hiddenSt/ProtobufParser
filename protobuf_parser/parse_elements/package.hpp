@@ -9,7 +9,7 @@ namespace protobuf_parser {
 
 class Package : public ParseElement {
  public:
-  Package();
+  Package() = delete;
   explicit Package(const std::string& name);
   explicit Package(const std::string& name, Package* parent_package);
   explicit Package(std::string&& name) noexcept;

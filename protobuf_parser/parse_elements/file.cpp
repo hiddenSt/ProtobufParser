@@ -4,9 +4,6 @@
 
 namespace protobuf_parser {
 
-File::File() : name_(), directory_(nullptr) {
-}
-
 protobuf_parser::File::File(const std::string& name, Directory* directory, Package* package)
     : name_(name), directory_(directory), package_(package) {
 }

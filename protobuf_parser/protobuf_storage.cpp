@@ -82,9 +82,10 @@ void ProtobufStorage::AddFiles(const google::protobuf::DescriptorPool* descripto
 
     // TODO:
     for (std::size_t i = 0; i < directories_.size(); ++i) {
-      if (directories_[i].GetName() == file_descriptor->) {
-        directory = &directories_[i];
-      }
+      // TODO: find directory
+      //if (directories_[i].GetName() == file_descriptor->) {
+        //directory = &directories_[i];
+      //}
     }
     files_.emplace_back(file, directory, a_package);
   }
