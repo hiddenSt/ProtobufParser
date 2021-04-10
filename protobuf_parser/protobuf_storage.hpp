@@ -72,8 +72,8 @@ class ProtobufStorage {
   void AddPackages(const std::set<std::string>& packages);
   void AddFiles(const google::protobuf::DescriptorPool* descriptor_pool, const std::set<std::string>& files);
   void AddMessagesFromFiles(const google::protobuf::DescriptorPool* descriptor_pool);
-  Package* FindFilePackage(const google::protobuf::FileDescriptor* file_descriptor);
-  Directory* FindFileDirectory(const google::protobuf::FileDescriptor* file_descriptor);
+  Package* FindPackageForFileDescriptor(const google::protobuf::FileDescriptor* file_descriptor);
+  Directory* FindDirectoryForFileDescriptor(const google::protobuf::FileDescriptor* file_descriptor);
 
   std::vector<Message> messages_;
   std::vector<File> files_;

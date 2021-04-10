@@ -71,8 +71,8 @@ void ProtobufStorage::AddDirectories(const std::set<std::string>& directories) {
 void ProtobufStorage::AddFiles(const google::protobuf::DescriptorPool* descriptor_pool, const std::set<std::string>& files) {
   for (auto& file: files) {
     auto* file_descriptor = descriptor_pool->FindFileByName(file);
-    Package* a_package = FindFilePackage(file_descriptor);
-    Directory* directory = FindFileDirectory(file_descriptor);
+    Package* a_package = FindPackageForFileDescriptor(file_descriptor);
+    Directory* directory = FindDirectoryForFileDescriptor(file_descriptor);
     files_.emplace_back(file, directory, a_package);
   }
 }
@@ -87,7 +87,7 @@ void ProtobufStorage::AddMessagesFromFiles(const google::protobuf::DescriptorPoo
   }
 }
 
-Package* ProtobufStorage::FindFilePackage(const google::protobuf::FileDescriptor* file_descriptor) {
+Package* ProtobufStorage::FindPackageForFileDescriptor(const google::protobuf::FileDescriptor* file_descriptor) {
   Package* a_package = nullptr;
   for (std::size_t i = 0; i < packages_.size(); ++i) {
     if (packages_[i].GetName() == file_descriptor->package()) {
@@ -96,7 +96,7 @@ Package* ProtobufStorage::FindFilePackage(const google::protobuf::FileDescriptor
   }
 }
 
-Directory* ProtobufStorage::FindFileDirectory(
+Directory* ProtobufStorage::FindDirectoryForFileDescriptor(
     const google::protobuf::FileDescriptor* file_descriptor) {
   Directory* directory = nullptr;
   // TODO:
