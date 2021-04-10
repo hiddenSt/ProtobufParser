@@ -110,6 +110,7 @@ Directory* ProtobufStorage::FindFileDirectory(
   return directory;
 }
 
+// ITERATORS
 template <>
 ProtobufStorage::MessagesIterator<Directory>::MessagesIterator(Directory* root,
                                                                ProtobufStorage* storage)
