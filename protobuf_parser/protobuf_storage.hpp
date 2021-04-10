@@ -14,7 +14,7 @@
 #include <protobuf_parser/parse_elements/file.hpp>
 
 namespace protobuf_parser {
-// WARNING THERE IS A BUG!!!! Need to change references in child elements to their parents
+
 class ProtobufStorage {
  public:
   template <typename T>

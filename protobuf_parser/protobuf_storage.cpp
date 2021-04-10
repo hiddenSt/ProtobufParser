@@ -27,7 +27,6 @@ void ProtobufStorage::StoreDescriptorPool(const google::protobuf::DescriptorPool
                                           const std::set<std::string>& files,
                                           const std::set<std::string>& directories,
                                           const std::set<std::string>& packages) {
-
   AddPackages(packages);
   AddDirectories(directories);
   AddFiles(descriptor_pool, files);
