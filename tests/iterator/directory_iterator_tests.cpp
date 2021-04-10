@@ -4,6 +4,7 @@
 
 namespace tests {
 namespace iterator {
+
 TEST(DirectoryIteratorTests, CanIterateOverMessages) {
   protobuf_parser::ProtobufStorage storage{};
   protobuf_parser::Package a_package{"hello world"};
@@ -12,6 +13,13 @@ TEST(DirectoryIteratorTests, CanIterateOverMessages) {
   protobuf_parser::Message message{"Hello world", &file};
   std::vector<protobuf_parser::File> files{file};
   std::vector<protobuf_parser::Message> messages{message};
+  std::vector<protobuf_parser::Directory> directories{dir};
+  std::vector<protobuf_parser::Package> packages{a_package};
+  storage.AddPackages(std::move(packages));
+  storage.AddMessages(std::move(messages));
+  storage.AddFiles(std::move(files));
+  storage.AddDirectories(std::move(directories));
+
   for (auto msg = storage.Begin(&dir); msg != storage.End<protobuf_parser::Directory>(); ++msg) {
     ASSERT_TRUE(*msg == message);
   }
