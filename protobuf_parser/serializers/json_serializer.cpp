@@ -8,9 +8,7 @@ JsonSerializer::JsonSerializer() {
 }
 
 void JsonSerializer::AddMessage(const Message& message) {
-  json_representation_["messages"] = {};
-  json_representation_["messages"]["file"] = message.GetFile()->GetName();
-  json_representation_["messages"]["package"] = message.GetPackage()->GetName();
+  json_representation_[message.GetName()] = {"file"};
 }
 
 std::string JsonSerializer::Serialize() {

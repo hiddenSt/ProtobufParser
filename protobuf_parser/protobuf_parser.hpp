@@ -57,12 +57,16 @@ ProtobufParser<Serializer>::ProtobufParser(const std::string& path) : path_(path
 
 template <typename Serializer>
 std::string ProtobufParser<Serializer>::SerializeDirectory(const std::string& dir_path) {
-  /*TODO: add realization*/
+  auto* directory = storage_.FindDirectory(dir_path);
+  view::View<Directory, Serializer> directory_view{directory, storage_, serializer_};
+  return directory_view.Serialize();
 }
 
 template <typename Serializer>
 std::string ProtobufParser<Serializer>::SerializePackage(const std::string& package_name) {
-  /*TODO: add realization*/
+  auto* package = storage_.FindPackage(package_name);
+  view::View<Package, Serializer> package_view{package, storage_, serializer_};
+  return package_view.Serialize();
 }
 
 }  // namespace protobuf_parser
