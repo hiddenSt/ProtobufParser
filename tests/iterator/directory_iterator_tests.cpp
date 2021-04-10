@@ -8,8 +8,8 @@ TEST(DirectoryIteratorTests, CanIterateOverMessages) {
   protobuf_parser::ProtobufStorage storage{};
   protobuf_parser::Package a_package{"hello world"};
   protobuf_parser::Directory dir{"hello_dir"};
-  protobuf_parser::File file{"name", &dir};
-  protobuf_parser::Message message{"Hello world", &file, &a_package};
+  protobuf_parser::File file{"name", &dir, &a_package};
+  protobuf_parser::Message message{"Hello world", &file};
   storage.AddFile(file);
   storage.AddPackage(a_package);
   storage.AddDirectory(dir);

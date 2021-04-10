@@ -7,8 +7,8 @@ namespace protobuf_parser {
 File::File() : name_(), path_(), directory_(nullptr) {
 }
 
-protobuf_parser::File::File(const std::string& name, Directory* directory)
-    : name_(name), directory_(directory), path_() {
+protobuf_parser::File::File(const std::string& name, Directory* directory, Package* package)
+    : name_(name), directory_(directory), package_(package), path_() {
   auto* tmp_dir = directory_;
   std::string path_element;
   while (tmp_dir != nullptr) {
@@ -48,11 +48,19 @@ bool File::operator!=(const File& other) const noexcept {
 }
 
 File::File(const File& other)
-    : ParseElement(other), name_(other.name_), path_(other.name_), directory_(other.directory_) {
+    : ParseElement(other),
+      name_(other.name_),
+      path_(other.name_),
+      directory_(other.directory_),
+      package_(other.package_) {
 }
 
 Directory* File::GetDirectory() {
   return directory_;
+}
+
+Package* File::GetPackage() {
+  return package_;
 }
 
 }  // namespace protobuf_parser

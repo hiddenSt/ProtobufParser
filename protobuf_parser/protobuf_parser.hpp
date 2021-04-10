@@ -2,6 +2,7 @@
 #define PROTOBUF_PARSER_PROTOBUF_PARSER_PROTOBUF_PARSER_HPP_
 
 #include <string>
+#include <filesystem>
 
 #include <protobuf_parser/protobuf_storage.hpp>
 #include <protobuf_parser/view/view.hpp>
@@ -23,17 +24,23 @@ class ProtobufParser {
  private:
   google::protobuf::compiler::DiskSourceTree disk_source_tree_;
   StubMultipleErrorCollector error_collector_;
-  std::string path_;
+  std::filesystem::path path_;
   Serializer serializer_;
   ProtobufStorage storage_;
 };
 
 template <typename Serializer>
 ProtobufParser<Serializer>::ProtobufParser(const std::string& path) : path_(path) {
-  // Add Empty string argument as virtual_path parameter to indicate DiskSourceTree to map path_ as
+  // Add empty string argument as virtual_path parameter to indicate DiskSourceTree to map path_ as
   // a root
-  disk_source_tree_.MapPath(std::string{}, path_);
+  disk_source_tree_.MapPath(std::string{}, path_.string());
   google::protobuf::compiler::Importer importer{&disk_source_tree_, &error_collector_};
+  std::filesystem::recursive_directory_iterator recursive_directory_iterator{path_};
+  for (auto& dir_entry : recursive_directory_iterator) {
+    if (dir_entry.is_regular_file()) {
+    } else if (dir_entry.is_directory()) {
+    }
+  }
 }
 
 template <typename Serializer>

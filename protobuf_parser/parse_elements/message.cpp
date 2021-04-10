@@ -2,16 +2,15 @@
 
 namespace protobuf_parser {
 
-Message::Message()
-    : name_(), package_(nullptr), file_(nullptr), parent_message_(nullptr), fields_() {
+Message::Message() : name_(), file_(nullptr), parent_message_(nullptr), fields_() {
 }
 
-Message::Message(const std::string& name, File* file, Package* package, Message* parent_message)
-    : name_(name), file_(file), package_(package), parent_message_(parent_message) {
+Message::Message(const std::string& name, File* file, Message* parent_message)
+    : name_(name), file_(file), parent_message_(parent_message) {
 }
 
-Message::Message(const std::string& name, File* file, Package* package)
-    : name_(name), file_(file), package_(package), parent_message_(nullptr) {
+Message::Message(const std::string& name, File* file)
+    : name_(name), file_(file), parent_message_(nullptr) {
 }
 
 Message::Message(const Message& other)
@@ -19,12 +18,11 @@ Message::Message(const Message& other)
       name_(other.name_),
       parent_message_(other.parent_message_),
       file_(other.file_),
-      package_(other.package_),
       fields_(other.fields_) {
 }
 
 Package* Message::GetPackage() const noexcept {
-  return package_;
+  return file_->GetPackage();
 }
 
 File* Message::GetFile() const noexcept {
@@ -45,10 +43,6 @@ bool Message::operator==(const Message& other) {
   }
 
   if (file_ != other.file_) {
-    return false;
-  }
-
-  if (package_ != other.package_) {
     return false;
   }
 

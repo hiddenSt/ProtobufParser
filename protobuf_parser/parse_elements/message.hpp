@@ -15,8 +15,8 @@ class Message : public ParseElement {
  public:
   Message();
   Message(const Message& other);
-  explicit Message(const std::string& name, File* file, Package* package, Message* parent_message);
-  explicit Message(const std::string& name, File* file, Package* package);
+  explicit Message(const std::string& name, File* file, Message* parent_message);
+  explicit Message(const std::string& name, File* file);
   ~Message() = default;
 
   bool operator==(const Message& other);
@@ -37,7 +37,6 @@ class Message : public ParseElement {
   std::string name_;
   Message* parent_message_;
   File* file_;
-  Package* package_;
   std::vector<Message*> nested_messages_;
   std::vector<Field> fields_;
 };
