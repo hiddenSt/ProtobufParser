@@ -15,11 +15,11 @@ TEST(FileTests, CanGetFileName) {
 TEST(FileTests, CanGetFilePath) {
   std::string file_name{"FileName1"};
   protobuf_parser::Directory outer_dir{"outer"};
-  protobuf_parser::Directory inner_dir{"inner", &outer_dir};
+  protobuf_parser::Directory inner_dir{"outer/inner", &outer_dir};
   protobuf_parser::Package a_package{"HelloWorld"};
   protobuf_parser::File file{file_name, &inner_dir, &a_package};
 
-  std::string file_path = "/" + outer_dir.GetName() + "/" + inner_dir.GetName() + "/";
+  std::string file_path = inner_dir.GetName() + "/" + file_name;
   ASSERT_EQ(file.GetPath(), file_path);
 }
 

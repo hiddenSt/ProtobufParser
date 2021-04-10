@@ -4,31 +4,19 @@
 
 namespace protobuf_parser {
 
-File::File() : name_(), path_(), directory_(nullptr) {
+File::File() : name_(), directory_(nullptr) {
 }
 
 protobuf_parser::File::File(const std::string& name, Directory* directory, Package* package)
-    : name_(name), directory_(directory), package_(package), path_() {
-  auto* tmp_dir = directory_;
-  std::string path_element;
-  while (tmp_dir != nullptr) {
-    path_element = tmp_dir->GetName();
-    std::reverse(path_element.begin(), path_element.end());
-    path_ += "/" + path_element;
-    tmp_dir = tmp_dir->GetParentDirectory();
-  }
-
-  path_ += "/";
-
-  std::reverse(path_.begin(), path_.end());
+    : name_(name), directory_(directory), package_(package) {
 }
 
 const std::string& File::GetName() const noexcept {
   return name_;
 }
 
-const std::string& File::GetPath() const noexcept {
-  return path_;
+const std::string File::GetPath() const noexcept {
+  return directory_->GetName() + "/" + name_;
 }
 
 bool File::operator==(const File& other) const noexcept {
@@ -50,7 +38,6 @@ bool File::operator!=(const File& other) const noexcept {
 File::File(const File& other)
     : ParseElement(other),
       name_(other.name_),
-      path_(other.name_),
       directory_(other.directory_),
       package_(other.package_) {
 }

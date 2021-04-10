@@ -17,7 +17,7 @@ class File : public ParseElement {
   ~File() = default;
 
   const std::string& GetName() const noexcept;
-  const std::string& GetPath() const noexcept;
+  const std::string GetPath() const noexcept;
   Directory* GetDirectory();
   Package* GetPackage();
 
@@ -26,7 +26,6 @@ class File : public ParseElement {
 
  private:
   std::string name_;
-  std::string path_;
   Directory* directory_;
   Package* package_;
 };
