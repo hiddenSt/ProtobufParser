@@ -7,6 +7,14 @@
 
 int main(int argc, char* argv[]) {
   argparse::ArgumentParser program{"protobuf_parser"};
+  program.add_argument("source_directory")
+      .help("Source directory to parse from");
+  program.add_argument("parse_source")
+      .help("Name of the source to parse from. Default - directory");
+  program.add_argument("--package")
+      .help("Set parse source to package name")
+      .default_value(false)
+      .implicit_value(true);
 
   try {
     program.parse_args(argc, argv);
@@ -17,6 +25,11 @@ int main(int argc, char* argv[]) {
   }
 
   protobuf_parser::ProtobufParser<protobuf_parser::serializer::JsonSerializer> parser(program.get<std::string>("source"));
-  std::cout << parser.SerializeDirectory();
+  auto parse_source = program.get<std::string>("parse_source");
+  if (program["--package"] == true) {
+    std::cout << parser.SerializePackage(parse_source);
+  } else {
+    std::cout << parser.SerializeDirectory(parse_source);
+  }
   return 0;
 }
