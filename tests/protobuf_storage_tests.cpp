@@ -7,4 +7,4 @@ TEST(ProtobufStorageTests, CanCreateStorage) {
   protobuf_parser::ProtobufStorage{};
 }
 
-}
+}  // namespace tests

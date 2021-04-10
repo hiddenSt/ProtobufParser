@@ -6,13 +6,15 @@ include(cmake/ClangTidy.cmake)
 
 option(PROTOBUF_PARSER_DEVELOPER "ProtobufParser development mode" OFF)
 option(PROTOBUF_PARSER_TESTS "Enable ProtobufParser tests" OFF)
+option(PROTOBUF_PARSER_CONSOLE_UTILITY "Build console utility tool" OFF)
 
 
 add_subdirectory(third-party)
-
 add_subdirectory(protobuf_parser)
 
-add_subdirectory(example)
+if (PROTOBUF_PARSER_CONSOLE_UTILITY)
+  add_subdirectory(console_utility)
+endif()
 
 if (PROTOBUF_PARSER_TESTS OR PROTOBUF_PARSER_DEVELOPER)
   add_subdirectory(tests)

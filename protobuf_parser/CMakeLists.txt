@@ -25,8 +25,8 @@ set(PROTOBUF_PARSER_HEADERS
   parse_elements/file.hpp
   parse_elements/package.hpp
   parse_elements/directory.hpp
-  view/view.hpp
   serializers/json_serializer.hpp
+  view/view.hpp
   )
 
 add_library(protobuf_parser STATIC "${PROTOBUF_PARSER_HEADERS}" "${PROTOBUF_PARSER_CXX_SOURCES}")

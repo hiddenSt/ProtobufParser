@@ -27,7 +27,7 @@ TEST(MessageTests, CanGetNestedMessages) {
   protobuf_parser::Message nested_message{nested_message_name, &file, &message};
   message.AddNestedMessage(&nested_message);
 
-  for(auto nested_message_iterator: message.GetNestedMessages()) {
+  for (auto nested_message_iterator : message.GetNestedMessages()) {
     ASSERT_EQ(nested_message_iterator->GetParentMessage()->GetName(), message_name);
   }
 }
@@ -81,32 +81,32 @@ TEST(MessageTests, CanGetPackage) {
 }
 
 TEST(MessageTests, CanGetMessageName) {
-    protobuf_parser::Directory dir{"Hello world dit"};
+  protobuf_parser::Directory dir{"Hello world dit"};
   protobuf_parser::Package a_package{"HelloWorld"};
-    protobuf_parser::File file{"Hello world", &dir, &a_package};
-    std::string message_name{"CoolName"};
+  protobuf_parser::File file{"Hello world", &dir, &a_package};
+  std::string message_name{"CoolName"};
 
-    protobuf_parser::Message message{message_name, &file};
+  protobuf_parser::Message message{message_name, &file};
 
-    ASSERT_EQ(message.GetName(), message_name);
+  ASSERT_EQ(message.GetName(), message_name);
 }
 
 TEST(MessageTests, CanGetFields) {
-    protobuf_parser::Directory dir{"Hello world dit"};
+  protobuf_parser::Directory dir{"Hello world dit"};
   protobuf_parser::Package a_package{"HelloWorld"};
-    protobuf_parser::File file{"Hello world", &dir, &a_package};
-    std::string message_name{"CoolName"};
+  protobuf_parser::File file{"Hello world", &dir, &a_package};
+  std::string message_name{"CoolName"};
 
-    std::string field_name{"field_name"};
-    std::size_t number = 1;
-    std::string type = "string";
-    bool optional = false;
-    protobuf_parser::Field field{field_name, number, type, optional};
+  std::string field_name{"field_name"};
+  std::size_t number = 1;
+  std::string type = "string";
+  bool optional = false;
+  protobuf_parser::Field field{field_name, number, type, optional};
 
-    protobuf_parser::Message message{message_name, &file};
-    message.AddField(field);
+  protobuf_parser::Message message{message_name, &file};
+  message.AddField(field);
 
-  for(auto& fields_iterator: message.GetFields()) {
+  for (auto& fields_iterator : message.GetFields()) {
     ASSERT_EQ(fields_iterator.GetName(), field_name);
     ASSERT_EQ(fields_iterator.GetNumber(), number);
     ASSERT_EQ(fields_iterator.GetType(), type);

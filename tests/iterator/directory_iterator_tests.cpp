@@ -17,6 +17,5 @@ TEST(DirectoryIteratorTests, CanIterateOverMessages) {
   }
 }
 
-
-}
+}  // namespace iterator
 }  // namespace tests

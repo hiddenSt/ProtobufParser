@@ -22,7 +22,7 @@ void ProtobufStorage::AddFiles(std::vector<File>&& files) {
 }
 
 Directory* ProtobufStorage::FindDirectory(const std::string& directory_path) {
-  for (auto& directory: directories_) {
+  for (auto& directory : directories_) {
     if (directory.GetName() == directory_path) {
       return &directory;
     }
@@ -31,7 +31,7 @@ Directory* ProtobufStorage::FindDirectory(const std::string& directory_path) {
 }
 
 Package* ProtobufStorage::FindPackage(const std::string& package_name) {
-  for (auto& package: packages_) {
+  for (auto& package : packages_) {
     if (package_name == package.GetName()) {
       return &package;
     }

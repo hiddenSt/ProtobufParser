@@ -16,7 +16,7 @@ endif()
 
 get_filename_component(EXAMPLE_INCLUDE_PATH ".." ABSOLUTE)
 
-add_executable(example main.cpp)
+add_executable(protobuf_parser_utility main.cpp)
 
-target_link_libraries(example PRIVATE protobuf_parser argparse)
-target_include_directories(example PRIVATE "${EXAMPLE_INCLUDE_PATH}")
+target_link_libraries(protobuf_parser_utility PRIVATE protobuf_parser argparse)
+target_include_directories(protobuf_parser_utility PRIVATE "${EXAMPLE_INCLUDE_PATH}")
