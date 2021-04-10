@@ -4,25 +4,23 @@ namespace protobuf_parser {
 
 ProtobufStorage::ProtobufStorage() : messages_(), packages_(), files_(), directories_() {
 }
-void ProtobufStorage::AddMessage(const Message& message) {
-  messages_.push_back(message);
-  messages_[messages_.size() - 1].SetId(messages_.size() - 1);
+
+void ProtobufStorage::AddMessages(std::vector<Message>&& messages) {
+  messages_ = std::move(messages);
 }
 
-void ProtobufStorage::AddPackage(const Package& package) {
-  packages_.push_back(package);
-  packages_[packages_.size() - 1].SetId(packages_.size() - 1);
+void ProtobufStorage::AddPackages(std::vector<Package>&& packages) {
+  packages_ = std::move(packages);
 }
 
-void ProtobufStorage::AddDirectory(const Directory& directory) {
-  directories_.push_back(directory);
-  directories_[directories_.size() - 1].SetId(directories_.size() - 1);
+void ProtobufStorage::AddDirectories(std::vector<Directory>&& directories) {
+  directories_ = std::move(directories);
 }
 
-void ProtobufStorage::AddFile(const File& file) {
-  files_.push_back(file);
-  files_[files_.size() - 1].SetId(files_.size() - 1);
+void ProtobufStorage::AddFiles(std::vector<File>&& files) {
+  files_ = std::move(files);
 }
+
 
 template <>
 ProtobufStorage::MessagesIterator<Directory>::MessagesIterator(Directory* root,

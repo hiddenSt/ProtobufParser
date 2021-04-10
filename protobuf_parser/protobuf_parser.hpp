@@ -36,11 +36,23 @@ ProtobufParser<Serializer>::ProtobufParser(const std::string& path) : path_(path
   disk_source_tree_.MapPath(std::string{}, path_.string());
   google::protobuf::compiler::Importer importer{&disk_source_tree_, &error_collector_};
   std::filesystem::recursive_directory_iterator recursive_directory_iterator{path_};
+
+  std::vector<Message> messages;
+  std::vector<Package> packages;
+  std::vector<Directory> directories;
+  std::vector<File> files;
+
   for (auto& dir_entry : recursive_directory_iterator) {
-    if (dir_entry.is_regular_file()) {
+    if (dir_entry.is_regular_file() && dir_entry.path().extension() == ".proto") {
+
     } else if (dir_entry.is_directory()) {
     }
   }
+
+  storage_.AddDirectories(std::move(directories));
+  storage_.AddFiles(std::move(files));
+  storage_.AddPackages(std::move(packages));
+  storage_.AddMessages(std::move(messages));
 }
 
 template <typename Serializer>

@@ -50,10 +50,10 @@ class ProtobufStorage {
   ProtobufStorage();
   ~ProtobufStorage() = default;
 
-  void AddMessage(const Message& message);
-  void AddPackage(const Package& package);
-  void AddDirectory(const Directory& directory);
-  void AddFile(const File& file);
+  void AddMessages(std::vector<Message>&& messages);
+  void AddPackages(std::vector<Package>&& packages);
+  void AddDirectories(std::vector<Directory>&& directories);
+  void AddFiles(std::vector<File>&& files);
 
   template <typename T>
   MessagesIterator<T> Begin(T* root);
