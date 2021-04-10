@@ -3,13 +3,12 @@
 
 #include <string>
 
-#include <protobuf_parser/parse_element.hpp>
 #include <protobuf_parser/parse_elements/package.hpp>
 #include <protobuf_parser/parse_elements/directory.hpp>
 
 namespace protobuf_parser {
 
-class File : public ParseElement {
+class File {
  public:
   File() = delete;
   File(const File& other);

@@ -33,8 +33,7 @@ bool File::operator!=(const File& other) const noexcept {
 }
 
 File::File(const File& other)
-    : ParseElement(other),
-      name_(other.name_),
+    : name_(other.name_),
       directory_(other.directory_),
       package_(other.package_) {
 }

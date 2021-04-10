@@ -3,11 +3,9 @@
 
 #include <string>
 
-#include <protobuf_parser/parse_element.hpp>
-
 namespace protobuf_parser {
 
-class Package : public ParseElement {
+class Package {
  public:
   Package() = delete;
   explicit Package(const std::string& name);

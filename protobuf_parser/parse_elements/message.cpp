@@ -11,8 +11,7 @@ Message::Message(const std::string& name, File* file)
 }
 
 Message::Message(const Message& other)
-    : ParseElement(other),
-      name_(other.name_),
+    : name_(other.name_),
       parent_message_(other.parent_message_),
       file_(other.file_),
       fields_(other.fields_) {

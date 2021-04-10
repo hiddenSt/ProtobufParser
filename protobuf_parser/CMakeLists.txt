@@ -4,7 +4,6 @@ get_filename_component(LIB_PATH "." ABSOLUTE)
 find_package(Protobuf REQUIRED)
 
 set(PROTOBUF_PARSER_CXX_SOURCES
-  parse_element.cpp
   protobuf_storage.cpp
   stub_multiple_error_collector.cpp
   parse_elements/field.cpp
@@ -16,7 +15,6 @@ set(PROTOBUF_PARSER_CXX_SOURCES
   )
 
 set(PROTOBUF_PARSER_HEADERS
-  parse_element.hpp
   protobuf_storage.hpp
   protobuf_parser.hpp
   stub_multiple_error_collector.hpp

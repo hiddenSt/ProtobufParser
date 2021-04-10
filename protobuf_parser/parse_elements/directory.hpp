@@ -3,11 +3,9 @@
 
 #include <string>
 
-#include <protobuf_parser/parse_element.hpp>
-
 namespace protobuf_parser {
 
-class Directory : public ParseElement {
+class Directory {
  public:
   Directory() = delete;
   Directory(const Directory& other);

@@ -10,7 +10,7 @@ Directory::Directory(const std::string& name, protobuf_parser::Directory* parent
 }
 
 Directory::Directory(const Directory& other)
-    : ParseElement(other), name_(other.name_), parent_directory_(other.parent_directory_) {
+    : name_(other.name_), parent_directory_(other.parent_directory_) {
 }
 
 const std::string& Directory::GetName() const {

@@ -4,14 +4,13 @@
 #include <string>
 #include <vector>
 
-#include <protobuf_parser/parse_element.hpp>
 #include <protobuf_parser/parse_elements/file.hpp>
 #include <protobuf_parser/parse_elements/package.hpp>
 #include <protobuf_parser/parse_elements/field.hpp>
 
 namespace protobuf_parser {
 
-class Message : public ParseElement {
+class Message {
  public:
   Message() = delete;
   Message(const Message& other);
