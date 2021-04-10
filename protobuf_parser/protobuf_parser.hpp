@@ -44,7 +44,6 @@ ProtobufParser<Serializer>::ProtobufParser(const std::string& path) : path_(path
 
   for (auto& dir_entry : recursive_directory_iterator) {
     if (dir_entry.is_regular_file() && dir_entry.path().extension() == ".proto") {
-    } else if (dir_entry.is_directory()) {
     }
   }
 
