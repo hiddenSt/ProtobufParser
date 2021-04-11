@@ -152,7 +152,7 @@ template <>
 ProtobufStorage::MessagesIterator<Directory>::MessagesIterator(Directory* root,
                                                                ProtobufStorage* storage)
     : storage_(storage), index_(0) {
-  queue_.emplace(root);
+  EnqueueChildElements(root);
   PushBackCurrentElementMessages(root);
 }
 
@@ -160,7 +160,7 @@ template <>
 ProtobufStorage::MessagesIterator<Package>::MessagesIterator(Package* root,
                                                              ProtobufStorage* storage)
     : storage_(storage), index_(0) {
-  queue_.emplace(root);
+  EnqueueChildElements(root);
   PushBackCurrentElementMessages(root);
 }
 
