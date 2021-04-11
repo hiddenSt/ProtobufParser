@@ -72,10 +72,16 @@ class ProtobufStorage {
  private:
   void AddDirectories(const std::set<std::string>& directories);
   void AddPackages(const std::set<std::string>& packages);
-  void AddFiles(const google::protobuf::DescriptorPool* descriptor_pool, const std::set<std::string>& files);
+  void AddFiles(const google::protobuf::DescriptorPool* descriptor_pool,
+                const std::set<std::string>& files);
   void AddMessagesFromFiles(const google::protobuf::DescriptorPool* descriptor_pool);
   Package* FindPackageForFileDescriptor(const google::protobuf::FileDescriptor* file_descriptor);
-  Directory* FindDirectoryForFileDescriptor(const google::protobuf::FileDescriptor* file_descriptor);
+  Directory* FindDirectoryForFileDescriptor(
+      const google::protobuf::FileDescriptor* file_descriptor);
+  void SetUpPackagesParents();
+  void SetUpDirectoriesParents();
+  void AddNestedMessages(Message* message, const google::protobuf::DescriptorPool* descriptor_pool,
+                         std::size_t message_index);
 
   std::vector<Message> messages_;
   std::vector<File> files_;

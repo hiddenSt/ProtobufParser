@@ -34,10 +34,65 @@ void ProtobufStorage::StoreDescriptorPool(const google::protobuf::DescriptorPool
 }
 
 void ProtobufStorage::AddPackages(const std::set<std::string>& packages) {
-  for (auto& package: packages) {
+  for (auto& package : packages) {
     packages_.emplace_back(package);
   }
+  SetUpPackagesParents();
+}
 
+void ProtobufStorage::AddDirectories(const std::set<std::string>& directories) {
+  for (auto& directory : directories) {
+    directories_.emplace_back(directory);
+  }
+  SetUpDirectoriesParents();
+}
+
+void ProtobufStorage::AddFiles(const google::protobuf::DescriptorPool* descriptor_pool,
+                               const std::set<std::string>& files) {
+  for (auto& file : files) {
+    auto* file_descriptor = descriptor_pool->FindFileByName(file);
+    Package* a_package = FindPackageForFileDescriptor(file_descriptor);
+    Directory* directory = FindDirectoryForFileDescriptor(file_descriptor);
+    files_.emplace_back(file, directory, a_package);
+  }
+}
+
+void ProtobufStorage::AddMessagesFromFiles(
+    const google::protobuf::DescriptorPool* descriptor_pool) {
+  for (auto& file : files_) {
+    auto* file_descriptor = descriptor_pool->FindFileByName(file.GetName());
+    for (std::size_t i = 0; i < file_descriptor->message_type_count(); ++i) {
+      messages_.emplace_back(Message(file_descriptor->message_type(i)->name(), &file));
+      AddNestedMessages(&messages_.at(messages_.size() - 1), descriptor_pool, i);
+    }
+  }
+}
+
+Package* ProtobufStorage::FindPackageForFileDescriptor(
+    const google::protobuf::FileDescriptor* file_descriptor) {
+  Package* a_package = nullptr;
+  for (auto& package : packages_) {
+    if (package.GetName() == file_descriptor->package()) {
+      a_package = &package;
+    }
+  }
+  return a_package;
+}
+
+Directory* ProtobufStorage::FindDirectoryForFileDescriptor(
+    const google::protobuf::FileDescriptor* file_descriptor) {
+  Directory* directory = nullptr;
+  // TODO:
+  for (std::size_t i = 0; i < directories_.size(); ++i) {
+    // TODO: find directory
+    // if (directories_[i].GetName() == file_descriptor->) {
+    // directory = &directories_[i];
+    //}
+  }
+  return directory;
+}
+
+void ProtobufStorage::SetUpPackagesParents() {
   // BRUTE FORCE IS VERY VERY BAD
   for (std::size_t i = 0; i < packages_.size(); ++i) {
     for (std::size_t j = 0; j < packages_.size(); ++i) {
@@ -48,14 +103,9 @@ void ProtobufStorage::AddPackages(const std::set<std::string>& packages) {
       }
     }
   }
-
 }
 
-void ProtobufStorage::AddDirectories(const std::set<std::string>& directories) {
-  for (auto& directory: directories) {
-    directories_.emplace_back(directory);
-  }
-
+void ProtobufStorage::SetUpDirectoriesParents() {
   // BRUTE FORCE IS VERY VERY BAD
   for (std::size_t i = 0; i < directories_.size(); ++i) {
     for (std::size_t j = 0; j < directories_.size(); ++i) {
@@ -68,45 +118,9 @@ void ProtobufStorage::AddDirectories(const std::set<std::string>& directories) {
   }
 }
 
-void ProtobufStorage::AddFiles(const google::protobuf::DescriptorPool* descriptor_pool, const std::set<std::string>& files) {
-  for (auto& file: files) {
-    auto* file_descriptor = descriptor_pool->FindFileByName(file);
-    Package* a_package = FindPackageForFileDescriptor(file_descriptor);
-    Directory* directory = FindDirectoryForFileDescriptor(file_descriptor);
-    files_.emplace_back(file, directory, a_package);
-  }
-}
-
-void ProtobufStorage::AddMessagesFromFiles(const google::protobuf::DescriptorPool* descriptor_pool) {
-  for (auto& file: files_) {
-    auto* file_descriptor = descriptor_pool->FindFileByName(file.GetName());
-    for (std::size_t i = 0; i < file_descriptor->message_type_count(); ++i) {
-      messages_.emplace_back(Message(file_descriptor->message_type(i)->name(), &file));
-      // TODO: add nested messages
-    }
-  }
-}
-
-Package* ProtobufStorage::FindPackageForFileDescriptor(const google::protobuf::FileDescriptor* file_descriptor) {
-  Package* a_package = nullptr;
-  for (std::size_t i = 0; i < packages_.size(); ++i) {
-    if (packages_[i].GetName() == file_descriptor->package()) {
-      a_package = &packages_[i];
-    }
-  }
-}
-
-Directory* ProtobufStorage::FindDirectoryForFileDescriptor(
-    const google::protobuf::FileDescriptor* file_descriptor) {
-  Directory* directory = nullptr;
-  // TODO:
-  for (std::size_t i = 0; i < directories_.size(); ++i) {
-    // TODO: find directory
-    //if (directories_[i].GetName() == file_descriptor->) {
-    //directory = &directories_[i];
-    //}
-  }
-  return directory;
+void ProtobufStorage::AddNestedMessages(Message* message,
+                                        const google::protobuf::DescriptorPool* descriptor_pool,
+                                        std::size_t message_index) {
 }
 
 // ITERATORS
@@ -139,14 +153,14 @@ void ProtobufStorage::MessagesIterator<Directory>::EnqueueChildElements(Director
 }
 
 template <>
-void ProtobufStorage::MessagesIterator<Directory>::PushBackCurrentElementMessages(Directory* directory) {
+void ProtobufStorage::MessagesIterator<Directory>::PushBackCurrentElementMessages(
+    Directory* directory) {
   for (auto& message : storage_->messages_) {
     if (*message.GetDirectory() == *directory && message.GetParentMessage() == nullptr) {
       current_element_messages_.push_back(&message);
     }
   }
 }
-
 
 template <>
 ProtobufStorage::MessagesIterator<Directory>::MessagesIterator(Directory* root,
@@ -163,8 +177,6 @@ ProtobufStorage::MessagesIterator<Package>::MessagesIterator(Package* root,
   EnqueueChildElements(root);
   PushBackCurrentElementMessages(root);
 }
-
-
 
 template <>
 void ProtobufStorage::MessagesIterator<Package>::Iterate() {
@@ -196,6 +208,5 @@ void ProtobufStorage::MessagesIterator<Directory>::Iterate() {
     PushBackCurrentElementMessages(directory);
   }
 }
-
 
 }  // namespace protobuf_parser
