@@ -47,7 +47,7 @@ ProtobufParser<Serializer>::ProtobufParser(const std::filesystem::path& path) : 
     if (dir_entry.is_regular_file() && dir_entry.path().extension() == ".proto") {
       std::string relative_to_root_file_path = GetPathRelativeToRootDirectory(dir_entry.path().string());
       auto* file_descriptor = importer.Import(relative_to_root_file_path);
-      directories_names.insert(dir_entry.path().parent_path().string());
+      directories_names.insert(GetPathRelativeToRootDirectory(dir_entry.path().parent_path().string()));
       packages_names.insert(file_descriptor->package());
       files_names.insert(relative_to_root_file_path);
     }
