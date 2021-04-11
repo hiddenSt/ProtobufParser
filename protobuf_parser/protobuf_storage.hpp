@@ -8,10 +8,10 @@
 
 #include <google/protobuf/descriptor.h>
 
-#include <protobuf_parser/parse_elements/directory.hpp>
-#include <protobuf_parser/parse_elements/message.hpp>
-#include <protobuf_parser/parse_elements/package.hpp>
-#include <protobuf_parser/parse_elements/file.hpp>
+#include <protobuf_parser/parsed_elements/directory.hpp>
+#include <protobuf_parser/parsed_elements/message.hpp>
+#include <protobuf_parser/parsed_elements/package.hpp>
+#include <protobuf_parser/parsed_elements/file.hpp>
 
 namespace protobuf_parser {
 

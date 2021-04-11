@@ -5,7 +5,7 @@
 
 #include <nlohmann/json.hpp>
 
-#include <protobuf_parser/parse_elements/message.hpp>
+#include <protobuf_parser/parsed_elements/message.hpp>
 
 namespace protobuf_parser {
 namespace serializer {

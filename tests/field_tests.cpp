@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include <protobuf_parser/parse_elements/field.hpp>
-#include <protobuf_parser/parse_elements/package.hpp>
+#include <protobuf_parser/parsed_elements/field.hpp>
+#include <protobuf_parser/parsed_elements/package.hpp>
 
 namespace tests {
 
