@@ -32,12 +32,6 @@ bool File::operator!=(const File& other) const noexcept {
   return !(*this == other);
 }
 
-File::File(const File& other)
-    : name_(other.name_),
-      directory_(other.directory_),
-      package_(other.package_) {
-}
-
 Directory* File::GetDirectory() {
   return directory_;
 }

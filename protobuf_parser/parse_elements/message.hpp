@@ -13,7 +13,7 @@ namespace protobuf_parser {
 class Message {
  public:
   Message() = delete;
-  Message(const Message& other);
+  Message(const Message& other) = default;
   explicit Message(const std::string& name, File* file, Message* parent_message);
   explicit Message(const std::string& name, File* file);
   ~Message() = default;

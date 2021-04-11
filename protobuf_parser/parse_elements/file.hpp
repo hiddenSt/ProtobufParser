@@ -11,7 +11,7 @@ namespace protobuf_parser {
 class File {
  public:
   File() = delete;
-  File(const File& other);
+  File(const File& other) = default;
   explicit File(const std::string& name, Directory* directory, Package* package);
   ~File() = default;
 

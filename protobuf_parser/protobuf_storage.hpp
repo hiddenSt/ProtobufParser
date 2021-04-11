@@ -42,6 +42,8 @@ class ProtobufStorage {
 
    private:
     void Iterate();
+    void EnqueueChildElements(T* element);
+    void PushBackCurrentElementMessages(T* element);
 
     std::queue<T*> queue_;
     std::vector<Message*> current_element_messages_;
