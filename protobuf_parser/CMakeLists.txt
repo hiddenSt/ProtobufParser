@@ -29,7 +29,7 @@ set(PROTOBUF_PARSER_HEADERS
 
 add_library(protobuf_parser STATIC "${PROTOBUF_PARSER_HEADERS}" "${PROTOBUF_PARSER_CXX_SOURCES}")
 target_include_directories(protobuf_parser PRIVATE "${LIB_INCLUDE_PATH}" "${Protobuf_INCLUDE_DIRS}")
-target_link_libraries(protobuf_parser PRIVATE nlohmann_json::nlohmann_json "${Protobuf_LIBRARIES}")
+target_link_libraries(protobuf_parser PUBLIC nlohmann_json::nlohmann_json "${Protobuf_LIBRARIES}")
 
 # Linters
 

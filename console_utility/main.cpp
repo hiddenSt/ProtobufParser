@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <filesystem>
 
 #include <argparse/argparse.hpp>
 #include <protobuf_parser/protobuf_parser.hpp>
@@ -23,13 +24,14 @@ int main(int argc, char* argv[]) {
     std::cerr << program;
     return 1;
   }
-
-  protobuf_parser::ProtobufParser<protobuf_parser::serializer::JsonSerializer> parser(program.get<std::string>("source"));
+  std::filesystem::path root_path{program.get<std::string>("source_directory")};
+  protobuf_parser::ProtobufParser<protobuf_parser::serializer::JsonSerializer> parser(root_path);
   auto parse_source = program.get<std::string>("parse_source");
   if (program["--package"] == true) {
     std::cout << parser.SerializePackage(parse_source);
   } else {
-    std::cout << parser.SerializeDirectory(parse_source);
+    std::filesystem::path directory_path{parse_source};
+    std::cout << parser.SerializeDirectory(directory_path);
   }
   return 0;
 }
