@@ -32,9 +32,10 @@ class ProtobufParser {
 };
 
 template <typename Serializer>
-ProtobufParser<Serializer>::ProtobufParser(const std::filesystem::path& root_path) : root_path_(root_path) {
-  // Add empty string argument as virtual_path parameter to indicate DiskSourceTree to map root_path_ as
-  // a root
+ProtobufParser<Serializer>::ProtobufParser(const std::filesystem::path& root_path)
+    : root_path_(root_path) {
+  // Add empty string argument as virtual_path parameter to indicate DiskSourceTree to map
+  // root_path_ as a root
   disk_source_tree_.MapPath(std::string{}, root_path_.string());
   google::protobuf::compiler::Importer importer{&disk_source_tree_, &error_collector_};
   std::filesystem::recursive_directory_iterator recursive_directory_iterator{root_path_};
@@ -45,9 +46,11 @@ ProtobufParser<Serializer>::ProtobufParser(const std::filesystem::path& root_pat
 
   for (auto& dir_entry : recursive_directory_iterator) {
     if (dir_entry.is_regular_file() && dir_entry.path().extension() == ".proto") {
-      std::string relative_to_root_file_path = GetPathRelativeToRootDirectory(dir_entry.path().string());
+      std::string relative_to_root_file_path =
+          GetPathRelativeToRootDirectory(dir_entry.path().string());
       auto* file_descriptor = importer.Import(relative_to_root_file_path);
-      directories_names.insert(GetPathRelativeToRootDirectory(dir_entry.path().parent_path().string()));
+      directories_names.insert(
+          GetPathRelativeToRootDirectory(dir_entry.path().parent_path().string()));
       packages_names.insert(file_descriptor->package());
       files_names.insert(relative_to_root_file_path);
     }
@@ -57,7 +60,8 @@ ProtobufParser<Serializer>::ProtobufParser(const std::filesystem::path& root_pat
 }
 
 template <typename Serializer>
-std::string ProtobufParser<Serializer>::SerializeDirectory(const std::filesystem::path& relative_to_root_directory_path) {
+std::string ProtobufParser<Serializer>::SerializeDirectory(
+    const std::filesystem::path& relative_to_root_directory_path) {
   auto* directory = storage_.FindDirectory(relative_to_root_directory_path.string());
   view::View<Directory, Serializer> directory_view{directory, storage_, serializer_};
   return directory_view.Serialize();

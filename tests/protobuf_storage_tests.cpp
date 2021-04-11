@@ -7,4 +7,24 @@ TEST(ProtobufStorageTests, CanCreateStorage) {
   protobuf_parser::ProtobufStorage{};
 }
 
+TEST(ProtobufStorageTests, CanStoreDescriptorsPool) {
+
+}
+
+TEST(ProtobufStorageTests, CanFindPackage) {
+
+}
+
+TEST(ProtobufStorageTests, CanFindDirectory) {
+
+}
+
+TEST(ProtobufStorageTests, CanGetIteratorToDirectory) {
+
+}
+
+TEST(ProtobufStorageTests, CanGetIteratorToPackage) {
+
+}
+
 }  // namespace tests
