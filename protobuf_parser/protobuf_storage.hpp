@@ -121,6 +121,7 @@ ProtobufStorage::MessagesIterator<T> ProtobufStorage::MessagesIterator<T>::opera
 template <typename T>
 bool operator==(const ProtobufStorage::MessagesIterator<T>& a,
                 const ProtobufStorage::MessagesIterator<T>& b) {
+  // TODO: bug in case Iterator a == a.end()
   if (a.queue_.empty() && b.queue_.empty() && a.storage_ == b.storage_) {
     return true;
   }

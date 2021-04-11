@@ -17,9 +17,9 @@ template <typename Serializer>
 class ProtobufParser {
  public:
   ProtobufParser() = delete;
-  explicit ProtobufParser(const std::string& path);
+  explicit ProtobufParser(const std::filesystem::path& path);
 
-  std::string SerializeDirectory(const std::string& dir_path);
+  std::string SerializeDirectory(const std::filesystem::path& dir_path);
   std::string SerializePackage(const std::string& package_name);
 
  private:
@@ -31,14 +31,14 @@ class ProtobufParser {
 };
 
 template <typename Serializer>
-ProtobufParser<Serializer>::ProtobufParser(const std::string& path) : path_(path) {
+ProtobufParser<Serializer>::ProtobufParser(const std::filesystem::path& path) : path_(path) {
   // Add empty string argument as virtual_path parameter to indicate DiskSourceTree to map path_ as
   // a root
   disk_source_tree_.MapPath(std::string{}, path_.string());
   google::protobuf::compiler::Importer importer{&disk_source_tree_, &error_collector_};
   std::filesystem::recursive_directory_iterator recursive_directory_iterator{path_};
 
-  std::set<std::string> directories_names{};
+  std::set<std::string> directories_names;
   std::set<std::string> packages_names;
   std::set<std::string> files_names;
 
@@ -56,8 +56,8 @@ ProtobufParser<Serializer>::ProtobufParser(const std::string& path) : path_(path
 }
 
 template <typename Serializer>
-std::string ProtobufParser<Serializer>::SerializeDirectory(const std::string& dir_path) {
-  auto* directory = storage_.FindDirectory(dir_path);
+std::string ProtobufParser<Serializer>::SerializeDirectory(const std::filesystem::path& dir_path) {
+  auto* directory = storage_.FindDirectory(dir_path.string());
   view::View<Directory, Serializer> directory_view{directory, storage_, serializer_};
   return directory_view.Serialize();
 }
