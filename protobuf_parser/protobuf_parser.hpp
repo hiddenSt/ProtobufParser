@@ -23,6 +23,7 @@ class ProtobufParser {
   std::string SerializePackage(const std::string& package_name);
 
  private:
+  std::string GetPathRelativeToRootDirectory(const std::string& full_path);
   google::protobuf::compiler::DiskSourceTree disk_source_tree_;
   StubMultipleErrorCollector error_collector_;
   std::filesystem::path path_;
@@ -44,11 +45,11 @@ ProtobufParser<Serializer>::ProtobufParser(const std::filesystem::path& path) : 
 
   for (auto& dir_entry : recursive_directory_iterator) {
     if (dir_entry.is_regular_file() && dir_entry.path().extension() == ".proto") {
-      std::string file_full_name;  // TODO:
-      auto* file_descriptor = importer.Import(file_full_name);
+      std::string relative_to_root_file_path = GetPathRelativeToRootDirectory(dir_entry.path().string());
+      auto* file_descriptor = importer.Import(relative_to_root_file_path);
       directories_names.insert(dir_entry.path().parent_path().string());
       packages_names.insert(file_descriptor->package());
-      files_names.insert(file_full_name);
+      files_names.insert(relative_to_root_file_path);
     }
   }
 
@@ -67,6 +68,22 @@ std::string ProtobufParser<Serializer>::SerializePackage(const std::string& pack
   auto* package = storage_.FindPackage(package_name);
   view::View<Package, Serializer> package_view{package, storage_, serializer_};
   return package_view.Serialize();
+}
+
+template <typename Serializer>
+std::string ProtobufParser<Serializer>::GetPathRelativeToRootDirectory(
+    const std::string& full_path) {
+  std::string changed_path{};
+  std::size_t i = 0;
+  std::string root_path = path_.string();
+  while (full_path[i] == root_path[i]) {
+    ++i;
+  }
+  ++i;
+  for (std::size_t j = i; j < full_path.size(); ++j) {
+    changed_path += full_path[j];
+  }
+  return changed_path;
 }
 
 }  // namespace protobuf_parser
