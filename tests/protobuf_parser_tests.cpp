@@ -37,4 +37,17 @@ TEST_F(ProtobufParserTests, CanGetSerializedMessageFromPackage) {
   ASSERT_NO_THROW(protobuf_parser.SerializePackage(package_name));
 }
 
+TEST_F(ProtobufParserTests, ThrowsExceptionIfGivenDirectoryDoesNotExists) {
+  protobuf_parser::ProtobufParser<protobuf_parser::serializer::JsonSerializer> protobuf_parser{*root_path_};
+  std::string no_existing_directory_name{"NoName"};
+  std::filesystem::path no_existing_path{no_existing_directory_name};
+  ASSERT_THROW(protobuf_parser.SerializeDirectory(no_existing_path), std::runtime_error);
+}
+
+TEST_F(ProtobufParserTests, ThrowsExceptionIfGivenPackageDoesNotExists) {
+  protobuf_parser::ProtobufParser<protobuf_parser::serializer::JsonSerializer> protobuf_parser{*root_path_};
+  std::string no_existing_package_name{"no.exists"};
+  ASSERT_THROW(protobuf_parser.SerializePackage(no_existing_package_name), std::runtime_error);
+}
+
 }  // namespace tests
