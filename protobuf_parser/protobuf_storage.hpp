@@ -52,7 +52,7 @@ class ProtobufStorage {
   };
 
  public:
-  ProtobufStorage();
+  ProtobufStorage() = default;
   ~ProtobufStorage() = default;
 
   void StoreDescriptorPool(const google::protobuf::DescriptorPool* descriptor_pool,

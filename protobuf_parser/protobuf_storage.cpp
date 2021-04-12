@@ -2,7 +2,14 @@
 
 namespace protobuf_parser {
 
-ProtobufStorage::ProtobufStorage() : messages_(), packages_(), files_(), directories_() {
+void ProtobufStorage::StoreDescriptorPool(const google::protobuf::DescriptorPool* descriptor_pool,
+                                          const std::set<std::string>& files,
+                                          const std::set<std::string>& directories,
+                                          const std::set<std::string>& packages) {
+  AddPackages(packages);
+  AddDirectories(directories);
+  AddFiles(descriptor_pool, files);
+  AddMessagesFromFiles(descriptor_pool);
 }
 
 Directory* ProtobufStorage::FindDirectory(const std::string& directory_path) {
@@ -21,16 +28,6 @@ Package* ProtobufStorage::FindPackage(const std::string& package_name) {
     }
   }
   return nullptr;
-}
-
-void ProtobufStorage::StoreDescriptorPool(const google::protobuf::DescriptorPool* descriptor_pool,
-                                          const std::set<std::string>& files,
-                                          const std::set<std::string>& directories,
-                                          const std::set<std::string>& packages) {
-  AddPackages(packages);
-  AddDirectories(directories);
-  AddFiles(descriptor_pool, files);
-  AddMessagesFromFiles(descriptor_pool);
 }
 
 void ProtobufStorage::AddPackages(const std::set<std::string>& packages) {
