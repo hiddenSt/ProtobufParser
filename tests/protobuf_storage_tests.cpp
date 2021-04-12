@@ -59,28 +59,65 @@ class ProtobufStorageTests : public ::testing::Test {
   std::set<std::string> files_names_;
 };
 
-TEST_F(ProtobufStorageTests, CanCreateStorage) {
-  storage_->StoreDescriptorPool(importer_->pool(), files_names_, directories_names,
-                                packages_names_);
-}
-
 TEST_F(ProtobufStorageTests, CanStoreDescriptorsPool) {
+  ASSERT_NO_THROW(storage_->StoreDescriptorPool(importer_->pool(), files_names_, directories_names,
+                                                packages_names_));
 }
 
 TEST_F(ProtobufStorageTests, CanFindPackage) {
+  storage_->StoreDescriptorPool(importer_->pool(), files_names_, directories_names, packages_names_);
+  std::string package_1_name{"test_package"};
+  std::string package_2_name{"test_package.inner_test_package"};
+  auto* package_1 = storage_->FindPackage(package_1_name);
+  auto* package_2 = storage_->FindPackage(package_2_name);
+  ASSERT_NE(package_1, nullptr);
+  ASSERT_NE(package_2, nullptr);
+  ASSERT_EQ(package_1->GetName(), package_1_name);
+  ASSERT_EQ(package_2->GetName(), package_2_name);
+}
 
+TEST_F(ProtobufStorageTests, ReturnsNullptrIfStorageHasNoSuchPackage) {
+  storage_->StoreDescriptorPool(importer_->pool(), files_names_, directories_names, packages_names_);
+  std::string package_name{"NotExists"};
+  auto* package = storage_->FindPackage(package_name);
+  ASSERT_EQ(package, nullptr);
 }
 
 TEST_F(ProtobufStorageTests, CanFindDirectory) {
+  storage_->StoreDescriptorPool(importer_->pool(), files_names_, directories_names, packages_names_);
+  std::string directory_name{"protos/inner_directory"};
+  auto* directory = storage_->FindDirectory(directory_name);
+  ASSERT_NE(directory, nullptr);
+  ASSERT_EQ(directory->GetName(), directory_name);
+}
 
+TEST_F(ProtobufStorageTests, ReturnsNullptrIfStorageHasNoSuchDirectory) {
+  storage_->StoreDescriptorPool(importer_->pool(), files_names_, directories_names, packages_names_);
+  std::string directory_name{"not/existing/directory"};
+  auto* directory = storage_->FindDirectory(directory_name);
+  ASSERT_EQ(directory, nullptr);
 }
 
 TEST_F(ProtobufStorageTests, CanGetIteratorToDirectory) {
+  storage_->StoreDescriptorPool(importer_->pool(), files_names_, directories_names, packages_names_);
+  std::string directory_name{"protos/inner_directory"};
+  auto* directory = storage_->FindDirectory(directory_name);
+  ASSERT_NO_THROW(storage_->Begin(directory));
+}
 
+TEST_F(ProtobufStorageTests, CanIterateOverDirectories) {
+  storage_->StoreDescriptorPool(importer_->pool(), files_names_, directories_names, packages_names_);
+  std::string package_1_name{"test_package"};
+  auto* package = storage_->FindPackage(package_1_name);
+  ASSERT_NO_THROW(storage_->Begin(package));
 }
 
 TEST_F(ProtobufStorageTests, CanGetIteratorToPackage) {
+  storage_->StoreDescriptorPool(importer_->pool(), files_names_, directories_names, packages_names_);
+}
 
+TEST_F(ProtobufStorageTests, CanIterateOverPackages) {
+  storage_->StoreDescriptorPool(importer_->pool(), files_names_, directories_names, packages_names_);
 }
 
 }  // namespace tests
