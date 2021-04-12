@@ -121,7 +121,6 @@ ProtobufStorage::MessagesIterator<T> ProtobufStorage::MessagesIterator<T>::opera
 template <typename T>
 bool operator==(const ProtobufStorage::MessagesIterator<T>& a,
                 const ProtobufStorage::MessagesIterator<T>& b) {
-  // TODO: there is a bug, last message can not iterates
   if (a.elements_queue_.empty() && b.elements_queue_.empty() && a.storage_ == b.storage_ &&
       a.current_element_messages_.empty() && b.current_element_messages_.empty()) {
     return true;
