@@ -112,7 +112,7 @@ ProtobufStorage::MessagesIterator<T>& ProtobufStorage::MessagesIterator<T>::oper
 
 template <typename T>
 ProtobufStorage::MessagesIterator<T> ProtobufStorage::MessagesIterator<T>::operator++(int) {
-  MessagesIterator<T> tmp = this;
+  MessagesIterator<T> tmp = *this;
   Iterate();
   return tmp;
 }

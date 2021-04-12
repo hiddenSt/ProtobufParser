@@ -118,7 +118,7 @@ TEST_F(ProtobufStorageTests, CanIterateOverDirectories) {
   auto* directory = storage_->FindDirectory(directory_name);
   std::vector<std::string> messages;
   for (auto message = storage_->Begin(directory);
-       message != storage_->End<protobuf_parser::Directory>(); ++message) {
+       message != storage_->End<protobuf_parser::Directory>(); message++) {
     messages.push_back(message->GetName());
   }
   ASSERT_EQ(messages.size(), 3);
