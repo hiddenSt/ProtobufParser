@@ -38,6 +38,7 @@ ProtobufParser<Serializer>::ProtobufParser(const std::filesystem::path& root_pat
     : root_path_(root_path) {
   // Add empty string argument as virtual_path parameter to indicate DiskSourceTree to map
   // root_path_ as a root
+  // (https://developers.google.com/protocol-buffers/docs/reference/cpp/google.protobuf.compiler.importer#DiskSourceTree.MapPath.details)
   disk_source_tree_.MapPath(std::string{}, root_path_.string());
   google::protobuf::compiler::Importer importer{&disk_source_tree_, &error_collector_};
   std::filesystem::recursive_directory_iterator recursive_directory_iterator{root_path_};
