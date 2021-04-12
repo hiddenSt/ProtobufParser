@@ -116,6 +116,13 @@ void ProtobufStorage::SetUpDirectoriesParents() {
 
 void ProtobufStorage::AddNestedMessages(Message* message,
                                         const google::protobuf::Descriptor* descriptor) {
+  for (std::size_t i = 0; i < descriptor->nested_type_count(); ++i) {
+    auto* nested_message = message->AddNestedMessage(Message(descriptor->nested_type(i)->name(), message->GetFile()));
+    AddMessageFields(nested_message, descriptor->nested_type(i));
+    if (descriptor->nested_type(i)->nested_type_count() > 0) {
+      AddNestedMessages(nested_message, descriptor->nested_type(i));
+    }
+  }
 }
 
 void ProtobufStorage::AddMessageFields(Message* message,

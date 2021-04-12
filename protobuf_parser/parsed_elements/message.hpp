@@ -22,9 +22,10 @@ class Message {
   bool operator!=(const Message& other);
 
   void AddField(const Field& field);
-  void AddNestedMessage(Message* message);
+  Message* AddNestedMessage(const Message& message);
   void AddReservedName(const std::string& name);
   void AddReservedNumber(std::size_t number);
+  void SetParentMessage(Message* message) noexcept;
 
   Package* GetPackage() const noexcept;
   File* GetFile() const noexcept;
@@ -32,7 +33,7 @@ class Message {
   Message* GetParentMessage() const noexcept;
   const std::string& GetName() const;
   const std::vector<Field>& GetFields() const;
-  const std::vector<Message*>& GetNestedMessages() const;
+  const std::vector<Message>& GetNestedMessages() const;
   const std::vector<std::string>& GetReservedNames() const;
   const std::vector<std::size_t>& GetReservedNumbers() const;
 
@@ -40,7 +41,7 @@ class Message {
   std::string name_;
   Message* parent_message_;
   File* file_;
-  std::vector<Message*> nested_messages_;
+  std::vector<Message> nested_messages_;
   std::vector<Field> fields_;
   std::vector<std::string> reserved_names_;
   std::vector<std::size_t> reserved_numbers_;

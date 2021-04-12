@@ -5,7 +5,7 @@
 ## Зависимости
 Для использования необходимо следующее:
 * cmake
-* [protobuf-cpp-3.15.8](https://github.com/protocolbuffers/protobuf/releases/download/v3.15.8/protobuf-cpp-3.15.8.tar.gz)
+* [protobuf-cpp-3.15.8](https://github.com/protocolbuffers/protobuf/)
 * компилятор поддерживающий ``C++20``
 
 ### Сторонние библиотеки устанавливаемые автоматически
