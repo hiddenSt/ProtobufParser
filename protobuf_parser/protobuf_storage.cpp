@@ -63,7 +63,8 @@ void ProtobufStorage::AddMessagesFromFiles(
     auto* file_descriptor = descriptor_pool->FindFileByName(file.GetName());
     for (std::size_t i = 0; i < file_descriptor->message_type_count(); ++i) {
       messages_.emplace_back(Message(file_descriptor->message_type(i)->name(), &file));
-      AddNestedMessages(&messages_.at(messages_.size() - 1), descriptor_pool, i);
+      AddMessageFields(&messages_[messages_.size() - 1], file_descriptor->message_type(i));
+      AddNestedMessages(&messages_[messages_.size() - 1], file_descriptor->message_type(i));
     }
   }
 }
@@ -80,7 +81,7 @@ Package* ProtobufStorage::FindPackageForFileDescriptor(
 }
 
 Directory* ProtobufStorage::FindDirectoryForFileDescriptor(const std::string& file) {
-  for (auto& dir: directories_) {
+  for (auto& dir : directories_) {
     if (dir.Contains(file)) {
       return &dir;
     }
@@ -115,9 +116,17 @@ void ProtobufStorage::SetUpDirectoriesParents() {
 }
 
 void ProtobufStorage::AddNestedMessages(Message* message,
-                                        const google::protobuf::DescriptorPool* descriptor_pool,
-                                        std::size_t message_index) {
+                                        const google::protobuf::Descriptor* descriptor) {
   // TODO: implement
+}
+
+void ProtobufStorage::AddMessageFields(Message* message,
+                                       const google::protobuf::Descriptor* descriptor) {
+  for (std::size_t i = 0; i < descriptor->field_count(); ++i) {
+    message->AddField(Field(descriptor->field(i)->name(), descriptor->field(i)->number(),
+                            descriptor->field(i)->type_name(),
+                            descriptor->field(i)->is_optional()));
+  }
 }
 
 // ITERATORS
@@ -125,7 +134,8 @@ void ProtobufStorage::AddNestedMessages(Message* message,
 template <>
 void ProtobufStorage::MessagesIterator<Package>::EnqueueChildElements(Package* package) {
   for (auto& child_package : storage_->packages_) {
-    if (child_package.GetParentPackage() != nullptr && *child_package.GetParentPackage() == *package) {
+    if (child_package.GetParentPackage() != nullptr &&
+        *child_package.GetParentPackage() == *package) {
       queue_.emplace(&child_package);
     }
   }

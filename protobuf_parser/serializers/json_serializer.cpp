@@ -4,11 +4,19 @@ namespace protobuf_parser {
 namespace serializer {
 
 JsonSerializer::JsonSerializer() {
-  json_representation_["messages"] = nlohmann::json::array();
 }
 
 void JsonSerializer::AddMessage(const Message& message) {
-  json_representation_[message.GetName()] = {"file"};
+  nlohmann::json message_element;
+  message_element.emplace("name", message.GetName());
+  message_element.emplace("file", message.GetFile()->GetName());
+  for (auto& field : message.GetFields()) {
+    message_element["fields"].emplace("name", field.GetName());
+    message_element["fields"].emplace("type", field.GetType());
+    message_element["fields"].emplace("number", field.GetNumber());
+    message_element["fields"].emplace("optional", field.IsOptional());
+  }
+  json_representation_["data"] = message_element;
 }
 
 std::string JsonSerializer::Serialize() {

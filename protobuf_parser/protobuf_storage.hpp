@@ -79,8 +79,8 @@ class ProtobufStorage {
   Directory* FindDirectoryForFileDescriptor(const std::string& file_name);
   void SetUpPackagesParents();
   void SetUpDirectoriesParents();
-  void AddNestedMessages(Message* message, const google::protobuf::DescriptorPool* descriptor_pool,
-                         std::size_t message_index);
+  void AddNestedMessages(Message* message, const google::protobuf::Descriptor* descriptor);
+  void AddMessageFields(Message* message, const google::protobuf::Descriptor* descriptor);
 
   std::vector<Message> messages_;
   std::vector<File> files_;
@@ -90,7 +90,7 @@ class ProtobufStorage {
 
 template <typename T>
 ProtobufStorage::MessagesIterator<T>::MessagesIterator(ProtobufStorage* storage)
-    : storage_(storage), index_(0) {
+    : storage_(storage), index_(0), current_element_messages_(), queue_() {
 }
 
 template <typename T>
@@ -121,7 +121,9 @@ template <typename T>
 bool operator==(const ProtobufStorage::MessagesIterator<T>& a,
                 const ProtobufStorage::MessagesIterator<T>& b) {
   // TODO: bug in case Iterator a == a.end()
-  if (a.queue_.empty() && b.queue_.empty() && a.storage_ == b.storage_) {
+  if (a.queue_.empty() && b.queue_.empty() && a.storage_ == b.storage_ &&
+      (a.index_ == a.current_element_messages_.size() - 1 ||
+       b.index_ == b.current_element_messages_.size() - 1)) {
     return true;
   }
 
