@@ -118,15 +118,23 @@ void ProtobufStorage::SetUpDirectoriesParents() {
 
 void ProtobufStorage::AddNestedMessages(Message* message,
                                         const google::protobuf::Descriptor* descriptor) {
-  // TODO: implement
+
 }
 
 void ProtobufStorage::AddMessageFields(Message* message,
                                        const google::protobuf::Descriptor* descriptor) {
   for (std::size_t i = 0; i < descriptor->field_count(); ++i) {
-    message->AddField(Field(descriptor->field(i)->name(), descriptor->field(i)->number(),
-                            descriptor->field(i)->type_name(),
-                            descriptor->field(i)->is_optional(), descriptor->field(i)->is_repeated()));
+    if (descriptor->field(i)->type_name() == "message") {
+      message->AddField(Field(descriptor->field(i)->name(), descriptor->field(i)->number(),
+                              descriptor->field(i)->message_type()->name(),
+                              descriptor->field(i)->is_optional(),
+                              descriptor->field(i)->is_repeated()));
+    } else {
+      message->AddField(Field(descriptor->field(i)->name(), descriptor->field(i)->number(),
+                              descriptor->field(i)->type_name(),
+                              descriptor->field(i)->is_optional(),
+                              descriptor->field(i)->is_repeated()));
+    }
   }
 }
 

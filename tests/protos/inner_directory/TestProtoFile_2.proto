@@ -5,7 +5,7 @@ message TestMessage_2 {
   string query = 1;
   int32 page_number = 2;
   int32 result_per_page = 3;
-  ChildTestMessage_1 message = 4;
+  ChildTestMessage_1 name_of_field = 4;
   message ChildTestMessage_1 {
     string str = 1;
   }
