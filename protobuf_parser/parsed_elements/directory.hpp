@@ -16,6 +16,7 @@ class Directory {
   const std::string& GetName() const;
   Directory* GetParentDirectory();
   void SetParentDirectory(Directory* directory);
+  bool Contains(const std::string& file_name);
 
   bool operator==(const Directory& other) const noexcept;
   bool operator!=(const Directory& other) const noexcept;

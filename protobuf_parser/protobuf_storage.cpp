@@ -52,7 +52,7 @@ void ProtobufStorage::AddFiles(const google::protobuf::DescriptorPool* descripto
   for (auto& file : files) {
     auto* file_descriptor = descriptor_pool->FindFileByName(file);
     Package* a_package = FindPackageForFileDescriptor(file_descriptor);
-    Directory* directory = FindDirectoryForFileDescriptor(file_descriptor);
+    Directory* directory = FindDirectoryForFileDescriptor(file);
     files_.emplace_back(file, directory, a_package);
   }
 }
@@ -79,17 +79,13 @@ Package* ProtobufStorage::FindPackageForFileDescriptor(
   return a_package;
 }
 
-Directory* ProtobufStorage::FindDirectoryForFileDescriptor(
-    const google::protobuf::FileDescriptor* file_descriptor) {
-  Directory* directory = nullptr;
-  // TODO:
-  for (std::size_t i = 0; i < directories_.size(); ++i) {
-    // TODO: find directory
-    // if (directories_[i].GetName() == file_descriptor->) {
-    // directory = &directories_[i];
-    //}
+Directory* ProtobufStorage::FindDirectoryForFileDescriptor(const std::string& file) {
+  for (auto& dir: directories_) {
+    if (dir.Contains(file)) {
+      return &dir;
+    }
   }
-  return directory;
+  return nullptr;
 }
 
 void ProtobufStorage::SetUpPackagesParents() {
@@ -121,6 +117,7 @@ void ProtobufStorage::SetUpDirectoriesParents() {
 void ProtobufStorage::AddNestedMessages(Message* message,
                                         const google::protobuf::DescriptorPool* descriptor_pool,
                                         std::size_t message_index) {
+  // TODO: implement
 }
 
 // ITERATORS
