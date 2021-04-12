@@ -125,7 +125,7 @@ void ProtobufStorage::AddNestedMessages(Message* message,
 template <>
 void ProtobufStorage::MessagesIterator<Package>::EnqueueChildElements(Package* package) {
   for (auto& child_package : storage_->packages_) {
-    if (*child_package.GetParentPackage() == *package) {
+    if (child_package.GetParentPackage() != nullptr && *child_package.GetParentPackage() == *package) {
       queue_.emplace(&child_package);
     }
   }

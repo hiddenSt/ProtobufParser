@@ -13,7 +13,7 @@ namespace tests {
 class ProtobufStorageTests : public ::testing::Test {
  protected:
   void SetUp() override {
-    path_to_tests_proto_directory_ = "/home/hiddenst/internship/ProtoBuffParser/tests";
+    path_to_tests_proto_directory_ = "../../tests";
     std::filesystem::path root_path{path_to_tests_proto_directory_};
     std::filesystem::recursive_directory_iterator directory_iterator{root_path};
     disk_source_tree_ = new google::protobuf::compiler::DiskSourceTree{};
@@ -107,13 +107,13 @@ TEST_F(ProtobufStorageTests, CanGetIteratorToDirectory) {
 
 TEST_F(ProtobufStorageTests, CanIterateOverDirectories) {
   storage_->StoreDescriptorPool(importer_->pool(), files_names_, directories_names, packages_names_);
-  std::string package_1_name{"test_package"};
-  auto* package = storage_->FindPackage(package_1_name);
-  ASSERT_NO_THROW(storage_->Begin(package));
 }
 
 TEST_F(ProtobufStorageTests, CanGetIteratorToPackage) {
   storage_->StoreDescriptorPool(importer_->pool(), files_names_, directories_names, packages_names_);
+  std::string package_name{"test_package"};
+  auto* package = storage_->FindPackage(package_name);
+  ASSERT_NO_THROW(storage_->Begin(package));
 }
 
 TEST_F(ProtobufStorageTests, CanIterateOverPackages) {

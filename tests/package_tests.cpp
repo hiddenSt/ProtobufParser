@@ -58,8 +58,16 @@ TEST(PackageTests, ReturnsFalseIfComparePackagesWithDifferentParents) {
   protobuf_parser::Package parent_package{parent_package_name};
 
   protobuf_parser::Package package{package_name, &parent_package};
-  protobuf_parser::Package package2{package_name, nullptr};
+  protobuf_parser::Package package2{package_name};
 
+  ASSERT_FALSE(package == package2);
+}
+
+TEST(PackageTests, CanComparePackages) {
+  std::string package_name{"ParentPackageName1"};
+  std::string package_name_2{"PackageName"};
+  protobuf_parser::Package package{package_name};
+  protobuf_parser::Package package2{package_name_2};
   ASSERT_FALSE(package == package2);
 }
 
