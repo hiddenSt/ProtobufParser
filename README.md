@@ -29,7 +29,7 @@ protobuf_parser::ProtobufParser<protobuf_parser::serializer::JsonSerializer> par
 Можно парсить messages по директории или по package. Будет возвращён std::string в формате указаноого сериалайзера
 ```
 parser.SerializeDirectory('path_relative_to_the_root_directory')
-parser.SerializeDirectory('package_name')
+parser.SerializePackage('package_name')
 ```
 
 Для того чтобы реализовать свой парсер необходимо определить класс со следующими методами
