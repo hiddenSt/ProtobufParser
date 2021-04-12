@@ -25,10 +25,10 @@ TEST(MessageTests, CanGetNestedMessages) {
   protobuf_parser::Message message{message_name, &file};
 
   protobuf_parser::Message nested_message{nested_message_name, &file, &message};
-  //message.AddNestedMessage(&nested_message);
+  message.AddNestedMessage(nested_message);
 
   for (auto nested_message_iterator : message.GetNestedMessages()) {
-   // ASSERT_EQ(nested_message_iterator->GetParentMessage()->GetName(), message_name);
+   ASSERT_EQ(nested_message_iterator.GetParentMessage()->GetName(), message_name);
   }
 }
 
@@ -42,9 +42,9 @@ TEST(MessageTests, CanGetParentMessage) {
   protobuf_parser::Message message{message_name, &file};
 
   protobuf_parser::Message nested_message{nested_message_name, &file, &message};
-//  message.AddNestedMessage(&nested_message);
+  message.AddNestedMessage(nested_message);
 
- // ASSERT_TRUE(*nested_message.GetParentMessage() == message);
+  ASSERT_TRUE(*nested_message.GetParentMessage() == message);
 }
 
 TEST(MessageTests, CanGetFile) {

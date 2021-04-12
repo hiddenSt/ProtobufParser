@@ -37,11 +37,4 @@ TEST_F(ProtobufParserTests, CanGetSerializedMessageFromPackage) {
   ASSERT_NO_THROW(protobuf_parser.SerializePackage(package_name));
 }
 
-TEST_F(ProtobufParserTests, ReturnsCorrectJson) {
-  protobuf_parser::ProtobufParser<protobuf_parser::serializer::JsonSerializer> protobuf_parser{
-      *root_path_};
-  auto message = protobuf_parser.SerializeDirectory("protos");
-  ASSERT_EQ(1, 2) << message;
-}
-
 }  // namespace tests
