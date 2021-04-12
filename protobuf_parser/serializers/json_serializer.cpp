@@ -24,7 +24,7 @@ void JsonSerializer::AddMessage(const Message& message) {
 }
 
 std::string JsonSerializer::Serialize() {
-  return json_representation_.dump();
+  return json_representation_.dump(2);
 }
 
 }  // namespace serializer
