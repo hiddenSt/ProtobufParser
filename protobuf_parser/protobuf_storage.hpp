@@ -46,9 +46,8 @@ class ProtobufStorage {
     void PushBackCurrentElementMessages(T* element);
 
     std::queue<T*> queue_;
-    std::vector<Message*> current_element_messages_;
+    std::queue<Message*> current_element_messages_;
     ProtobufStorage* storage_;
-    std::size_t current_message_index_;
   };
 
  public:
@@ -91,18 +90,18 @@ class ProtobufStorage {
 
 template <typename T>
 ProtobufStorage::MessagesIterator<T>::MessagesIterator(ProtobufStorage* storage)
-    : storage_(storage), current_message_index_(0), current_element_messages_(), queue_() {
+    : storage_(storage), current_element_messages_(), queue_() {
 }
 
 template <typename T>
 Message& ProtobufStorage::MessagesIterator<T>::operator*() const {
-  return *current_element_messages_[current_message_index_];
+  return *current_element_messages_.front();
 }
 
 template <typename T>
 typename ProtobufStorage::MessagesIterator<T>::pointer
 ProtobufStorage::MessagesIterator<T>::operator->() {
-  return current_element_messages_[current_message_index_];
+  return current_element_messages_.front();
 }
 
 template <typename T>
@@ -122,9 +121,7 @@ template <typename T>
 bool operator==(const ProtobufStorage::MessagesIterator<T>& a,
                 const ProtobufStorage::MessagesIterator<T>& b) {
   // TODO: there is a bug, last message can not iterates
-  if (a.queue_.empty() && b.queue_.empty() && a.storage_ == b.storage_ &&
-      (a.current_message_index_ == a.current_element_messages_.size() - 1 ||
-       b.current_message_index_ == b.current_element_messages_.size() - 1)) {
+  if (a.queue_.empty() && b.queue_.empty() && a.storage_ == b.storage_ && a.current_element_messages_.empty() && b.current_element_messages_.empty()) {
     return true;
   }
 
@@ -137,10 +134,6 @@ bool operator==(const ProtobufStorage::MessagesIterator<T>& a,
   }
 
   if (a.storage_ != b.storage_) {
-    return false;
-  }
-
-  if (a.current_message_index_ != b.current_message_index_) {
     return false;
   }
 

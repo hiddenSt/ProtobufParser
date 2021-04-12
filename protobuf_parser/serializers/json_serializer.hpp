@@ -18,6 +18,7 @@ class JsonSerializer {
   std::string Serialize();
 
  private:
+  void AddNestedMessages(const Message& message, nlohmann::json& parent_json);
   nlohmann::json json_representation_;
 };
 

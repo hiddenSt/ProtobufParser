@@ -33,11 +33,17 @@ void JsonSerializer::AddMessage(const Message& message) {
     field_element["repeated"] = field.IsRepeated();
     message_element["fields"].emplace_back(field_element);
   }
+  message_element["nested_messages"] = nlohmann::json::array();
+  //AddNestedMessages(message, message_element["nested_messages"]);
   json_representation_.emplace_back(message_element);
 }
 
 std::string JsonSerializer::Serialize() {
   return json_representation_.dump(2);
+}
+
+void JsonSerializer::AddNestedMessages(const Message& message, nlohmann::json& parent_json) {
+
 }
 
 }  // namespace serializer
