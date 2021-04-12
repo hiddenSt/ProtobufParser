@@ -16,7 +16,7 @@ TEST(MessageTests, CanCreateMessage) {
 }
 
 TEST(MessageTests, CanGetNestedMessages) {
-  protobuf_parser::Directory dir{"Hello world dit"};
+  protobuf_parser::Directory dir{"Hello world dir"};
   protobuf_parser::Package a_package{"Hello world"};
   protobuf_parser::File file{"Hello world", &dir, &a_package};
   std::string message_name{"CoolName"};

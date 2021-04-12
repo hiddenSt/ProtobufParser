@@ -5,6 +5,9 @@
 #include <protobuf_parser/protobuf_parser.hpp>
 #include <protobuf_parser/serializers/json_serializer.hpp>
 
+
+namespace tests {
+
 class ProtobufParserTests : public ::testing::Test {
  protected:
   void SetUp() override {
@@ -15,7 +18,6 @@ class ProtobufParserTests : public ::testing::Test {
   std::filesystem::path* root_path_;
 };
 
-namespace tests {
 TEST_F(ProtobufParserTests, CanCreateProtobufParser) {
   ASSERT_NO_THROW(
       protobuf_parser::ProtobufParser<protobuf_parser::serializer::JsonSerializer>{*root_path_});
@@ -41,4 +43,5 @@ TEST_F(ProtobufParserTests, ReturnsCorrectJson) {
   auto message = protobuf_parser.SerializeDirectory("protos");
   ASSERT_EQ(1, 2) << message;
 }
+
 }  // namespace tests

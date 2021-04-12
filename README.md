@@ -5,7 +5,13 @@
 ## Зависимости
 Для использования необходимо следующее:
 * cmake
-* protobuf compiler
+* [protobuf-cpp-3.15.8](https://github.com/protocolbuffers/protobuf/releases/download/v3.15.8/protobuf-cpp-3.15.8.tar.gz)
+* компилятор поддерживающий ``C++20``
+
+### Сторонние библиотеки устанавливаемые автоматически
+* [nlohmann/json](https://github.com/nlohmann/json)
+* [p-ranav/argparse](https://github.com/p-ranav/argparse)
+* [google test](https://github.com/google/googletest)
 
 ## Использование
 
@@ -17,13 +23,13 @@
 
 Создайте парсер со своим сериалайзером. В библиотеке есть JsonSerializer
 ```c++
-protobuf_parser::ProtobufParser<protobuf_parser::serializer::JsonSerializer> parser(имя дериктории);
+protobuf_parser::ProtobufParser<protobuf_parser::serializer::JsonSerializer> parser('root_directory_to_parse');
 ```
 
 Можно парсить messages по директории или по package. Будет возвращён std::string в формате указаноого сериалайзера
 ```
-parser.SerializeDirectory('путь к дериктории')
-parser.SerializeDirectory('название пакета')
+parser.SerializeDirectory('path_relative_to_the_root_directory')
+parser.SerializeDirectory('package_name')
 ```
 
 Для того чтобы реализовать свой парсер необходимо определить класс со следующими методами
@@ -53,5 +59,5 @@ class Serializer {
 Для вспомогательной информации запустите консольную утилиту с флагом ``-h``
 Для того чтобы распарсить package необходимо указать параметр ``--package``
 ```shell script
-./protobuf_parser_utility --package protos_files_dir dir1
+./protobuf_parser_utility --package protos_files_dir package_name
 ```
