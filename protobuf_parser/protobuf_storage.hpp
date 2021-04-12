@@ -48,7 +48,7 @@ class ProtobufStorage {
     std::queue<T*> queue_;
     std::vector<Message*> current_element_messages_;
     ProtobufStorage* storage_;
-    std::size_t index_;
+    std::size_t current_message_index_;
   };
 
  public:
@@ -76,12 +76,12 @@ class ProtobufStorage {
                 const std::set<std::string>& files);
   void AddMessagesFromFiles(const google::protobuf::DescriptorPool* descriptor_pool);
   Package* FindPackageForFileDescriptor(const google::protobuf::FileDescriptor* file_descriptor);
-  Directory* FindDirectoryForFileDescriptor(const std::string& file_name);
+  Directory* FindDirectoryForFile(const std::string& file_name);
   void SetUpPackagesParents();
   void SetUpDirectoriesParents();
   void AddNestedMessages(Message* message, const google::protobuf::Descriptor* descriptor);
   void AddMessageFields(Message* message, const google::protobuf::Descriptor* descriptor);
-  void AddMessageReservedParams(Message* message, const google::protobuf::Descriptor* descriptor);
+  void AddMessageReservedFieldsAndNumbers(Message* message, const google::protobuf::Descriptor* descriptor);
 
   std::vector<Message> messages_;
   std::vector<File> files_;
@@ -91,18 +91,18 @@ class ProtobufStorage {
 
 template <typename T>
 ProtobufStorage::MessagesIterator<T>::MessagesIterator(ProtobufStorage* storage)
-    : storage_(storage), index_(0), current_element_messages_(), queue_() {
+    : storage_(storage), current_message_index_(0), current_element_messages_(), queue_() {
 }
 
 template <typename T>
 Message& ProtobufStorage::MessagesIterator<T>::operator*() const {
-  return *current_element_messages_[index_];
+  return *current_element_messages_[current_message_index_];
 }
 
 template <typename T>
 typename ProtobufStorage::MessagesIterator<T>::pointer
 ProtobufStorage::MessagesIterator<T>::operator->() {
-  return current_element_messages_[index_];
+  return current_element_messages_[current_message_index_];
 }
 
 template <typename T>
@@ -123,8 +123,8 @@ bool operator==(const ProtobufStorage::MessagesIterator<T>& a,
                 const ProtobufStorage::MessagesIterator<T>& b) {
   // TODO: there is a bug, last message can not iterates
   if (a.queue_.empty() && b.queue_.empty() && a.storage_ == b.storage_ &&
-      (a.index_ == a.current_element_messages_.size() - 1 ||
-       b.index_ == b.current_element_messages_.size() - 1)) {
+      (a.current_message_index_ == a.current_element_messages_.size() - 1 ||
+       b.current_message_index_ == b.current_element_messages_.size() - 1)) {
     return true;
   }
 
@@ -140,7 +140,7 @@ bool operator==(const ProtobufStorage::MessagesIterator<T>& a,
     return false;
   }
 
-  if (a.index_ != b.index_) {
+  if (a.current_message_index_ != b.current_message_index_) {
     return false;
   }
 

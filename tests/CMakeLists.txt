@@ -5,7 +5,6 @@ set(TESTS_SOURCES
   package_tests.cpp
   message_tests.cpp
   protobuf_storage_tests.cpp
-  view/view_tests.cpp
 )
 
 set(UTIL_SOURCES

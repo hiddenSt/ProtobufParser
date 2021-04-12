@@ -7,7 +7,7 @@
 #include <protobuf_parser/serializers/json_serializer.hpp>
 
 int main(int argc, char* argv[]) {
-  argparse::ArgumentParser program{"protobuf_parser"};
+  argparse::ArgumentParser program{"protobuf_parser", "1.0"};
   program.add_argument("source_directory")
       .help("Source directory to parse from");
   program.add_argument("parse_source")

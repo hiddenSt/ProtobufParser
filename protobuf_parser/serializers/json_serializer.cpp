@@ -11,15 +11,16 @@ void JsonSerializer::AddMessage(const Message& message) {
   nlohmann::json message_element;
   message_element["name"] = message.GetName();
   message_element["file"] = message.GetFile()->GetName();
+  message_element["package"] = message.GetPackage()->GetName();
   message_element["fields"] = nlohmann::json::array();
   message_element["reserved_names"] = nlohmann::json::array();
   message_element["reserved_numbers"] = nlohmann::json::array();
 
-  for (auto& reserved_name: message.GetReservedNames()) {
+  for (auto& reserved_name : message.GetReservedNames()) {
     message_element["reserved_names"].emplace_back(reserved_name);
   }
 
-  for (auto& reserved_number: message.GetReservedNumbers()) {
+  for (auto& reserved_number : message.GetReservedNumbers()) {
     message_element["reserved_numbers"].emplace_back(reserved_number);
   }
 

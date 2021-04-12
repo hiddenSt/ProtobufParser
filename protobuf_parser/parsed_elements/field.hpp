@@ -10,8 +10,8 @@ class Field {
  public:
   explicit Field(const std::string& name, std::size_t number, const std::string& type,
                  bool optional, bool repeated);
-  explicit Field(std::string&& name, std::size_t number, const std::string& type,
-                 bool optional, bool repeated) noexcept;
+  explicit Field(std::string&& name, std::size_t number, const std::string& type, bool optional,
+                 bool repeated) noexcept;
   Field(const Field& other) = default;
 
   void AddEnumValue(const std::string& name);

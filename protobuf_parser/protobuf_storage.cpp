@@ -52,7 +52,7 @@ void ProtobufStorage::AddFiles(const google::protobuf::DescriptorPool* descripto
   for (auto& file : files) {
     auto* file_descriptor = descriptor_pool->FindFileByName(file);
     Package* a_package = FindPackageForFileDescriptor(file_descriptor);
-    Directory* directory = FindDirectoryForFileDescriptor(file);
+    Directory* directory = FindDirectoryForFile(file);
     files_.emplace_back(file, directory, a_package);
   }
 }
@@ -64,7 +64,8 @@ void ProtobufStorage::AddMessagesFromFiles(
     for (std::size_t i = 0; i < file_descriptor->message_type_count(); ++i) {
       messages_.emplace_back(Message(file_descriptor->message_type(i)->name(), &file));
       AddMessageFields(&messages_[messages_.size() - 1], file_descriptor->message_type(i));
-      AddMessageReservedParams(&messages_[messages_.size() - 1], file_descriptor->message_type(i));
+      AddMessageReservedFieldsAndNumbers(&messages_[messages_.size() - 1],
+                                         file_descriptor->message_type(i));
       AddNestedMessages(&messages_[messages_.size() - 1], file_descriptor->message_type(i));
     }
   }
@@ -81,9 +82,9 @@ Package* ProtobufStorage::FindPackageForFileDescriptor(
   return a_package;
 }
 
-Directory* ProtobufStorage::FindDirectoryForFileDescriptor(const std::string& file) {
+Directory* ProtobufStorage::FindDirectoryForFile(const std::string& file_name) {
   for (auto& dir : directories_) {
-    if (dir.Contains(file)) {
+    if (dir.Contains(file_name)) {
       return &dir;
     }
   }
@@ -118,19 +119,20 @@ void ProtobufStorage::SetUpDirectoriesParents() {
 
 void ProtobufStorage::AddNestedMessages(Message* message,
                                         const google::protobuf::Descriptor* descriptor) {
-
 }
 
 void ProtobufStorage::AddMessageFields(Message* message,
                                        const google::protobuf::Descriptor* descriptor) {
   for (std::size_t i = 0; i < descriptor->field_count(); ++i) {
-    if (descriptor->field(i)->type_name() == "message") {
-      message->AddField(Field(descriptor->field(i)->name(), descriptor->field(i)->number(),
+    if (descriptor->field(i)->type_name() == std::string{"message"}) {
+      message->AddField(Field(descriptor->field(i)->name(),
+                              descriptor->field(i)->number(),
                               descriptor->field(i)->message_type()->name(),
                               descriptor->field(i)->is_optional(),
                               descriptor->field(i)->is_repeated()));
     } else {
-      message->AddField(Field(descriptor->field(i)->name(), descriptor->field(i)->number(),
+      message->AddField(Field(descriptor->field(i)->name(),
+                              descriptor->field(i)->number(),
                               descriptor->field(i)->type_name(),
                               descriptor->field(i)->is_optional(),
                               descriptor->field(i)->is_repeated()));
@@ -138,17 +140,19 @@ void ProtobufStorage::AddMessageFields(Message* message,
   }
 }
 
-void ProtobufStorage::AddMessageReservedParams(Message* message, const google::protobuf::Descriptor* descriptor) {
+void ProtobufStorage::AddMessageReservedFieldsAndNumbers(Message* message,
+                                               const google::protobuf::Descriptor* descriptor) {
   for (std::size_t i = 0; i < descriptor->reserved_name_count(); ++i) {
     message->AddReservedName(descriptor->reserved_name(i));
   }
 
   for (std::size_t i = 0; i < descriptor->reserved_range_count(); ++i) {
-    for (std::size_t number = descriptor->reserved_range(i)->start; number != descriptor->reserved_range(i)->end; ++number) {
+    for (std::size_t number = descriptor->reserved_range(i)->start;
+         number != descriptor->reserved_range(i)->end; ++number) {
       message->AddReservedNumber(number);
     }
   }
- }
+}
 
 // ITERATORS
 
@@ -193,7 +197,7 @@ void ProtobufStorage::MessagesIterator<Directory>::PushBackCurrentElementMessage
 template <>
 ProtobufStorage::MessagesIterator<Directory>::MessagesIterator(Directory* root,
                                                                ProtobufStorage* storage)
-    : storage_(storage), index_(0) {
+    : storage_(storage), current_message_index_(0) {
   EnqueueChildElements(root);
   PushBackCurrentElementMessages(root);
 }
@@ -201,15 +205,15 @@ ProtobufStorage::MessagesIterator<Directory>::MessagesIterator(Directory* root,
 template <>
 ProtobufStorage::MessagesIterator<Package>::MessagesIterator(Package* root,
                                                              ProtobufStorage* storage)
-    : storage_(storage), index_(0) {
+    : storage_(storage), current_message_index_(0) {
   EnqueueChildElements(root);
   PushBackCurrentElementMessages(root);
 }
 
 template <>
 void ProtobufStorage::MessagesIterator<Package>::Iterate() {
-  if (index_ < current_element_messages_.size() - 1) {
-    ++index_;
+  if (current_message_index_ < current_element_messages_.size() - 1) {
+    ++current_message_index_;
   } else {
     auto* package = queue_.front();
     queue_.pop();
@@ -217,22 +221,22 @@ void ProtobufStorage::MessagesIterator<Package>::Iterate() {
 
     current_element_messages_.erase(current_element_messages_.begin(),
                                     current_element_messages_.end());
-    index_ = 0;
+    current_message_index_ = 0;
     PushBackCurrentElementMessages(package);
   }
 }
 
 template <>
 void ProtobufStorage::MessagesIterator<Directory>::Iterate() {
-  if (index_ < current_element_messages_.size() - 1) {
-    ++index_;
+  if (current_message_index_ < current_element_messages_.size() - 1) {
+    ++current_message_index_;
   } else {
     auto* directory = queue_.front();
     queue_.pop();
     EnqueueChildElements(directory);
     current_element_messages_.erase(current_element_messages_.begin(),
                                     current_element_messages_.end());
-    index_ = 0;
+    current_message_index_ = 0;
     PushBackCurrentElementMessages(directory);
   }
 }
