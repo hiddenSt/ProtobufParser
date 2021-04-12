@@ -80,7 +80,8 @@ class ProtobufStorage {
   void SetUpDirectoriesParents();
   void AddNestedMessages(Message* message, const google::protobuf::Descriptor* descriptor);
   void AddMessageFields(Message* message, const google::protobuf::Descriptor* descriptor);
-  void AddMessageReservedFieldsAndNumbers(Message* message, const google::protobuf::Descriptor* descriptor);
+  void AddMessageReservedFieldsAndNumbers(Message* message,
+                                          const google::protobuf::Descriptor* descriptor);
 
   std::vector<Message> messages_;
   std::vector<File> files_;
@@ -121,7 +122,8 @@ template <typename T>
 bool operator==(const ProtobufStorage::MessagesIterator<T>& a,
                 const ProtobufStorage::MessagesIterator<T>& b) {
   // TODO: there is a bug, last message can not iterates
-  if (a.queue_.empty() && b.queue_.empty() && a.storage_ == b.storage_ && a.current_element_messages_.empty() && b.current_element_messages_.empty()) {
+  if (a.queue_.empty() && b.queue_.empty() && a.storage_ == b.storage_ &&
+      a.current_element_messages_.empty() && b.current_element_messages_.empty()) {
     return true;
   }
 

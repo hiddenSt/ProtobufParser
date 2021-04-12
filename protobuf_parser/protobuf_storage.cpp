@@ -117,7 +117,8 @@ void ProtobufStorage::SetUpDirectoriesParents() {
 void ProtobufStorage::AddNestedMessages(Message* message,
                                         const google::protobuf::Descriptor* descriptor) {
   for (std::size_t i = 0; i < descriptor->nested_type_count(); ++i) {
-    auto* nested_message = message->AddNestedMessage(Message(descriptor->nested_type(i)->name(), message->GetFile()));
+    auto* nested_message =
+        message->AddNestedMessage(Message(descriptor->nested_type(i)->name(), message->GetFile()));
     AddMessageFields(nested_message, descriptor->nested_type(i));
     if (descriptor->nested_type(i)->nested_type_count() > 0) {
       AddNestedMessages(nested_message, descriptor->nested_type(i));
@@ -129,14 +130,12 @@ void ProtobufStorage::AddMessageFields(Message* message,
                                        const google::protobuf::Descriptor* descriptor) {
   for (std::size_t i = 0; i < descriptor->field_count(); ++i) {
     if (descriptor->field(i)->type_name() == std::string{"message"}) {
-      message->AddField(Field(descriptor->field(i)->name(),
-                              descriptor->field(i)->number(),
+      message->AddField(Field(descriptor->field(i)->name(), descriptor->field(i)->number(),
                               descriptor->field(i)->message_type()->name(),
                               descriptor->field(i)->is_optional(),
                               descriptor->field(i)->is_repeated()));
     } else {
-      message->AddField(Field(descriptor->field(i)->name(),
-                              descriptor->field(i)->number(),
+      message->AddField(Field(descriptor->field(i)->name(), descriptor->field(i)->number(),
                               descriptor->field(i)->type_name(),
                               descriptor->field(i)->is_optional(),
                               descriptor->field(i)->is_repeated()));
@@ -144,8 +143,8 @@ void ProtobufStorage::AddMessageFields(Message* message,
   }
 }
 
-void ProtobufStorage::AddMessageReservedFieldsAndNumbers(Message* message,
-                                               const google::protobuf::Descriptor* descriptor) {
+void ProtobufStorage::AddMessageReservedFieldsAndNumbers(
+    Message* message, const google::protobuf::Descriptor* descriptor) {
   for (std::size_t i = 0; i < descriptor->reserved_name_count(); ++i) {
     message->AddReservedName(descriptor->reserved_name(i));
   }
