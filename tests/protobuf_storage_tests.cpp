@@ -107,6 +107,13 @@ TEST_F(ProtobufStorageTests, CanGetIteratorToDirectory) {
 
 TEST_F(ProtobufStorageTests, CanIterateOverDirectories) {
   storage_->StoreDescriptorPool(importer_->pool(), files_names_, directories_names, packages_names_);
+  std::string directory_name{"protos"};
+  auto* directory = storage_->FindDirectory(directory_name);
+  std::vector<std::string> messages;
+  for (auto message = storage_->Begin(directory); message != storage_->End<protobuf_parser::Directory>(); ++message) {
+    messages.push_back(message->GetName());
+  }
+  ASSERT_EQ(messages.size(), 2);
 }
 
 TEST_F(ProtobufStorageTests, CanGetIteratorToPackage) {
@@ -118,6 +125,13 @@ TEST_F(ProtobufStorageTests, CanGetIteratorToPackage) {
 
 TEST_F(ProtobufStorageTests, CanIterateOverPackages) {
   storage_->StoreDescriptorPool(importer_->pool(), files_names_, directories_names, packages_names_);
+  std::string package_name{"test_package"};
+  auto* package = storage_->FindPackage(package_name);
+  std::vector<std::string> messages;
+  for (auto message = storage_->Begin(package); message != storage_->End<protobuf_parser::Package>(); ++message) {
+    messages.push_back(message->GetName());
+  }
+  ASSERT_EQ(messages.size(), 2);
 }
 
 }  // namespace tests
