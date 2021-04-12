@@ -28,10 +28,20 @@ int main(int argc, char* argv[]) {
   protobuf_parser::ProtobufParser<protobuf_parser::serializer::JsonSerializer> parser(root_path);
   auto parse_source = program.get<std::string>("parse_source");
   if (program["--package"] == true) {
-    std::cout << parser.SerializePackage(parse_source);
+    try {
+      std::cout << parser.SerializePackage(parse_source) << std::endl;
+    } catch (std::runtime_error& error) {
+      std::cerr << error.what() << std::endl;
+      return 1;
+    }
   } else {
     std::filesystem::path directory_path{parse_source};
-    std::cout << parser.SerializeDirectory(directory_path);
+    try {
+      std::cout << parser.SerializeDirectory(directory_path) << std::endl;
+    } catch (std::runtime_error& error) {
+      std::cerr << error.what() << std::endl;
+      return 1;
+    }
   }
   return 0;
 }
