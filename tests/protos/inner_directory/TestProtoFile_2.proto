@@ -9,4 +9,6 @@ message TestMessage_2 {
   message ChildTestMessage_1 {
     string str = 1;
   }
+  reserved 10, 12 to 15;
+  reserved "foo", "bar";
 }
