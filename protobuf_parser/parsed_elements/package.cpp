@@ -16,7 +16,7 @@ Package::Package(std::string&& name, Package* parent_package) noexcept
     : name_(std::move(name)), parent_package_(parent_package) {
 }
 
-Package* Package::GetParentPackage() {
+Package* Package::GetParentPackage() noexcept {
   return parent_package_;
 }
 
@@ -40,7 +40,7 @@ bool Package::operator!=(const Package& other) {
   return !(*this == other);
 }
 
-void Package::SetParentPackage(Package* parent) {
+void Package::SetParentPackage(Package* parent) noexcept {
   parent_package_ = parent;
 }
 

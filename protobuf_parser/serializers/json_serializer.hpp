@@ -15,7 +15,6 @@ class JsonSerializer {
   JsonSerializer();
 
   void AddMessage(const Message& message);
-
   std::string Serialize();
 
  private:

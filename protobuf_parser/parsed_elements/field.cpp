@@ -9,7 +9,8 @@ Field::Field(const std::string& name, std::size_t number, const std::string& typ
       type_(type),
       optional_(optional),
       enum_(false),
-      repeated_(repeated) {
+      repeated_(repeated),
+      map_(false) {
 }
 
 Field::Field(std::string&& name, std::size_t number, const std::string& type, bool optional,
@@ -19,7 +20,8 @@ Field::Field(std::string&& name, std::size_t number, const std::string& type, bo
       type_(type),
       optional_(optional),
       enum_(false),
-      repeated_(repeated) {
+      repeated_(repeated),
+      map_(false) {
 }
 
 const std::string& Field::GetName() const {

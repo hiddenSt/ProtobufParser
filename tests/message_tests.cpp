@@ -101,7 +101,8 @@ TEST(MessageTests, CanGetFields) {
   std::size_t number = 1;
   std::string type = "string";
   bool optional = false;
-  protobuf_parser::Field field{field_name, number, type, optional, false};
+  bool repeated = false;
+  protobuf_parser::Field field{field_name, number, type, optional, repeated};
 
   protobuf_parser::Message message{message_name, &file};
   message.AddField(field);
@@ -111,6 +112,7 @@ TEST(MessageTests, CanGetFields) {
     ASSERT_EQ(fields_iterator.GetNumber(), number);
     ASSERT_EQ(fields_iterator.GetType(), type);
     ASSERT_EQ(fields_iterator.IsOptional(), optional);
+    ASSERT_EQ(fields_iterator.IsRepeated(), repeated);
   }
 }
 
