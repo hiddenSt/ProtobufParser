@@ -43,9 +43,9 @@ class ProtobufStorage {
    private:
     void Iterate();
     void EnqueueChildElements(T* element);
-    void PushBackCurrentElementMessages(T* element);
+    void EnqueueCurrentElementMessages(T* element);
 
-    std::queue<T*> queue_;
+    std::queue<T*> elements_queue_;
     std::queue<Message*> current_element_messages_;
     ProtobufStorage* storage_;
   };
@@ -91,7 +91,7 @@ class ProtobufStorage {
 
 template <typename T>
 ProtobufStorage::MessagesIterator<T>::MessagesIterator(ProtobufStorage* storage)
-    : storage_(storage), current_element_messages_(), queue_() {
+    : storage_(storage), current_element_messages_(), elements_queue_() {
 }
 
 template <typename T>
@@ -122,12 +122,12 @@ template <typename T>
 bool operator==(const ProtobufStorage::MessagesIterator<T>& a,
                 const ProtobufStorage::MessagesIterator<T>& b) {
   // TODO: there is a bug, last message can not iterates
-  if (a.queue_.empty() && b.queue_.empty() && a.storage_ == b.storage_ &&
+  if (a.elements_queue_.empty() && b.elements_queue_.empty() && a.storage_ == b.storage_ &&
       a.current_element_messages_.empty() && b.current_element_messages_.empty()) {
     return true;
   }
 
-  if (a.queue_ != b.queue_) {
+  if (a.elements_queue_ != b.elements_queue_) {
     return false;
   }
 

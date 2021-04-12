@@ -164,13 +164,13 @@ void ProtobufStorage::MessagesIterator<Package>::EnqueueChildElements(Package* p
   for (auto& child_package : storage_->packages_) {
     if (child_package.GetParentPackage() != nullptr &&
         *child_package.GetParentPackage() == *package) {
-      queue_.push(&child_package);
+      elements_queue_.push(&child_package);
     }
   }
 }
 
 template <>
-void ProtobufStorage::MessagesIterator<Package>::PushBackCurrentElementMessages(Package* package) {
+void ProtobufStorage::MessagesIterator<Package>::EnqueueCurrentElementMessages(Package* package) {
   for (auto& message : storage_->messages_) {
     if (message.GetPackage() == package && message.GetParentMessage() == nullptr) {
       current_element_messages_.push(&message);
@@ -182,13 +182,13 @@ template <>
 void ProtobufStorage::MessagesIterator<Directory>::EnqueueChildElements(Directory* directory) {
   for (auto& child_directory : storage_->directories_) {
     if (child_directory.GetParentDirectory() == directory) {
-      queue_.push(&child_directory);
+      elements_queue_.push(&child_directory);
     }
   }
 }
 
 template <>
-void ProtobufStorage::MessagesIterator<Directory>::PushBackCurrentElementMessages(
+void ProtobufStorage::MessagesIterator<Directory>::EnqueueCurrentElementMessages(
     Directory* directory) {
   for (auto& message : storage_->messages_) {
     if (*message.GetDirectory() == *directory && message.GetParentMessage() == nullptr) {
@@ -202,7 +202,7 @@ ProtobufStorage::MessagesIterator<Directory>::MessagesIterator(Directory* root,
                                                                ProtobufStorage* storage)
     : storage_(storage) {
   EnqueueChildElements(root);
-  PushBackCurrentElementMessages(root);
+  EnqueueCurrentElementMessages(root);
 }
 
 template <>
@@ -210,7 +210,7 @@ ProtobufStorage::MessagesIterator<Package>::MessagesIterator(Package* root,
                                                              ProtobufStorage* storage)
     : storage_(storage) {
   EnqueueChildElements(root);
-  PushBackCurrentElementMessages(root);
+  EnqueueCurrentElementMessages(root);
 }
 
 template <>
@@ -218,11 +218,11 @@ void ProtobufStorage::MessagesIterator<Package>::Iterate() {
   if (!current_element_messages_.empty()) {
     current_element_messages_.pop();
   }
-  if (current_element_messages_.empty() && !queue_.empty()) {
-    auto* package = queue_.front();
-    queue_.pop();
+  if (current_element_messages_.empty() && !elements_queue_.empty()) {
+    auto* package = elements_queue_.front();
+    elements_queue_.pop();
     EnqueueChildElements(package);
-    PushBackCurrentElementMessages(package);
+    EnqueueCurrentElementMessages(package);
   }
 }
 
@@ -231,11 +231,11 @@ void ProtobufStorage::MessagesIterator<Directory>::Iterate() {
   if (!current_element_messages_.empty()) {
     current_element_messages_.pop();
   }
-  if (current_element_messages_.empty() && !queue_.empty()) {
-    auto* directory = queue_.front();
-    queue_.pop();
+  if (current_element_messages_.empty() && !elements_queue_.empty()) {
+    auto* directory = elements_queue_.front();
+    elements_queue_.pop();
     EnqueueChildElements(directory);
-    PushBackCurrentElementMessages(directory);
+    EnqueueCurrentElementMessages(directory);
   }
 }
 
