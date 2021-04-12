@@ -2,13 +2,13 @@
 
 namespace protobuf_parser {
 
-Field::Field(const std::string& name, std::size_t number, const std::string& type, bool optional)
-    : name_(name), number_(number), type_(type), optional_(optional) {
+Field::Field(const std::string& name, std::size_t number, const std::string& type, bool optional, bool repeated)
+    : name_(name), number_(number), type_(type), optional_(optional), enum_(false), repeated_(repeated) {
 }
 
 Field::Field(std::string&& name, std::size_t number, const std::string& type,
-             bool optional) noexcept
-    : name_(std::move(name)), number_(number), type_(type), optional_(optional) {
+             bool optional, bool repeated) noexcept
+    : name_(std::move(name)), number_(number), type_(type), optional_(optional), enum_(false), repeated_(repeated) {
 }
 
 const std::string& Field::GetName() const {
@@ -32,6 +32,26 @@ Field& Field::operator=(const Field& other) {
 
 bool Field::IsOptional() const noexcept {
   return optional_;
+}
+
+bool Field::IsRepeated() const noexcept {
+  return repeated_;
+}
+
+bool Field::IsEnum() const noexcept {
+  return enum_;
+}
+
+bool Field::IsMap() const noexcept {
+  return map_;
+}
+const std::vector<std::string>& Field::GetEnumValues() const {
+  return enum_values_;
+}
+
+void Field::AddEnumValue(const std::string& name) {
+  enum_ = true;
+  enum_values_.push_back(name);
 }
 
 }  // namespace protobuf_parser

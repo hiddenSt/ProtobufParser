@@ -65,4 +65,20 @@ void Message::AddNestedMessage(Message* message) {
   nested_messages_.push_back(message);
 }
 
+void Message::AddReservedName(const std::string& name) {
+  reserved_names_.push_back(name);
+}
+
+void Message::AddReservedNumber(std::size_t number) {
+  reserved_numbers_.push_back(number);
+}
+
+const std::vector<std::string>& Message::GetReservedNames() const {
+  return reserved_names_;
+}
+
+const std::vector<std::size_t>& Message::GetReservedNumbers() const {
+  return reserved_numbers_;
+}
+
 }  // namespace protobuf_parser

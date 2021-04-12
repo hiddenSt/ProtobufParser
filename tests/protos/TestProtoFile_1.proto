@@ -4,4 +4,9 @@ package test_package;
 message TestMessage_1 {
   int32 test_field = 2;
   int32 test_field_2 = 3;
+  enum Corpus {
+    UNIVERSAL = 0;
+    WEB = 1;
+  }
+  Corpus corpus = 4;
 }

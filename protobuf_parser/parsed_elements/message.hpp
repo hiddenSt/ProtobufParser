@@ -23,6 +23,8 @@ class Message {
 
   void AddField(const Field& field);
   void AddNestedMessage(Message* message);
+  void AddReservedName(const std::string& name);
+  void AddReservedNumber(std::size_t number);
 
   Package* GetPackage() const noexcept;
   File* GetFile() const noexcept;
@@ -31,6 +33,8 @@ class Message {
   const std::string& GetName() const;
   const std::vector<Field>& GetFields() const;
   const std::vector<Message*>& GetNestedMessages() const;
+  const std::vector<std::string>& GetReservedNames() const;
+  const std::vector<std::size_t>& GetReservedNumbers() const;
 
  private:
   std::string name_;
@@ -38,6 +42,8 @@ class Message {
   File* file_;
   std::vector<Message*> nested_messages_;
   std::vector<Field> fields_;
+  std::vector<std::string> reserved_names_;
+  std::vector<std::size_t> reserved_numbers_;
 };
 
 }  // namespace protobuf_parser

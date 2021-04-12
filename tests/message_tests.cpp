@@ -101,7 +101,7 @@ TEST(MessageTests, CanGetFields) {
   std::size_t number = 1;
   std::string type = "string";
   bool optional = false;
-  protobuf_parser::Field field{field_name, number, type, optional};
+  protobuf_parser::Field field{field_name, number, type, optional, false};
 
   protobuf_parser::Message message{message_name, &file};
   message.AddField(field);

@@ -125,7 +125,7 @@ void ProtobufStorage::AddMessageFields(Message* message,
   for (std::size_t i = 0; i < descriptor->field_count(); ++i) {
     message->AddField(Field(descriptor->field(i)->name(), descriptor->field(i)->number(),
                             descriptor->field(i)->type_name(),
-                            descriptor->field(i)->is_optional()));
+                            descriptor->field(i)->is_optional(), descriptor->field(i)->is_repeated()));
   }
 }
 
