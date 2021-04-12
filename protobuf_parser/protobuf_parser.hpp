@@ -4,6 +4,7 @@
 #include <string>
 #include <filesystem>
 #include <set>
+#include <exception>
 
 #include <protobuf_parser/protobuf_storage.hpp>
 #include <protobuf_parser/view/view.hpp>
@@ -16,7 +17,7 @@ namespace protobuf_parser {
 template <typename Serializer>
 class ProtobufParser {
  public:
-  ProtobufParser() = delete;
+  ProtobufParser() = default;
   explicit ProtobufParser(const std::filesystem::path& root_path);
 
   std::string SerializeDirectory(const std::filesystem::path& relative_to_root_directory_path);
@@ -24,6 +25,7 @@ class ProtobufParser {
 
  private:
   std::string GetPathRelativeToRootDirectory(const std::string& full_path);
+
   google::protobuf::compiler::DiskSourceTree disk_source_tree_;
   StubMultipleErrorCollector error_collector_;
   std::filesystem::path root_path_;
@@ -63,6 +65,9 @@ template <typename Serializer>
 std::string ProtobufParser<Serializer>::SerializeDirectory(
     const std::filesystem::path& relative_to_root_directory_path) {
   auto* directory = storage_.FindDirectory(relative_to_root_directory_path.string());
+  if (directory == nullptr) {
+    throw std::runtime_error{"No such directory"};
+  }
   view::View<Directory, Serializer> directory_view{directory, storage_, serializer_};
   return directory_view.Serialize();
 }
@@ -70,6 +75,9 @@ std::string ProtobufParser<Serializer>::SerializeDirectory(
 template <typename Serializer>
 std::string ProtobufParser<Serializer>::SerializePackage(const std::string& package_name) {
   auto* package = storage_.FindPackage(package_name);
+  if (package == nullptr) {
+    throw std::runtime_error{"No such package"};
+  }
   view::View<Package, Serializer> package_view{package, storage_, serializer_};
   return package_view.Serialize();
 }

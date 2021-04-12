@@ -8,7 +8,7 @@ set(TESTS_SOURCES
   view/view_tests.cpp
   iterator/directory_iterator_tests.cpp
   iterator/package_iterator_tests.cpp
-  )
+  iterator/protobuf_parser_tests.cpp)
 
 set(UTIL_SOURCES
   util/mock_multiple_error_collector.cpp
