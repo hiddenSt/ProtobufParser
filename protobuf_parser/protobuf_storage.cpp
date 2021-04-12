@@ -64,6 +64,7 @@ void ProtobufStorage::AddMessagesFromFiles(
     for (std::size_t i = 0; i < file_descriptor->message_type_count(); ++i) {
       messages_.emplace_back(Message(file_descriptor->message_type(i)->name(), &file));
       AddMessageFields(&messages_[messages_.size() - 1], file_descriptor->message_type(i));
+      AddMessageReservedParams(&messages_[messages_.size() - 1], file_descriptor->message_type(i));
       AddNestedMessages(&messages_[messages_.size() - 1], file_descriptor->message_type(i));
     }
   }
@@ -128,6 +129,18 @@ void ProtobufStorage::AddMessageFields(Message* message,
                             descriptor->field(i)->is_optional(), descriptor->field(i)->is_repeated()));
   }
 }
+
+void ProtobufStorage::AddMessageReservedParams(Message* message, const google::protobuf::Descriptor* descriptor) {
+  for (std::size_t i = 0; i < descriptor->reserved_name_count(); ++i) {
+    message->AddReservedName(descriptor->reserved_name(i));
+  }
+
+  for (std::size_t i = 0; i < descriptor->reserved_range_count(); ++i) {
+    for (std::size_t number = descriptor->reserved_range(i)->start; number != descriptor->reserved_range(i)->end; ++number) {
+      message->AddReservedNumber(number);
+    }
+  }
+ }
 
 // ITERATORS
 

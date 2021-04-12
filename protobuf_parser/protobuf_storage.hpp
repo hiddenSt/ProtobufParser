@@ -81,6 +81,7 @@ class ProtobufStorage {
   void SetUpDirectoriesParents();
   void AddNestedMessages(Message* message, const google::protobuf::Descriptor* descriptor);
   void AddMessageFields(Message* message, const google::protobuf::Descriptor* descriptor);
+  void AddMessageReservedParams(Message* message, const google::protobuf::Descriptor* descriptor);
 
   std::vector<Message> messages_;
   std::vector<File> files_;
