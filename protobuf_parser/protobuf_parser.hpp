@@ -18,6 +18,7 @@ template <typename Serializer>
 class ProtobufParser {
  public:
   ProtobufParser() = default;
+  ~ProtobufParser() = default;
   explicit ProtobufParser(const std::filesystem::path& root_path);
 
   std::string SerializeDirectory(const std::filesystem::path& relative_to_root_directory_path);
