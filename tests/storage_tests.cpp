@@ -9,7 +9,7 @@
 
 namespace tests {
 
-class ProtobufStorageTests : public ::testing::Test {
+class StorageTests : public ::testing::Test {
  protected:
   void SetUp() override {
     path_to_tests_proto_directory_ = "../../tests";
@@ -60,12 +60,12 @@ class ProtobufStorageTests : public ::testing::Test {
   std::set<std::string> files_names_;
 };
 
-TEST_F(ProtobufStorageTests, CanStoreDescriptorsPool) {
+TEST_F(StorageTests, CanStoreDescriptorsPool) {
   ASSERT_NO_THROW(storage_->StoreDescriptorPool(importer_->pool(), files_names_, directories_names,
                                                 packages_names_));
 }
 
-TEST_F(ProtobufStorageTests, CanFindPackage) {
+TEST_F(StorageTests, CanFindPackage) {
   storage_->StoreDescriptorPool(importer_->pool(), files_names_, directories_names,
                                 packages_names_);
   std::string package_1_name{"test_package"};
@@ -78,7 +78,7 @@ TEST_F(ProtobufStorageTests, CanFindPackage) {
   ASSERT_EQ(package_2->GetName(), package_2_name);
 }
 
-TEST_F(ProtobufStorageTests, ReturnsNullptrIfStorageHasNoSuchPackage) {
+TEST_F(StorageTests, ReturnsNullptrIfStorageHasNoSuchPackage) {
   storage_->StoreDescriptorPool(importer_->pool(), files_names_, directories_names,
                                 packages_names_);
   std::string package_name{"NotExists"};
@@ -86,7 +86,7 @@ TEST_F(ProtobufStorageTests, ReturnsNullptrIfStorageHasNoSuchPackage) {
   ASSERT_EQ(package, nullptr);
 }
 
-TEST_F(ProtobufStorageTests, CanFindDirectory) {
+TEST_F(StorageTests, CanFindDirectory) {
   storage_->StoreDescriptorPool(importer_->pool(), files_names_, directories_names,
                                 packages_names_);
   std::string directory_name{"protos/inner_directory"};
@@ -95,7 +95,7 @@ TEST_F(ProtobufStorageTests, CanFindDirectory) {
   ASSERT_EQ(directory->GetName(), directory_name);
 }
 
-TEST_F(ProtobufStorageTests, ReturnsNullptrIfStorageHasNoSuchDirectory) {
+TEST_F(StorageTests, ReturnsNullptrIfStorageHasNoSuchDirectory) {
   storage_->StoreDescriptorPool(importer_->pool(), files_names_, directories_names,
                                 packages_names_);
   std::string directory_name{"not/existing/directory"};
@@ -103,7 +103,7 @@ TEST_F(ProtobufStorageTests, ReturnsNullptrIfStorageHasNoSuchDirectory) {
   ASSERT_EQ(directory, nullptr);
 }
 
-TEST_F(ProtobufStorageTests, CanGetIteratorToDirectory) {
+TEST_F(StorageTests, CanGetIteratorToDirectory) {
   storage_->StoreDescriptorPool(importer_->pool(), files_names_, directories_names,
                                 packages_names_);
   std::string directory_name{"protos/inner_directory"};
@@ -111,7 +111,7 @@ TEST_F(ProtobufStorageTests, CanGetIteratorToDirectory) {
   ASSERT_NO_THROW(storage_->Begin(directory));
 }
 
-TEST_F(ProtobufStorageTests, CanIterateOverDirectories) {
+TEST_F(StorageTests, CanIterateOverDirectories) {
   storage_->StoreDescriptorPool(importer_->pool(), files_names_, directories_names,
                                 packages_names_);
   std::string directory_name{"protos"};
@@ -124,7 +124,7 @@ TEST_F(ProtobufStorageTests, CanIterateOverDirectories) {
   ASSERT_EQ(messages.size(), 3);
 }
 
-TEST_F(ProtobufStorageTests, CanGetIteratorToPackage) {
+TEST_F(StorageTests, CanGetIteratorToPackage) {
   storage_->StoreDescriptorPool(importer_->pool(), files_names_, directories_names,
                                 packages_names_);
   std::string package_name{"test_package"};
@@ -132,7 +132,7 @@ TEST_F(ProtobufStorageTests, CanGetIteratorToPackage) {
   ASSERT_NO_THROW(storage_->Begin(package));
 }
 
-TEST_F(ProtobufStorageTests, CanIterateOverPackages) {
+TEST_F(StorageTests, CanIterateOverPackages) {
   storage_->StoreDescriptorPool(importer_->pool(), files_names_, directories_names,
                                 packages_names_);
   std::string package_name{"test_package"};
