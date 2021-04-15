@@ -3,8 +3,8 @@
 
 #include <string>
 
-#include <protobuf_parser/parsed_elements/package.hpp>
-#include <protobuf_parser/parsed_elements/directory.hpp>
+#include <protobuf_parser/elements/package.hpp>
+#include <protobuf_parser/elements/directory.hpp>
 
 namespace protobuf_parser {
 

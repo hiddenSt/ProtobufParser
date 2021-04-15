@@ -4,9 +4,9 @@
 #include <string>
 #include <vector>
 
-#include <protobuf_parser/parsed_elements/file.hpp>
-#include <protobuf_parser/parsed_elements/package.hpp>
-#include <protobuf_parser/parsed_elements/field.hpp>
+#include <protobuf_parser/elements/file.hpp>
+#include <protobuf_parser/elements/package.hpp>
+#include <protobuf_parser/elements/field.hpp>
 
 namespace protobuf_parser {
 

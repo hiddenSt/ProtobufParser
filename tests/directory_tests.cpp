@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include <protobuf_parser/parsed_elements/directory.hpp>
+#include <protobuf_parser/elements/directory.hpp>
 
 namespace tests {
 

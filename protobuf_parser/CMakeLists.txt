@@ -6,11 +6,12 @@ find_package(Protobuf REQUIRED)
 set(PROTOBUF_PARSER_CXX_SOURCES
   storage.cpp
   stub_multiple_error_collector.cpp
-  parsed_elements/field.cpp
-  parsed_elements/message.cpp
-  parsed_elements/file.cpp
-  parsed_elements/package.cpp
-  parsed_elements/directory.cpp
+  elements/field.cpp
+  elements/message.cpp
+  elements/file.cpp
+  elements/package.cpp
+  elements/directory.cpp
+  builders/message_builder.cpp
   serializers/json_serializer.cpp
   )
 
@@ -18,11 +19,12 @@ set(PROTOBUF_PARSER_HEADERS
   storage.hpp
   parser.hpp
   stub_multiple_error_collector.hpp
-  parsed_elements/field.hpp
-  parsed_elements/message.hpp
-  parsed_elements/file.hpp
-  parsed_elements/package.hpp
-  parsed_elements/directory.hpp
+  elements/field.hpp
+  elements/message.hpp
+  elements/file.hpp
+  elements/package.hpp
+  elements/directory.hpp
+  builders/message_builder.hpp
   serializers/json_serializer.hpp
   view/view.hpp
   )

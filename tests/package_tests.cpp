@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <protobuf_parser/parsed_elements/package.hpp>
+#include <protobuf_parser/elements/package.hpp>
 
 namespace tests {
 
