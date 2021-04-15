@@ -12,6 +12,9 @@ set(PROTOBUF_PARSER_CXX_SOURCES
   elements/package.cpp
   elements/directory.cpp
   builders/message_builder.cpp
+  builders/file_builder.cpp
+  builders/directory_builder.cpp
+  builders/package_builder.cpp
   serializers/json_serializer.cpp
   )
 
@@ -25,6 +28,9 @@ set(PROTOBUF_PARSER_HEADERS
   elements/package.hpp
   elements/directory.hpp
   builders/message_builder.hpp
+  builders/file_builder.hpp
+  builders/directory_builder.hpp
+  builders/package_builder.hpp
   serializers/json_serializer.hpp
   view/view.hpp
   )
