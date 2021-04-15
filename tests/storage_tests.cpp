@@ -3,7 +3,7 @@
 
 #include <filesystem>
 
-#include <protobuf_parser/protobuf_storage.hpp>
+#include <protobuf_parser/storage.hpp>
 
 #include <google/protobuf/compiler/importer.h>
 
@@ -19,7 +19,7 @@ class ProtobufStorageTests : public ::testing::Test {
     disk_source_tree_->MapPath(std::string{}, path_to_tests_proto_directory_);
     importer_ =
         new google::protobuf::compiler::Importer{disk_source_tree_, mock_multiple_error_collector_};
-    storage_ = new protobuf_parser::ProtobufStorage{};
+    storage_ = new protobuf_parser::Storage{};
 
     for (auto& dir_entry : directory_iterator) {
       if (dir_entry.is_regular_file() && dir_entry.path().extension() == ".proto") {
@@ -54,7 +54,7 @@ class ProtobufStorageTests : public ::testing::Test {
   google::protobuf::compiler::DiskSourceTree* disk_source_tree_;
   util::MockMultipleErrorCollector* mock_multiple_error_collector_;
   std::string path_to_tests_proto_directory_;
-  protobuf_parser::ProtobufStorage* storage_;
+  protobuf_parser::Storage* storage_;
   std::set<std::string> directories_names;
   std::set<std::string> packages_names_;
   std::set<std::string> files_names_;

@@ -1,12 +1,12 @@
-#ifndef PROTOBUF_PARSER_PROTOBUF_PARSER_PROTOBUF_PARSER_HPP_
-#define PROTOBUF_PARSER_PROTOBUF_PARSER_PROTOBUF_PARSER_HPP_
+#ifndef PROTOBUF_PARSER_PROTOBUF_PARSER_PARSER_HPP_
+#define PROTOBUF_PARSER_PROTOBUF_PARSER_PARSER_HPP_
 
 #include <string>
 #include <filesystem>
 #include <set>
 #include <exception>
 
-#include <protobuf_parser/protobuf_storage.hpp>
+#include <protobuf_parser/storage.hpp>
 #include <protobuf_parser/view/view.hpp>
 #include <google/protobuf/compiler/importer.h>
 
@@ -15,11 +15,11 @@
 namespace protobuf_parser {
 
 template <typename Serializer>
-class ProtobufParser {
+class Parser {
  public:
-  ProtobufParser() = default;
-  ~ProtobufParser() = default;
-  explicit ProtobufParser(const std::filesystem::path& root_path);
+  Parser() = default;
+  ~Parser() = default;
+  explicit Parser(const std::filesystem::path& root_path);
 
   std::string SerializeDirectory(const std::filesystem::path& relative_to_root_directory_path);
   std::string SerializePackage(const std::string& package_name);
@@ -31,11 +31,11 @@ class ProtobufParser {
   StubMultipleErrorCollector error_collector_;
   std::filesystem::path root_path_;
   Serializer serializer_;
-  ProtobufStorage storage_;
+  Storage storage_;
 };
 
 template <typename Serializer>
-ProtobufParser<Serializer>::ProtobufParser(const std::filesystem::path& root_path)
+Parser<Serializer>::Parser(const std::filesystem::path& root_path)
     : root_path_(root_path) {
   // Add empty string argument as virtual_path parameter to indicate DiskSourceTree to map
   // root_path_ as a root
@@ -64,7 +64,7 @@ ProtobufParser<Serializer>::ProtobufParser(const std::filesystem::path& root_pat
 }
 
 template <typename Serializer>
-std::string ProtobufParser<Serializer>::SerializeDirectory(
+std::string Parser<Serializer>::SerializeDirectory(
     const std::filesystem::path& relative_to_root_directory_path) {
   auto* directory = storage_.FindDirectory(relative_to_root_directory_path.string());
   if (directory == nullptr) {
@@ -75,7 +75,7 @@ std::string ProtobufParser<Serializer>::SerializeDirectory(
 }
 
 template <typename Serializer>
-std::string ProtobufParser<Serializer>::SerializePackage(const std::string& package_name) {
+std::string Parser<Serializer>::SerializePackage(const std::string& package_name) {
   auto* package = storage_.FindPackage(package_name);
   if (package == nullptr) {
     throw std::runtime_error{"No such package"};
@@ -85,7 +85,7 @@ std::string ProtobufParser<Serializer>::SerializePackage(const std::string& pack
 }
 
 template <typename Serializer>
-std::string ProtobufParser<Serializer>::GetPathRelativeToRootDirectory(
+std::string Parser<Serializer>::GetPathRelativeToRootDirectory(
     const std::string& full_path) {
   std::string changed_path{};
   std::size_t i = 0;
@@ -102,4 +102,4 @@ std::string ProtobufParser<Serializer>::GetPathRelativeToRootDirectory(
 
 }  // namespace protobuf_parser
 
-#endif  // PROTOBUF_PARSER_PROTOBUF_PARSER_PROTOBUF_PARSER_HPP_
+#endif  // PROTOBUF_PARSER_PROTOBUF_PARSER_PARSER_HPP_

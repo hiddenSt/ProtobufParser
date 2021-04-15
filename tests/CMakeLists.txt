@@ -4,12 +4,12 @@ set(TESTS_SOURCES
   directory_tests.cpp
   package_tests.cpp
   message_tests.cpp
-  protobuf_storage_tests.cpp
+  storage_tests.cpp
 )
 
 set(UTIL_SOURCES
   util/mock_multiple_error_collector.cpp
-  util/mock_multiple_error_collector.hpp protobuf_parser_tests.cpp)
+  util/mock_multiple_error_collector.hpp parser_tests.cpp)
 
 add_executable(run_protobuf_parser_tests "${TESTS_SOURCES}" "${UTIL_SOURCES}")
 

@@ -15,7 +15,7 @@
 
 namespace protobuf_parser {
 
-class ProtobufStorage {
+class Storage {
  public:
   template <typename T>
   class MessagesIterator {
@@ -26,13 +26,13 @@ class ProtobufStorage {
     using pointer = Message*;
     using reference = Message&;
 
-    MessagesIterator(T* root, ProtobufStorage* storage);
-    MessagesIterator(ProtobufStorage* storage);
+    MessagesIterator(T* root, Storage* storage);
+    MessagesIterator(Storage* storage);
 
     reference operator*() const;
     pointer operator->();
     MessagesIterator<T>& operator++();
-    MessagesIterator<T> operator++(int);
+    const MessagesIterator<T> operator++(int);
 
     template <typename Y>
     friend bool operator==(const MessagesIterator<Y>& a, const MessagesIterator<Y>& b);
@@ -47,12 +47,12 @@ class ProtobufStorage {
 
     std::queue<T*> elements_queue_;
     std::queue<Message*> current_element_messages_;
-    ProtobufStorage* storage_;
+    Storage* storage_;
   };
 
  public:
-  ProtobufStorage() = default;
-  ~ProtobufStorage() = default;
+  Storage() = default;
+  ~Storage() = default;
 
   void StoreDescriptorPool(const google::protobuf::DescriptorPool* descriptor_pool,
                            const std::set<std::string>& files,
@@ -90,37 +90,36 @@ class ProtobufStorage {
 };
 
 template <typename T>
-ProtobufStorage::MessagesIterator<T>::MessagesIterator(ProtobufStorage* storage)
+Storage::MessagesIterator<T>::MessagesIterator(Storage* storage)
     : storage_(storage), current_element_messages_(), elements_queue_() {
 }
 
 template <typename T>
-Message& ProtobufStorage::MessagesIterator<T>::operator*() const {
+Message& Storage::MessagesIterator<T>::operator*() const {
   return *current_element_messages_.front();
 }
 
 template <typename T>
-typename ProtobufStorage::MessagesIterator<T>::pointer
-ProtobufStorage::MessagesIterator<T>::operator->() {
+typename Storage::MessagesIterator<T>::pointer Storage::MessagesIterator<T>::operator->() {
   return current_element_messages_.front();
 }
 
 template <typename T>
-ProtobufStorage::MessagesIterator<T>& ProtobufStorage::MessagesIterator<T>::operator++() {
+Storage::MessagesIterator<T>& Storage::MessagesIterator<T>::operator++() {
   Iterate();
   return *this;
 }
 
 template <typename T>
-ProtobufStorage::MessagesIterator<T> ProtobufStorage::MessagesIterator<T>::operator++(int) {
+const Storage::MessagesIterator<T> Storage::MessagesIterator<T>::operator++(int) {
   MessagesIterator<T> tmp = *this;
   Iterate();
   return tmp;
 }
 
 template <typename T>
-bool operator==(const ProtobufStorage::MessagesIterator<T>& a,
-                const ProtobufStorage::MessagesIterator<T>& b) {
+bool operator==(const Storage::MessagesIterator<T>& a,
+                const Storage::MessagesIterator<T>& b) {
   if (a.elements_queue_.empty() && b.elements_queue_.empty() && a.storage_ == b.storage_ &&
       a.current_element_messages_.empty() && b.current_element_messages_.empty()) {
     return true;
@@ -142,18 +141,18 @@ bool operator==(const ProtobufStorage::MessagesIterator<T>& a,
 }
 
 template <typename T>
-bool operator!=(const ProtobufStorage::MessagesIterator<T>& a,
-                const ProtobufStorage::MessagesIterator<T>& b) {
+bool operator!=(const Storage::MessagesIterator<T>& a,
+                const Storage::MessagesIterator<T>& b) {
   return !(a == b);
 }
 
 template <typename T>
-ProtobufStorage::MessagesIterator<T> ProtobufStorage::Begin(T* root) {
+Storage::MessagesIterator<T> Storage::Begin(T* root) {
   return MessagesIterator<T>{root, this};
 }
 
 template <typename T>
-ProtobufStorage::MessagesIterator<T> ProtobufStorage::End() {
+Storage::MessagesIterator<T> Storage::End() {
   return MessagesIterator<T>{this};
 }
 

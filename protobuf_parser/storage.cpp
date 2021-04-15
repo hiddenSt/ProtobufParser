@@ -1,8 +1,8 @@
-#include "protobuf_storage.hpp"
+#include "storage.hpp"
 
 namespace protobuf_parser {
 
-void ProtobufStorage::StoreDescriptorPool(const google::protobuf::DescriptorPool* descriptor_pool,
+void Storage::StoreDescriptorPool(const google::protobuf::DescriptorPool* descriptor_pool,
                                           const std::set<std::string>& files,
                                           const std::set<std::string>& directories,
                                           const std::set<std::string>& packages) {
@@ -12,7 +12,7 @@ void ProtobufStorage::StoreDescriptorPool(const google::protobuf::DescriptorPool
   AddMessagesFromFiles(descriptor_pool);
 }
 
-Directory* ProtobufStorage::FindDirectory(const std::string& directory_path) {
+Directory* Storage::FindDirectory(const std::string& directory_path) {
   for (auto& directory : directories_) {
     if (directory.GetName() == directory_path) {
       return &directory;
@@ -21,7 +21,7 @@ Directory* ProtobufStorage::FindDirectory(const std::string& directory_path) {
   return nullptr;
 }
 
-Package* ProtobufStorage::FindPackage(const std::string& package_name) {
+Package* Storage::FindPackage(const std::string& package_name) {
   for (auto& package : packages_) {
     if (package_name == package.GetName()) {
       return &package;
@@ -30,21 +30,21 @@ Package* ProtobufStorage::FindPackage(const std::string& package_name) {
   return nullptr;
 }
 
-void ProtobufStorage::AddPackages(const std::set<std::string>& packages) {
+void Storage::AddPackages(const std::set<std::string>& packages) {
   for (auto& package : packages) {
     packages_.emplace_back(package);
   }
   SetUpPackagesParents();
 }
 
-void ProtobufStorage::AddDirectories(const std::set<std::string>& directories) {
+void Storage::AddDirectories(const std::set<std::string>& directories) {
   for (auto& directory : directories) {
     directories_.emplace_back(directory);
   }
   SetUpDirectoriesParents();
 }
 
-void ProtobufStorage::AddFiles(const google::protobuf::DescriptorPool* descriptor_pool,
+void Storage::AddFiles(const google::protobuf::DescriptorPool* descriptor_pool,
                                const std::set<std::string>& files) {
   for (auto& file : files) {
     auto* file_descriptor = descriptor_pool->FindFileByName(file);
@@ -54,7 +54,7 @@ void ProtobufStorage::AddFiles(const google::protobuf::DescriptorPool* descripto
   }
 }
 
-void ProtobufStorage::AddMessagesFromFiles(
+void Storage::AddMessagesFromFiles(
     const google::protobuf::DescriptorPool* descriptor_pool) {
   for (auto& file : files_) {
     auto* file_descriptor = descriptor_pool->FindFileByName(file.GetName());
@@ -68,7 +68,7 @@ void ProtobufStorage::AddMessagesFromFiles(
   }
 }
 
-Package* ProtobufStorage::FindPackageForFileDescriptor(
+Package* Storage::FindPackageForFileDescriptor(
     const google::protobuf::FileDescriptor* file_descriptor) {
   Package* a_package = nullptr;
   for (auto& package : packages_) {
@@ -79,7 +79,7 @@ Package* ProtobufStorage::FindPackageForFileDescriptor(
   return a_package;
 }
 
-Directory* ProtobufStorage::FindDirectoryForFile(const std::string& file_name) {
+Directory* Storage::FindDirectoryForFile(const std::string& file_name) {
   for (auto& dir : directories_) {
     if (dir.Contains(file_name)) {
       return &dir;
@@ -88,7 +88,7 @@ Directory* ProtobufStorage::FindDirectoryForFile(const std::string& file_name) {
   return nullptr;
 }
 
-void ProtobufStorage::SetUpPackagesParents() {
+void Storage::SetUpPackagesParents() {
   // BRUTE FORCE IS VERY VERY BAD
   for (std::size_t i = 0; i < packages_.size(); ++i) {
     for (std::size_t j = 0; j < packages_.size(); ++j) {
@@ -101,7 +101,7 @@ void ProtobufStorage::SetUpPackagesParents() {
   }
 }
 
-void ProtobufStorage::SetUpDirectoriesParents() {
+void Storage::SetUpDirectoriesParents() {
   // BRUTE FORCE IS VERY VERY BAD
   for (std::size_t i = 0; i < directories_.size(); ++i) {
     for (std::size_t j = 0; j < directories_.size(); ++j) {
@@ -114,7 +114,7 @@ void ProtobufStorage::SetUpDirectoriesParents() {
   }
 }
 
-void ProtobufStorage::AddNestedMessages(Message* message,
+void Storage::AddNestedMessages(Message* message,
                                         const google::protobuf::Descriptor* descriptor) {
   for (std::size_t i = 0; i < descriptor->nested_type_count(); ++i) {
     auto* nested_message =
@@ -126,7 +126,7 @@ void ProtobufStorage::AddNestedMessages(Message* message,
   }
 }
 
-void ProtobufStorage::AddMessageFields(Message* message,
+void Storage::AddMessageFields(Message* message,
                                        const google::protobuf::Descriptor* descriptor) {
   for (std::size_t i = 0; i < descriptor->field_count(); ++i) {
     if (descriptor->field(i)->type_name() == std::string{"message"}) {
@@ -143,7 +143,7 @@ void ProtobufStorage::AddMessageFields(Message* message,
   }
 }
 
-void ProtobufStorage::AddMessageReservedFieldsAndNumbers(
+void Storage::AddMessageReservedFieldsAndNumbers(
     Message* message, const google::protobuf::Descriptor* descriptor) {
   for (std::size_t i = 0; i < descriptor->reserved_name_count(); ++i) {
     message->AddReservedName(descriptor->reserved_name(i));
@@ -160,7 +160,7 @@ void ProtobufStorage::AddMessageReservedFieldsAndNumbers(
 // ITERATORS
 
 template <>
-void ProtobufStorage::MessagesIterator<Package>::EnqueueChildElements(Package* package) {
+void Storage::MessagesIterator<Package>::EnqueueChildElements(Package* package) {
   for (auto& child_package : storage_->packages_) {
     if (child_package.GetParentPackage() != nullptr &&
         *child_package.GetParentPackage() == *package) {
@@ -170,7 +170,7 @@ void ProtobufStorage::MessagesIterator<Package>::EnqueueChildElements(Package* p
 }
 
 template <>
-void ProtobufStorage::MessagesIterator<Package>::EnqueueCurrentElementMessages(Package* package) {
+void Storage::MessagesIterator<Package>::EnqueueCurrentElementMessages(Package* package) {
   for (auto& message : storage_->messages_) {
     if (message.GetPackage() == package && message.GetParentMessage() == nullptr) {
       current_element_messages_.push(&message);
@@ -179,7 +179,7 @@ void ProtobufStorage::MessagesIterator<Package>::EnqueueCurrentElementMessages(P
 }
 
 template <>
-void ProtobufStorage::MessagesIterator<Directory>::EnqueueChildElements(Directory* directory) {
+void Storage::MessagesIterator<Directory>::EnqueueChildElements(Directory* directory) {
   for (auto& child_directory : storage_->directories_) {
     if (child_directory.GetParentDirectory() == directory) {
       elements_queue_.push(&child_directory);
@@ -188,7 +188,7 @@ void ProtobufStorage::MessagesIterator<Directory>::EnqueueChildElements(Director
 }
 
 template <>
-void ProtobufStorage::MessagesIterator<Directory>::EnqueueCurrentElementMessages(
+void Storage::MessagesIterator<Directory>::EnqueueCurrentElementMessages(
     Directory* directory) {
   for (auto& message : storage_->messages_) {
     if (*message.GetDirectory() == *directory && message.GetParentMessage() == nullptr) {
@@ -198,23 +198,21 @@ void ProtobufStorage::MessagesIterator<Directory>::EnqueueCurrentElementMessages
 }
 
 template <>
-ProtobufStorage::MessagesIterator<Directory>::MessagesIterator(Directory* root,
-                                                               ProtobufStorage* storage)
+Storage::MessagesIterator<Directory>::MessagesIterator(Directory* root, Storage* storage)
     : storage_(storage) {
   EnqueueChildElements(root);
   EnqueueCurrentElementMessages(root);
 }
 
 template <>
-ProtobufStorage::MessagesIterator<Package>::MessagesIterator(Package* root,
-                                                             ProtobufStorage* storage)
+Storage::MessagesIterator<Package>::MessagesIterator(Package* root, Storage* storage)
     : storage_(storage) {
   EnqueueChildElements(root);
   EnqueueCurrentElementMessages(root);
 }
 
 template <>
-void ProtobufStorage::MessagesIterator<Package>::Iterate() {
+void Storage::MessagesIterator<Package>::Iterate() {
   if (!current_element_messages_.empty()) {
     current_element_messages_.pop();
   }
@@ -227,7 +225,7 @@ void ProtobufStorage::MessagesIterator<Package>::Iterate() {
 }
 
 template <>
-void ProtobufStorage::MessagesIterator<Directory>::Iterate() {
+void Storage::MessagesIterator<Directory>::Iterate() {
   if (!current_element_messages_.empty()) {
     current_element_messages_.pop();
   }

@@ -3,7 +3,7 @@
 #include <filesystem>
 
 #include <argparse/argparse.hpp>
-#include <protobuf_parser/protobuf_parser.hpp>
+#include <protobuf_parser/parser.hpp>
 #include <protobuf_parser/serializers/json_serializer.hpp>
 
 int main(int argc, char* argv[]) {
@@ -24,8 +24,9 @@ int main(int argc, char* argv[]) {
     std::cerr << program;
     return 1;
   }
+
   std::filesystem::path root_path{program.get<std::string>("source_directory")};
-  protobuf_parser::ProtobufParser<protobuf_parser::serializer::JsonSerializer> parser(root_path);
+  protobuf_parser::Parser<protobuf_parser::serializer::JsonSerializer> parser(root_path);
   auto parse_source = program.get<std::string>("parse_source");
   if (program["--package"] == true) {
     try {

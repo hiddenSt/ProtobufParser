@@ -23,7 +23,7 @@
 
 Создайте парсер со своим сериалайзером. В библиотеке есть JsonSerializer
 ```c++
-protobuf_parser::ProtobufParser<protobuf_parser::serializer::JsonSerializer> parser('root_directory_to_parse');
+protobuf_parser::Parser<protobuf_parser::serializer::JsonSerializer> parser('root_directory_to_parse');
 ```
 
 Можно парсить messages по директории или по package. Будет возвращён std::string в формате указаноого сериалайзера
