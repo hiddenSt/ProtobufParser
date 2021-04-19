@@ -77,6 +77,9 @@ Message::Message(Message&& other) noexcept :
       reserved_names_(std::move(other.reserved_names_)) {
   other.file_ = nullptr;
   other.parent_message_ = nullptr;
+  for (auto& nested_message: nested_messages_) {
+    nested_message.parent_message_ = this;
+  }
 }
 
 }  // namespace protobuf_parser
