@@ -23,6 +23,7 @@ class StorageBuilder {
   void AddPackages(const std::set<std::string>& packages);
   void AddFiles(const std::set<std::string>& files);
   void AddMessagesFromFiles(const google::protobuf::DescriptorPool* descriptor_pool);
+  Storage GetStorage() const noexcept;
 
  private:
   void SetUpPackagesParents();

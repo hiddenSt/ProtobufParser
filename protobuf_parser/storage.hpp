@@ -14,10 +14,11 @@
 #include <protobuf_parser/elements/file.hpp>
 
 namespace protobuf_parser {
+namespace builders {
+class StorageBuilder;
+}
 
 class Storage {
-  friend class StorageBuilder;
-
  public:
   Storage() = default;
   ~Storage() = default;
@@ -31,6 +32,8 @@ class Storage {
   Storage& operator=(Storage&&) = delete;
 
  private:
+  friend class builders::StorageBuilder;
+
   std::vector<Message> messages_;
   std::vector<File> files_;
   std::vector<Package> packages_;
