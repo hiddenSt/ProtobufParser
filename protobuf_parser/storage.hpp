@@ -54,6 +54,14 @@ class Storage {
   Storage() = default;
   ~Storage() = default;
 
+  // Non-copyable
+  Storage(const Storage&) = delete;
+  Storage& operator=(const Storage&) = delete;
+
+  // Non-movable
+  Storage(Storage&&) = delete;
+  Storage& operator=(Storage&&) = delete;
+
   void StoreDescriptorPool(const google::protobuf::DescriptorPool* descriptor_pool,
                            const std::set<std::string>& files,
                            const std::set<std::string>& directories,
@@ -61,6 +69,9 @@ class Storage {
 
   Directory* FindDirectory(const std::string& directory_path);
   Package* FindPackage(const std::string& package_name);
+
+
+
 
   template <typename T>
   MessagesIterator<T> Begin(T* root);
