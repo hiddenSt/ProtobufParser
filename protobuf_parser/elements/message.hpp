@@ -25,12 +25,6 @@ class Message {
   bool operator==(const Message& other);
   bool operator!=(const Message& other);
 
-  void AddField(const Field& field);
-  Message* AddNestedMessage(const Message& message);
-  void AddReservedName(const std::string& name);
-  void AddReservedNumber(std::size_t number);
-  void SetParentMessage(Message* message) noexcept;
-
   Package* GetPackage() const noexcept;
   File* GetFile() const noexcept;
   Directory* GetDirectory();

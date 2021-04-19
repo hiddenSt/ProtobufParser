@@ -37,10 +37,6 @@ Directory* Directory::GetParentDirectory() {
   return parent_directory_;
 }
 
-void Directory::SetParentDirectory(Directory* directory) {
-  parent_directory_ = directory;
-}
-
 bool Directory::Contains(const std::string& file_name) {
   std::size_t i = 0;
   while (file_name[i] == name_[i]) {

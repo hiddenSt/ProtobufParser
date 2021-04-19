@@ -67,12 +67,6 @@ class Storage {
                            const std::set<std::string>& directories,
                            const std::set<std::string>& packages);
 
-  Directory* FindDirectory(const std::string& directory_path);
-  Package* FindPackage(const std::string& package_name);
-
-
-
-
   template <typename T>
   MessagesIterator<T> Begin(T* root);
 
