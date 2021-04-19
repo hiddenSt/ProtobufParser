@@ -16,6 +16,8 @@
 namespace protobuf_parser {
 
 class Storage {
+  friend class StorageBuilder;
+
  public:
   Storage() = default;
   ~Storage() = default;
@@ -28,26 +30,7 @@ class Storage {
   Storage(Storage&&) = delete;
   Storage& operator=(Storage&&) = delete;
 
-  void StoreDescriptorPool(const google::protobuf::DescriptorPool* descriptor_pool,
-                           const std::set<std::string>& files,
-                           const std::set<std::string>& directories,
-                           const std::set<std::string>& packages);
-
  private:
-  void AddDirectories(const std::set<std::string>& directories);
-  void AddPackages(const std::set<std::string>& packages);
-  void AddFiles(const google::protobuf::DescriptorPool* descriptor_pool,
-                const std::set<std::string>& files);
-  void AddMessagesFromFiles(const google::protobuf::DescriptorPool* descriptor_pool);
-  Package* FindPackageForFileDescriptor(const google::protobuf::FileDescriptor* file_descriptor);
-  Directory* FindDirectoryForFile(const std::string& file_name);
-  void SetUpPackagesParents();
-  void SetUpDirectoriesParents();
-  void AddNestedMessages(Message* message, const google::protobuf::Descriptor* descriptor);
-  void AddMessageFields(Message* message, const google::protobuf::Descriptor* descriptor);
-  void AddMessageReservedFieldsAndNumbers(Message* message,
-                                          const google::protobuf::Descriptor* descriptor);
-
   std::vector<Message> messages_;
   std::vector<File> files_;
   std::vector<Package> packages_;

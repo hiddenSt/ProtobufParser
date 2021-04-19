@@ -17,7 +17,7 @@ class MessageBuilder {
 
  private:
   void AddNestedMessages(const google::protobuf::Descriptor* descriptor);
-  void AddReservedFields();
+  void AddReservedFieldsAndNumbers();
 };
 
 }

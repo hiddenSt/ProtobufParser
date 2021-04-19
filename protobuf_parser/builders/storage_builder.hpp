@@ -27,10 +27,6 @@ class StorageBuilder {
  private:
   void SetUpPackagesParents();
   void SetUpDirectoriesParents();
-  void AddNestedMessages(Message* message, const google::protobuf::Descriptor* descriptor);
-  void AddMessageFields(Message* message, const google::protobuf::Descriptor* descriptor);
-  void AddMessageReservedFieldsAndNumbers(Message* message,
-                                          const google::protobuf::Descriptor* descriptor);
   Package* FindPackageForFileDescriptor(const google::protobuf::FileDescriptor* file_descriptor);
   Directory* FindDirectoryForFile(const std::string& file_name);
 
