@@ -10,6 +10,10 @@
 
 namespace protobuf_parser {
 
+namespace builders {
+class MessageBuilder;
+}
+
 class Message {
  public:
   Message() = delete;
@@ -38,6 +42,7 @@ class Message {
   const std::vector<std::size_t>& GetReservedNumbers() const;
 
  private:
+  friend class builders::MessageBuilder;
   std::string name_;
   Message* parent_message_;
   File* file_;

@@ -5,6 +5,7 @@ find_package(Protobuf REQUIRED)
 
 set(PROTOBUF_PARSER_CXX_SOURCES
   storage.cpp
+  parser.cpp
   stub_multiple_error_collector.cpp
   elements/field.cpp
   elements/message.cpp
@@ -15,6 +16,7 @@ set(PROTOBUF_PARSER_CXX_SOURCES
   builders/file_builder.cpp
   builders/directory_builder.cpp
   builders/package_builder.cpp
+  builders/storage_builder.cpp
   serializers/json_serializer.cpp
   )
 
@@ -31,6 +33,7 @@ set(PROTOBUF_PARSER_HEADERS
   builders/file_builder.hpp
   builders/directory_builder.hpp
   builders/package_builder.hpp
+  builders/storage_builder.hpp
   serializers/json_serializer.hpp
   view/view.hpp
   )
