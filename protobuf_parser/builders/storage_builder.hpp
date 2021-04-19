@@ -12,26 +12,29 @@
 #include <protobuf_parser/elements/message.hpp>
 #include <protobuf_parser/elements/package.hpp>
 #include <protobuf_parser/elements/file.hpp>
+#include <protobuf_parser/storage.hpp>
 
 namespace protobuf_parser {
 namespace builders {
 
-class storage_builder {
+class StorageBuilder {
  public:
   void AddDirectories(const std::set<std::string>& directories);
   void AddPackages(const std::set<std::string>& packages);
-  void AddFiles(const google::protobuf::DescriptorPool* descriptor_pool,
-                const std::set<std::string>& files);
+  void AddFiles(const std::set<std::string>& files);
   void AddMessagesFromFiles(const google::protobuf::DescriptorPool* descriptor_pool);
-  Package* FindPackageForFileDescriptor(const google::protobuf::FileDescriptor* file_descriptor);
-  Directory* FindDirectoryForFile(const std::string& file_name);
+
+ private:
   void SetUpPackagesParents();
   void SetUpDirectoriesParents();
   void AddNestedMessages(Message* message, const google::protobuf::Descriptor* descriptor);
   void AddMessageFields(Message* message, const google::protobuf::Descriptor* descriptor);
   void AddMessageReservedFieldsAndNumbers(Message* message,
                                           const google::protobuf::Descriptor* descriptor);
- private:
+  Package* FindPackageForFileDescriptor(const google::protobuf::FileDescriptor* file_descriptor);
+  Directory* FindDirectoryForFile(const std::string& file_name);
+
+  Storage storage_;
 };
 
 }
