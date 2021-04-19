@@ -9,7 +9,7 @@ Parser::Parser(const std::filesystem::path& root_path)
   // root_path_ as a root
   // (https://developers.google.com/protocol-buffers/docs/reference/cpp/google.protobuf.compiler.importer#DiskSourceTree.MapPath.details)
   disk_source_tree_.MapPath(std::string{}, root_path_.string());
-  importer_ = new google::protobuf::compiler::Importer{&disk_source_tree_, &error_collector_};
+  importer_ = std::make_unique<ProtobufImporter>(&disk_source_tree_, &error_collector_);
   std::filesystem::recursive_directory_iterator recursive_directory_iterator{root_path_};
 
   for (auto& dir_entry : recursive_directory_iterator) {

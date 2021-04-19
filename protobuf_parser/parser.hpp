@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <set>
 #include <exception>
+#include <memory>
 
 #include <protobuf_parser/storage.hpp>
 #include <google/protobuf/compiler/importer.h>
@@ -17,11 +18,13 @@ namespace protobuf_parser {
 class Parser {
  public:
   explicit Parser(const std::filesystem::path& root_path);
-  ~Parser();
+  ~Parser() = default;
 
   Storage GetStorage();
 
  private:
+  using ProtobufImporter = google::protobuf::compiler::Importer;
+
   std::string GetPathRelativeToRootDirectory(const std::string& full_path);
   void AddDirectories(const std::set<std::string>& directories);
   void AddPackages(const std::set<std::string>& packages);
@@ -40,7 +43,7 @@ class Parser {
   google::protobuf::compiler::DiskSourceTree disk_source_tree_;
   StubMultipleErrorCollector error_collector_;
   std::filesystem::path root_path_;
-  google::protobuf::compiler::Importer* importer_;
+  std::unique_ptr<ProtobufImporter> importer_;
   std::set<std::string> directories_names_;
   std::set<std::string> packages_names_;
   std::set<std::string> files_names_;
