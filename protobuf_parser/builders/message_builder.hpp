@@ -6,20 +6,21 @@
 #include <protobuf_parser/elements/message.hpp>
 
 namespace protobuf_parser {
-class Message;
-
 namespace builders {
 
 class MessageBuilder {
  public:
-  explicit MessageBuilder();
-  ~MessageBuilder();
+  explicit MessageBuilder() = default;
+  ~MessageBuilder() = default;
 
-  const Message MessageBuildMessage(const google::protobuf::Descriptor* descriptor);
+  Message BuildMessage(const google::protobuf::Descriptor* descriptor, File* file);
+
+ private:
+  void AddNestedMessages(const google::protobuf::Descriptor* descriptor);
+  void AddReservedFields();
 };
 
 }
 }
-
 
 #endif  // PROTOBUF_PARSER_PROTOBUF_PARSER_BUILDER_MESSAGE_BUILDER_HPP_

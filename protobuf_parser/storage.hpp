@@ -17,40 +17,6 @@ namespace protobuf_parser {
 
 class Storage {
  public:
-  template <typename T>
-  class MessagesIterator {
-   public:
-    using iterator_category = std::forward_iterator_tag;
-    using difference_type = std::ptrdiff_t;
-    using value_type = Message;
-    using pointer = Message*;
-    using reference = Message&;
-
-    MessagesIterator(T* root, Storage* storage);
-    MessagesIterator(Storage* storage);
-
-    reference operator*() const;
-    pointer operator->();
-    MessagesIterator<T>& operator++();
-    const MessagesIterator<T> operator++(int);
-
-    template <typename Y>
-    friend bool operator==(const MessagesIterator<Y>& a, const MessagesIterator<Y>& b);
-
-    template <typename Y>
-    friend bool operator!=(const MessagesIterator<Y>& a, const MessagesIterator<Y>& b);
-
-   private:
-    void Iterate();
-    void EnqueueChildElements(T* element);
-    void EnqueueCurrentElementMessages(T* element);
-
-    std::queue<T*> elements_queue_;
-    std::queue<Message*> current_element_messages_;
-    Storage* storage_;
-  };
-
- public:
   Storage() = default;
   ~Storage() = default;
 
@@ -66,12 +32,6 @@ class Storage {
                            const std::set<std::string>& files,
                            const std::set<std::string>& directories,
                            const std::set<std::string>& packages);
-
-  template <typename T>
-  MessagesIterator<T> Begin(T* root);
-
-  template <typename T>
-  MessagesIterator<T> End();
 
  private:
   void AddDirectories(const std::set<std::string>& directories);
@@ -93,73 +53,6 @@ class Storage {
   std::vector<Package> packages_;
   std::vector<Directory> directories_;
 };
-
-template <typename T>
-Storage::MessagesIterator<T>::MessagesIterator(Storage* storage)
-    : storage_(storage), current_element_messages_(), elements_queue_() {
-}
-
-template <typename T>
-Message& Storage::MessagesIterator<T>::operator*() const {
-  return *current_element_messages_.front();
-}
-
-template <typename T>
-typename Storage::MessagesIterator<T>::pointer Storage::MessagesIterator<T>::operator->() {
-  return current_element_messages_.front();
-}
-
-template <typename T>
-Storage::MessagesIterator<T>& Storage::MessagesIterator<T>::operator++() {
-  Iterate();
-  return *this;
-}
-
-template <typename T>
-const Storage::MessagesIterator<T> Storage::MessagesIterator<T>::operator++(int) {
-  MessagesIterator<T> tmp = *this;
-  Iterate();
-  return tmp;
-}
-
-template <typename T>
-bool operator==(const Storage::MessagesIterator<T>& a,
-                const Storage::MessagesIterator<T>& b) {
-  if (a.elements_queue_.empty() && b.elements_queue_.empty() && a.storage_ == b.storage_ &&
-      a.current_element_messages_.empty() && b.current_element_messages_.empty()) {
-    return true;
-  }
-
-  if (a.elements_queue_ != b.elements_queue_) {
-    return false;
-  }
-
-  if (a.current_element_messages_ != b.current_element_messages_) {
-    return false;
-  }
-
-  if (a.storage_ != b.storage_) {
-    return false;
-  }
-
-  return true;
-}
-
-template <typename T>
-bool operator!=(const Storage::MessagesIterator<T>& a,
-                const Storage::MessagesIterator<T>& b) {
-  return !(a == b);
-}
-
-template <typename T>
-Storage::MessagesIterator<T> Storage::Begin(T* root) {
-  return MessagesIterator<T>{root, this};
-}
-
-template <typename T>
-Storage::MessagesIterator<T> Storage::End() {
-  return MessagesIterator<T>{this};
-}
 
 }  // namespace protobuf_parser
 

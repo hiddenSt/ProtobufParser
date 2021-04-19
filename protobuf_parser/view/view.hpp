@@ -7,33 +7,19 @@
 namespace protobuf_parser {
 namespace view {
 
-template <typename T, typename Serializer>
+template <typename T>
 class View {
  public:
   View() = delete;
-  explicit View(T* root, Storage& storage, const Serializer& serializer);
+  explicit View(T* root);
   ~View() = default;
 
   std::string Serialize();
 
  private:
-  Serializer serializer_;
   Storage& storage_;
   T* root_;
 };
-
-template <typename T, typename Serializer>
-View<T, Serializer>::View(T* root, Storage& storage, const Serializer& serializer)
-    : root_(root), serializer_(serializer), storage_(storage) {
-}
-
-template <typename T, typename Serializer>
-std::string View<T, Serializer>::Serialize() {
-  for (auto message = storage_.Begin(root_); message != storage_.End<T>(); ++message) {
-    serializer_.AddMessage(*message);
-  }
-  return serializer_.Serialize();
-}
 
 }  // namespace view
 }  // namespace protobuf_parser

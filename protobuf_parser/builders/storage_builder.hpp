@@ -31,7 +31,6 @@ class storage_builder {
   void AddMessageFields(Message* message, const google::protobuf::Descriptor* descriptor);
   void AddMessageReservedFieldsAndNumbers(Message* message,
                                           const google::protobuf::Descriptor* descriptor);
-
  private:
 };
 

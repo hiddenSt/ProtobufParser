@@ -17,10 +17,15 @@ class MessageBuilder;
 class Message {
  public:
   Message() = delete;
-  Message(const Message& other) = default;
   explicit Message(const std::string& name, File* file, Message* parent_message);
   explicit Message(const std::string& name, File* file);
   ~Message() = default;
+
+  Message(Message&& other) noexcept;
+
+  // Non-copyable
+  Message(const Message&) = delete;
+  Message& operator= (const Message&) = delete;
 
   bool operator==(const Message& other);
   bool operator!=(const Message& other);
