@@ -22,12 +22,16 @@ class StorageBuilder {
   void AddPackageBuilder(PackageBuilder* package_builder);
   void AddFileBuilder(FileBuilder* file_builder);
   void AddMessageBuilder(MessageBuilder* message_builder);
-  const Storage& GetStorage() const noexcept;
+  const Storage& GetStorage();
 
  private:
-  void SetUpPackagesParents();
-  void SetUpDirectoriesParents();
-  Package* FindPackageForFileDescriptor(const google::protobuf::FileDescriptor* file_descriptor);
+  void BuildDirectories();
+  void BuildPackages();
+  void BuildFiles();
+  void BuildMessages();
+  Package* FindParentForPackage(const std::string& package_name);
+  Directory* FindParentForDirectory(const std::string*& directory_name);
+  Package* FindPackageForFile(const std::string& file_name);
   Directory* FindDirectoryForFile(const std::string& file_name);
 
   Storage storage_;

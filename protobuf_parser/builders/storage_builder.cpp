@@ -19,17 +19,36 @@ void StorageBuilder::AddMessageBuilder(MessageBuilder* message_builder) {
   message_builders_.push_back(message_builder);
 }
 
-const Storage& StorageBuilder::GetStorage() const noexcept {
+const Storage& StorageBuilder::GetStorage() {
+  BuildDirectories();
+  BuildPackages();
+  BuildFiles();
+  BuildMessages();
   return storage_;
 }
 
-void StorageBuilder::SetUpPackagesParents() {
-  std::sort(package_builders_.begin(),package_builders_.end(),
-            [](const PackageBuilder& a, const PackageBuilder& b) {
-              return a.GetName() <= b.GetName();
-  });
+Package* StorageBuilder::FindParentForPackage(const std::string& package_name) {
+  std::string diff;
+  for (auto& package: storage_.packages_) {
+    if (package_name.find(package.GetName() + ".") == 0) {
+      std::size_t i = 0;
+      while (package.GetName()[i] == package_name[i]) {
+        ++i;
+      }
+      ++i;
+      while (i < package_name.size()) {
+        if (package_name[i] == '.') {
+          continue;
+        }
+      }
+      return &package;
+    }
+  }
+  return nullptr;
+}
 
-  // TODO: 
+Directory* StorageBuilder::FindParentForDirectory(const std::string*& directory_name) {
+  return nullptr;
 }
 
 }
