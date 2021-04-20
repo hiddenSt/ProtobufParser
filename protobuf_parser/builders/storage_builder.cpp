@@ -18,8 +18,18 @@ void StorageBuilder::AddFileBuilder(FileBuilder* file_builder) {
 void StorageBuilder::AddMessageBuilder(MessageBuilder* message_builder) {
   message_builders_.push_back(message_builder);
 }
+
 const Storage& StorageBuilder::GetStorage() const noexcept {
   return storage_;
+}
+
+void StorageBuilder::SetUpPackagesParents() {
+  std::sort(package_builders_.begin(),package_builders_.end(),
+            [](const PackageBuilder& a, const PackageBuilder& b) {
+              return a.GetName() <= b.GetName();
+  });
+
+  
 }
 
 }
