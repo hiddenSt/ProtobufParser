@@ -91,5 +91,15 @@ Directory* StorageBuilder::FindParentForDirectory(const std::string& directory_n
   return nullptr;
 }
 
+void StorageBuilder::BuildFiles() {
+  for (auto& builder: file_builders_) {
+    Directory* directory = FindDirectoryForFile(builder->GetName());
+    Package* package = FindPackageForFile(builder->GetName());
+    builder->SetUpDirectory(directory);
+    builder->SetUpPackage(package);
+    storage_.files_.emplace_back(std::move(builder->GetFile()));
+  }
+}
+
 }
 }
