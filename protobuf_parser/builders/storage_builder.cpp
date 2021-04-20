@@ -3,16 +3,16 @@
 namespace protobuf_parser {
 namespace builders {
 
-void StorageBuilder::AddDirectories(const std::set<std::string>& directories) {
-  for (auto& directory_name: directories) {
-    storage_.directories_.emplace_back(directory_name);
-  }
+void StorageBuilder::AddDirectory(DirectoryBuilder& directory_builder) {
+
 }
 
-void StorageBuilder::AddPackages(const std::set<std::string>& packages) {
-  for (auto& package_name: packages) {
-    storage_.packages_.emplace_back(package_name);
-  }
+void StorageBuilder::AddPackage(PackageBuilder& package_builder) {
+
+}
+
+void StorageBuilder::AddFiles(FileBuilder& file_builder) {
+
 }
 
 }

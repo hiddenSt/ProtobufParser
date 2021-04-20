@@ -1,10 +1,23 @@
 #ifndef PROTOBUF_PARSER_PROTOBUF_PARSER_BUILDERS_PACKAGE_BUILDER_HPP_
 #define PROTOBUF_PARSER_PROTOBUF_PARSER_BUILDERS_PACKAGE_BUILDER_HPP_
 
+#include <string>
+
+#include <protobuf_parser/elements/package.hpp>
+
 namespace protobuf_parser {
 namespace builders {
 
-class PackageBuilder {};
+class PackageBuilder {
+ public:
+  PackageBuilder() = default;
+
+  void SetUpName(const std::string& name) noexcept;
+  void SetUpParent(Package* parent) noexcept;
+
+ private:
+  Package package_;
+};
 
 }
 }

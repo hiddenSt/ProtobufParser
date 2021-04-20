@@ -8,22 +8,21 @@
 
 #include <google/protobuf/descriptor.h>
 
-#include <protobuf_parser/elements/directory.hpp>
-#include <protobuf_parser/elements/message.hpp>
-#include <protobuf_parser/elements/package.hpp>
-#include <protobuf_parser/elements/file.hpp>
 #include <protobuf_parser/storage.hpp>
+#include <protobuf_parser/builders/file_builder.hpp>
+#include <protobuf_parser/builders/message_builder.hpp>
+#include <protobuf_parser/builders/directory_builder.hpp>
+#include <protobuf_parser/builders/package_builder.hpp>
 
 namespace protobuf_parser {
 namespace builders {
 
 class StorageBuilder {
  public:
-  void AddDirectories(const std::set<std::string>& directories);
-  void AddPackages(const std::set<std::string>& packages);
-  void AddFiles(const std::set<std::string>& files);
-  void AddMessagesFromFiles(const google::protobuf::DescriptorPool* descriptor_pool);
-  Storage GetStorage() const noexcept;
+  void AddDirectory(DirectoryBuilder& directory_builder);
+  void AddPackage(PackageBuilder& package_builder);
+  void AddFiles(FileBuilder& file_builder);
+  Storage& GetStorage() const noexcept;
 
  private:
   void SetUpPackagesParents();

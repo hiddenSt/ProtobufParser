@@ -1,8 +1,6 @@
 #ifndef PROTOBUF_PARSER_PROTOBUF_PARSER_BUILDER_MESSAGE_BUILDER_HPP_
 #define PROTOBUF_PARSER_PROTOBUF_PARSER_BUILDER_MESSAGE_BUILDER_HPP_
 
-#include <google/protobuf/descriptor.h>
-
 #include <protobuf_parser/elements/message.hpp>
 
 namespace protobuf_parser {
@@ -13,11 +11,16 @@ class MessageBuilder {
   explicit MessageBuilder() = default;
   ~MessageBuilder() = default;
 
-  Message BuildMessage(const google::protobuf::Descriptor* descriptor, File* file);
+  void SetUpMessageName(const std::string& name) noexcept;
+  void SetUpParent(Message* parent) noexcept;
+  void SetUpFile(File* file) noexcept;
+  void AddNestedMessage(Message&& message);
+  void AddFiled(const Field& field);
+  void AddReservedName(const std::string& name);
+  void AddReservedNumber(std::size_t number);
 
  private:
-  void AddNestedMessages(const google::protobuf::Descriptor* descriptor);
-  void AddReservedFieldsAndNumbers();
+  Message message_;
 };
 
 }

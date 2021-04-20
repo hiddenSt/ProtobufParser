@@ -7,12 +7,13 @@
 #include <protobuf_parser/elements/directory.hpp>
 
 namespace protobuf_parser {
+namespace builders {
+class FileBuilder;
+}
 
 class File {
  public:
-  File() = delete;
-  File(const File& other) = default;
-  explicit File(const std::string& name, Directory* directory, Package* package);
+  File() = default;
   ~File() = default;
 
   const std::string& GetName() const noexcept;
@@ -24,6 +25,8 @@ class File {
   bool operator!=(const File& other) const noexcept;
 
  private:
+  friend class builders::FileBuilder;
+
   std::string name_;
   Directory* directory_;
   Package* package_;

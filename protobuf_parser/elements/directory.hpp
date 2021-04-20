@@ -4,14 +4,19 @@
 #include <string>
 
 namespace protobuf_parser {
+namespace builders {
+class DirectoryBuilder;
+}
 
 class Directory {
  public:
-  Directory() = delete;
-  Directory(const Directory& other);
-  explicit Directory(const std::string& names);
-  explicit Directory(const std::string& name, Directory* parent_directory);
+  Directory() = default;
+  Directory(Directory&& directory);
   ~Directory() = default;
+
+  // Non-copyable
+  Directory(const Directory&) = delete;
+  Directory& operator=(const Directory&) = delete;
 
   const std::string& GetName() const;
   Directory* GetParentDirectory();
@@ -21,6 +26,8 @@ class Directory {
   bool operator!=(const Directory& other) const noexcept;
 
  private:
+  friend class builders::DirectoryBuilder;
+
   std::string name_;
   Directory* parent_directory_;
 };

@@ -4,10 +4,6 @@
 
 namespace protobuf_parser {
 
-protobuf_parser::File::File(const std::string& name, Directory* directory, Package* package)
-    : name_(name), directory_(directory), package_(package) {
-}
-
 const std::string& File::GetName() const noexcept {
   return name_;
 }

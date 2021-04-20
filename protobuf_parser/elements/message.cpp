@@ -2,14 +2,6 @@
 
 namespace protobuf_parser {
 
-Message::Message(const std::string& name, File* file, Message* parent_message)
-    : name_(name), file_(file), parent_message_(parent_message) {
-}
-
-Message::Message(const std::string& name, File* file)
-    : name_(name), file_(file), parent_message_(nullptr) {
-}
-
 Package* Message::GetPackage() const noexcept {
   return file_->GetPackage();
 }

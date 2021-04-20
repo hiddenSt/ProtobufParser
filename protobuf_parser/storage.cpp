@@ -75,7 +75,7 @@ void Storage::SetUpPackagesParents() {
   for (std::size_t i = 0; i < packages_.size(); ++i) {
     for (std::size_t j = 0; j < packages_.size(); ++j) {
       if (i != j) {
-        if (packages_[j].GetName().find(packages_[i].GetName()) == 0) {
+        if (packages_[j].GetName().find(packages_[i].GetName() + ".") == 0) {
           packages_[j].SetParentPackage(&packages_[i]);
         }
       }
@@ -88,7 +88,7 @@ void Storage::SetUpDirectoriesParents() {
   for (std::size_t i = 0; i < directories_.size(); ++i) {
     for (std::size_t j = 0; j < directories_.size(); ++j) {
       if (i != j) {
-        if (directories_[j].GetName().find(directories_[i].GetName()) == 0) {
+        if (directories_[j].GetName().find(directories_[i].GetName() + "/") == 0) {
           directories_[j].SetParentDirectory(&directories_[i]);
         }
       }

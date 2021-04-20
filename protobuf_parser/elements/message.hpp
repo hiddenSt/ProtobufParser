@@ -16,9 +16,7 @@ class MessageBuilder;
 
 class Message {
  public:
-  Message() = delete;
-  explicit Message(const std::string& name, File* file, Message* parent_message);
-  explicit Message(const std::string& name, File* file);
+  Message() = default;
   ~Message() = default;
 
   Message(Message&& other) noexcept;
@@ -42,6 +40,7 @@ class Message {
 
  private:
   friend class builders::MessageBuilder;
+
   std::string name_;
   Message* parent_message_;
   File* file_;

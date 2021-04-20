@@ -1,10 +1,24 @@
 #ifndef PROTOBUF_PARSER_PROTOBUF_PARSER_BUILDERS_FILE_BUILDER_HPP_
 #define PROTOBUF_PARSER_PROTOBUF_PARSER_BUILDERS_FILE_BUILDER_HPP_
 
+#include <string>
+
+#include <protobuf_parser/elements/file.hpp>
+
 namespace protobuf_parser {
 namespace builders {
 
-class FileBuilder {};
+class FileBuilder {
+ public:
+  FileBuilder() = default;
+
+  void SetUpName(const std::string& name) noexcept;
+  void SetUpDirectory(Directory* directory) noexcept;
+  void SetUpPackage(Package* package) noexcept;
+
+ private:
+  File file_;
+};
 
 }
 }
