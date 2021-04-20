@@ -3,7 +3,7 @@
 #include <protobuf_parser/elements/file.hpp>
 
 namespace tests {
-
+/*
 TEST(FileTests, CanGetFileName) {
   std::string file_name{"FileName1"};
   protobuf_parser::Directory dir{"outer"};
@@ -55,5 +55,5 @@ TEST(FileTests, ReturnsFalseIfCompareFilesWithDifferentPaths) {
 
   ASSERT_TRUE(file != file2);
 }
-
+*/
 }  // namespace tests

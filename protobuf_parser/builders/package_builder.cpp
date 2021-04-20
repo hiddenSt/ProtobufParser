@@ -8,7 +8,7 @@ void PackageBuilder::SetUpName(const std::string& name) noexcept {
 }
 
 void PackageBuilder::SetUpParent(Package* parent) noexcept {
-  parent->parent_package_ = parent;
+  package_.parent_package_ = parent;
 }
 
 Package& PackageBuilder::GetPackage() {

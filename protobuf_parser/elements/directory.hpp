@@ -19,7 +19,7 @@ class Directory {
   Directory& operator=(const Directory&) = delete;
 
   const std::string& GetName() const;
-  Directory* GetParentDirectory();
+  const Directory& GetParentDirectory();
   bool Contains(const std::string& file_name);
 
   bool operator==(const Directory& other) const noexcept;

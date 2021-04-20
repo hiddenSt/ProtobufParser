@@ -2,8 +2,8 @@
 
 namespace protobuf_parser {
 
-Package* Package::GetParentPackage() noexcept {
-  return parent_package_;
+Package& Package::GetParentPackage() noexcept {
+  return *parent_package_;
 }
 
 const std::string& Package::GetName() const {

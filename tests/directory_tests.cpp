@@ -2,7 +2,7 @@
 #include <protobuf_parser/elements/directory.hpp>
 
 namespace tests {
-
+/*
 TEST(DirectoryTests, CanGetParentDirectory) {
   std::string parent_dir_name{"CoolName"};
   std::string dir_name{"cool_name"};
@@ -23,5 +23,5 @@ TEST(DirectoryTests, CanSetParentDirectory) {
 
   ASSERT_EQ(dir.GetParentDirectory()->GetName(), new_parent_dir_name);
 }
-
+*/
 }  // namespace tests

@@ -22,8 +22,8 @@ bool Directory::operator!=(const Directory& other) const noexcept {
   return !(*this == other);
 }
 
-Directory* Directory::GetParentDirectory() {
-  return parent_directory_;
+const Directory& Directory::GetParentDirectory() {
+  return *parent_directory_;
 }
 
 bool Directory::Contains(const std::string& file_name) {
@@ -39,6 +39,11 @@ bool Directory::Contains(const std::string& file_name) {
     ++i;
   }
   return true;
+}
+Directory::Directory(Directory&& directory)
+    : parent_directory_(directory.parent_directory_),
+      name_(std::move(directory.name_)) {
+  directory.parent_directory_ = nullptr;
 }
 
 }  // namespace protobuf_parser
