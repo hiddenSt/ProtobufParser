@@ -11,7 +11,7 @@ class MessageBuilder {
   explicit MessageBuilder() = default;
   ~MessageBuilder() = default;
 
-  void SetUpMessageName(const std::string& name) noexcept;
+  void SetUpName(const std::string& name) noexcept;
   void SetUpParent(Message* parent) noexcept;
   void SetUpFile(File* file) noexcept;
   void AddNestedMessage(Message&& message);

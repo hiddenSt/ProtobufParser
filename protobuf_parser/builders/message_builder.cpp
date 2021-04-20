@@ -3,7 +3,7 @@
 namespace protobuf_parser {
 namespace builders {
 
-void MessageBuilder::SetUpMessageName(const std::string& name) noexcept {
+void MessageBuilder::SetUpName(const std::string& name) noexcept {
   message_.name_ = name;
 }
 
