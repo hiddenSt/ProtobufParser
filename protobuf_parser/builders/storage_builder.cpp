@@ -28,7 +28,6 @@ const Storage& StorageBuilder::GetStorage() {
 }
 
 Package* StorageBuilder::FindParentForPackage(const std::string& package_name) {
-  std::string diff;
   for (auto& package: storage_.packages_) {
     if (package_name.find(package.GetName() + ".") == 0) {
       std::size_t i = 0;
@@ -47,7 +46,22 @@ Package* StorageBuilder::FindParentForPackage(const std::string& package_name) {
   return nullptr;
 }
 
-Directory* StorageBuilder::FindParentForDirectory(const std::string*& directory_name) {
+Directory* StorageBuilder::FindParentForDirectory(const std::string& directory_name) {
+  for (auto& directory: storage_.directories_) {
+    if (directory_name.find(directory.GetName() + "/") == 0) {
+      std::size_t i = 0;
+      while (directory.GetName()[i] == directory_name[i]) {
+        ++i;
+      }
+      ++i;
+      while (i < directory_name.size()) {
+        if (directory_name[i] == '/') {
+          continue;
+        }
+      }
+      return &directory;
+    }
+  }
   return nullptr;
 }
 
