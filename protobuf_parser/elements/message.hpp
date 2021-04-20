@@ -28,10 +28,10 @@ class Message {
   bool operator==(const Message& other);
   bool operator!=(const Message& other);
 
-  Package* GetPackage() const noexcept;
-  File* GetFile() const noexcept;
-  Directory* GetDirectory();
-  Message* GetParentMessage() const noexcept;
+  const Package& GetPackage() const noexcept;
+  const File& GetFile() const noexcept;
+  const Directory& GetDirectory();
+  const Message& GetParentMessage() const noexcept;
   const std::string& GetName() const;
   const std::vector<Field>& GetFields() const;
   const std::vector<Message>& GetNestedMessages() const;

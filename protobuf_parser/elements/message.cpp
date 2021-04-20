@@ -2,16 +2,16 @@
 
 namespace protobuf_parser {
 
-Package* Message::GetPackage() const noexcept {
+const Package& Message::GetPackage() const noexcept {
   return file_->GetPackage();
 }
 
-File* Message::GetFile() const noexcept {
-  return file_;
+const File& Message::GetFile() const noexcept {
+  return *file_;
 }
 
-Message* Message::GetParentMessage() const noexcept {
-  return parent_message_;
+const Message& Message::GetParentMessage() const noexcept {
+  return *parent_message_;
 }
 
 const std::string& Message::GetName() const {
@@ -38,7 +38,7 @@ bool Message::operator!=(const Message& other) {
   return !(*this == other);
 }
 
-Directory* Message::GetDirectory() {
+const Directory& Message::GetDirectory() {
   return file_->GetDirectory();
 }
 

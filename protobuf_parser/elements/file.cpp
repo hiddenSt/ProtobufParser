@@ -28,12 +28,12 @@ bool File::operator!=(const File& other) const noexcept {
   return !(*this == other);
 }
 
-Directory* File::GetDirectory() {
-  return directory_;
+const Directory& File::GetDirectory() {
+  return *directory_;
 }
 
-Package* File::GetPackage() {
-  return package_;
+const Package& File::GetPackage() {
+  return *package_;
 }
 
 }  // namespace protobuf_parser

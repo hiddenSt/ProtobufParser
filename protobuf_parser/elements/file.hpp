@@ -18,8 +18,8 @@ class File {
 
   const std::string& GetName() const noexcept;
   const std::string GetPath() const noexcept;
-  Directory* GetDirectory();
-  Package* GetPackage();
+  const Directory& GetDirectory();
+  const Package& GetPackage();
 
   bool operator==(const File& other) const noexcept;
   bool operator!=(const File& other) const noexcept;
