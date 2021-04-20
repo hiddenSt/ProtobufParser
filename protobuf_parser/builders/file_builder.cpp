@@ -15,5 +15,9 @@ void FileBuilder::SetUpPackage(Package* package) noexcept {
   file_.package_ = package;
 }
 
+File& FileBuilder::GetFile() {
+  return file_;
+}
+
 }
 }

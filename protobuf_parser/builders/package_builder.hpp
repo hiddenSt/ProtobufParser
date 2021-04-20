@@ -15,6 +15,8 @@ class PackageBuilder {
   void SetUpName(const std::string& name) noexcept;
   void SetUpParent(Package* parent) noexcept;
 
+  Package& GetPackage();
+
  private:
   Package package_;
 };

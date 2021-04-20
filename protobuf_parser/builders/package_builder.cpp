@@ -11,5 +11,9 @@ void PackageBuilder::SetUpParent(Package* parent) noexcept {
   parent->parent_package_ = parent;
 }
 
+Package& PackageBuilder::GetPackage() {
+  return package_;
+}
+
 }
 }

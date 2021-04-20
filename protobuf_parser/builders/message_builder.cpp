@@ -32,5 +32,9 @@ void MessageBuilder::AddReservedNumber(std::size_t number) {
   message_.reserved_numbers_.push_back(number);
 }
 
+Message& MessageBuilder::GetMessage() {
+  return message_;
+}
+
 }
 }

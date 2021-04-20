@@ -5,7 +5,7 @@ set(TESTS_SOURCES
   package_tests.cpp
   message_tests.cpp
   storage_tests.cpp
-)
+  builders/message_builder_tests.cpp)
 
 set(UTIL_SOURCES
   util/mock_multiple_error_collector.cpp

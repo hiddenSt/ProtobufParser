@@ -7,7 +7,6 @@
 #include <set>
 
 #include <google/protobuf/descriptor.h>
-
 #include <protobuf_parser/storage.hpp>
 #include <protobuf_parser/builders/file_builder.hpp>
 #include <protobuf_parser/builders/message_builder.hpp>
@@ -19,9 +18,10 @@ namespace builders {
 
 class StorageBuilder {
  public:
-  void AddDirectory(DirectoryBuilder& directory_builder);
-  void AddPackage(PackageBuilder& package_builder);
-  void AddFiles(FileBuilder& file_builder);
+  void AddDirectoryBuilder(DirectoryBuilder* directory_builder);
+  void AddPackageBuilder(PackageBuilder* package_builder);
+  void AddFileBuilder(FileBuilder* file_builder);
+  void AddMessageBuilder(MessageBuilder* message_builder);
   Storage& GetStorage() const noexcept;
 
  private:
@@ -31,6 +31,10 @@ class StorageBuilder {
   Directory* FindDirectoryForFile(const std::string& file_name);
 
   Storage storage_;
+  std::vector<MessageBuilder*> message_builders_;
+  std::vector<DirectoryBuilder*> directory_builders_;
+  std::vector<FileBuilder*> file_builders_;
+  std::vector<PackageBuilder*> package_builders_;
 };
 
 }

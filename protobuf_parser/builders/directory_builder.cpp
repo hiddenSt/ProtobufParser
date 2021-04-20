@@ -10,6 +10,9 @@ void DirectoryBuilder::SetUpParent(Directory* parent) noexcept {
 void DirectoryBuilder::SetUpName(const std::string& name) noexcept {
   directory_.name_ = name;
 }
+Directory& DirectoryBuilder::GetDirectory() {
+  return directory_;
+}
 
 }
 }

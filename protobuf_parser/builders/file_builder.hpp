@@ -16,6 +16,8 @@ class FileBuilder {
   void SetUpDirectory(Directory* directory) noexcept;
   void SetUpPackage(Package* package) noexcept;
 
+  File& GetFile();
+
  private:
   File file_;
 };

@@ -36,7 +36,7 @@ parser.SerializePackage('package_name')
 ```c++
 class Serializer {
   public:
-   void AddMessage(const Message& message);
+   void AddMessageBuilder(const Message& message);
    std::string Serialize();
 };
 ```
