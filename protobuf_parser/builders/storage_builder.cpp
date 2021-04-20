@@ -27,6 +27,32 @@ const Storage& StorageBuilder::GetStorage() {
   return storage_;
 }
 
+void StorageBuilder::BuildDirectories() {
+  std::sort(directory_builders_.begin(), directory_builders_.end(),
+            [](const DirectoryBuilder& a, const DirectoryBuilder& b) {
+              return a.GetName() > b.GetName();
+  });
+
+  for (auto& builder: directory_builders_) {
+    Directory* parent = FindParentForDirectory(builder->GetName());
+    builder->SetUpParent(parent);
+    storage_.directories_.emplace_back(std::move(builder->GetDirectory()));
+  }
+}
+
+void StorageBuilder::BuildPackages() {
+  std::sort(package_builders_.begin(), package_builders_.end(),
+            [](const PackageBuilder& a, const PackageBuilder& b) {
+              return a.GetName() > b.GetName();
+            });
+
+  for (auto& builder: package_builders_) {
+    Package* parent = FindParentForPackage(builder->GetName());
+    builder->SetUpParent(parent);
+    storage_.packages_.emplace_back(std::move(builder->GetPackage()));
+  }
+}
+
 Package* StorageBuilder::FindParentForPackage(const std::string& package_name) {
   for (auto& package: storage_.packages_) {
     if (package_name.find(package.GetName() + ".") == 0) {
