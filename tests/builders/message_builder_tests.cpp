@@ -77,7 +77,7 @@ TEST(MessageBuilderTests, NestedMessagesHasCorrectParent) {
 }
 
 TEST(MessageBuilderTests, CanAddField) {
-  
+
 }
 
 TEST(MessageBuilderTests, CanAddReservedName) {

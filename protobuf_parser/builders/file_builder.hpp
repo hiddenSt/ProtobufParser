@@ -15,6 +15,7 @@ class FileBuilder {
   void SetUpName(const std::string& name) noexcept;
   void SetUpDirectory(Directory* directory) noexcept;
   void SetUpPackage(Package* package) noexcept;
+  const std::string& GetName() const;
 
   File& GetFile();
 

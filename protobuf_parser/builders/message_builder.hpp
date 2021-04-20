@@ -18,6 +18,8 @@ class MessageBuilder {
   void AddFiled(const Field& field);
   void AddReservedName(const std::string& name);
   void AddReservedNumber(std::size_t number);
+  const std::string& GetName() const;
+
   Message& GetMessage();
 
  private:

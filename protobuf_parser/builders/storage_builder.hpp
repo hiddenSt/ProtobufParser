@@ -22,7 +22,7 @@ class StorageBuilder {
   void AddPackageBuilder(PackageBuilder* package_builder);
   void AddFileBuilder(FileBuilder* file_builder);
   void AddMessageBuilder(MessageBuilder* message_builder);
-  Storage& GetStorage() const noexcept;
+  const Storage& GetStorage() const noexcept;
 
  private:
   void SetUpPackagesParents();

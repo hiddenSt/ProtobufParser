@@ -35,6 +35,9 @@ void MessageBuilder::AddReservedNumber(std::size_t number) {
 Message& MessageBuilder::GetMessage() {
   return message_;
 }
+const std::string& MessageBuilder::GetName() const {
+  return message_.GetName();
+}
 
 }
 }

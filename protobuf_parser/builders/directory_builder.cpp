@@ -15,5 +15,9 @@ Directory& DirectoryBuilder::GetDirectory() {
   return directory_;
 }
 
+const std::string& DirectoryBuilder::GetName() const {
+  return directory_.GetName();
+}
+
 }
 }

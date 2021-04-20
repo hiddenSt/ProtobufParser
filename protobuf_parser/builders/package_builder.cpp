@@ -15,5 +15,9 @@ Package& PackageBuilder::GetPackage() {
   return package_;
 }
 
+const std::string& PackageBuilder::GetName() const {
+  return package_.GetName();
+}
+
 }
 }

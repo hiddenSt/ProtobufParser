@@ -19,5 +19,9 @@ File& FileBuilder::GetFile() {
   return file_;
 }
 
+const std::string& FileBuilder::GetName() const {
+  return file_.GetName();
+}
+
 }
 }
