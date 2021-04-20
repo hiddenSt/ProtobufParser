@@ -16,6 +16,13 @@ class File {
   File() = default;
   ~File() = default;
 
+  // Movable
+  File(File&& other) noexcept;
+
+  // Non-copyable
+  File(const File&) = delete;
+  const File& operator=(const File&) = delete;
+
   const std::string& GetName() const noexcept;
   const std::string GetPath() const noexcept;
   const Directory& GetDirectory();

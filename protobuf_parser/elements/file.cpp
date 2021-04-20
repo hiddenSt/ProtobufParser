@@ -36,4 +36,12 @@ const Package& File::GetPackage() {
   return *package_;
 }
 
+File::File(File&& other) noexcept
+    : name_(std::move(other.name_)),
+      directory_(other.directory_),
+      package_(other.package_) {
+  other.directory_ = nullptr;
+  other.package_ = nullptr;
+}
+
 }  // namespace protobuf_parser
