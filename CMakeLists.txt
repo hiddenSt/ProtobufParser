@@ -10,8 +10,6 @@ option(PROTOBUF_PARSER_DEVELOPER "ProtobufParser development mode" OFF)
 option(PROTOBUF_PARSER_TESTS "Enable ProtobufParser tests" OFF)
 option(PROTOBUF_PARSER_CONSOLE_UTILITY "Build console utility tool" OFF)
 
-
-add_subdirectory(third-party)
 add_subdirectory(protobuf_parser)
 
 if (PROTOBUF_PARSER_CONSOLE_UTILITY)
