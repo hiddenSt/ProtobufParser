@@ -3,10 +3,12 @@
 #include <filesystem>
 
 #include <protobuf_parser/parser.hpp>
-#include <protobuf_parser/serializers/json_serializer.hpp>
-
 
 namespace tests {
 
+TEST(ParserTests, CanCreateParser) {
+  std::filesystem::path protos_path{"../../tests"};
+  ASSERT_NO_THROW(protobuf_parser::Parser{protos_path});
+}
 
 }  // namespace tests

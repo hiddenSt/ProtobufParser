@@ -107,4 +107,16 @@ void Parser::AddMessages() {
   }
 }
 
+void Parser::AddNestedMessages(builders::MessageBuilder* builder,
+                               const google::protobuf::Descriptor* descriptor) {
+
+}
+
+void Parser::AddMessageFields(builders::MessageBuilder* builder,
+                              const google::protobuf::Descriptor* descriptor) {
+}
+void Parser::AddMessageReservedFieldsAndNumbers(builders::MessageBuilder* builder,
+                                                const google::protobuf::Descriptor* descriptor) {
+}
+
 }

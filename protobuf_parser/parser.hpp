@@ -24,13 +24,13 @@ class Parser {
   explicit Parser(const std::filesystem::path& root_path);
   ~Parser() = default;
 
+  void Parse();
   Storage& GetStorage();
 
  private:
   using ProtobufImporter = google::protobuf::compiler::Importer;
 
   std::string GetPathRelativeToRootDirectory(const std::string& full_path);
-  void Parse();
   void AddDirectories();
   void AddPackages();
   void AddFiles();
@@ -48,10 +48,10 @@ class Parser {
   std::vector<builders::MessageBuilder> messages_builders_;
   std::vector<builders::FileBuilder> files_builders_;
   std::vector<builders::DirectoryBuilder> directories_builders_;
+  builders::StorageBuilder storage_builder_;
   std::set<std::string> directories_names_;
   std::set<std::string> packages_names_;
   std::set<std::string> files_names_;
-  builders::StorageBuilder storage_builder_;
   Storage storage_;
 };
 
