@@ -31,8 +31,9 @@ class StorageBuilder {
   void BuildMessages();
   Package* FindParentForPackage(const std::string& package_name);
   Directory* FindParentForDirectory(const std::string& directory_name);
-  Package* FindPackageForFile(const std::string& file_name);
+  Package* FindPackage(const std::string& package_name);
   Directory* FindDirectoryForFile(const std::string& file_name);
+  File* FindFile(const std::string& name);
 
   Storage storage_;
   std::vector<MessageBuilder*> message_builders_;

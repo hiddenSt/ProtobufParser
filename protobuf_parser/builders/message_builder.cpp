@@ -1,5 +1,7 @@
 #include "message_builder.hpp"
 
+#include <queue>
+
 namespace protobuf_parser {
 namespace builders {
 
@@ -37,6 +39,30 @@ Message& MessageBuilder::GetMessage() {
 }
 const std::string& MessageBuilder::GetName() const {
   return message_.GetName();
+}
+
+void MessageBuilder::SetUpFileName(const std::string& file_name) {
+  file_name_ = file_name;
+}
+
+const std::string& MessageBuilder::GetFileName() {
+  return file_name_;
+}
+
+void MessageBuilder::AddFile(File* file) noexcept {
+  message_.file_ = file;
+  std::queue<Message*> messages_queue;
+  for (auto& message: message_.nested_messages_) {
+    messages_queue.emplace(&message);
+  }
+  while (!messages_queue.empty()) {
+    auto* message = messages_queue.front();
+    messages_queue.pop();
+    message->file_ = message_.file_;
+    for (auto& nested: message->nested_messages_) {
+      messages_queue.emplace(&nested);
+    }
+  }
 }
 
 }

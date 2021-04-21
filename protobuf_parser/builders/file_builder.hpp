@@ -15,12 +15,16 @@ class FileBuilder {
   void SetUpName(const std::string& name) noexcept;
   void SetUpDirectory(Directory* directory) noexcept;
   void SetUpPackage(Package* package) noexcept;
+  void SetUpPackageName(const std::string& package_name);
   const std::string& GetName() const;
+
+  const std::string& GetPackageName() const;
 
   File& GetFile();
 
  private:
   File file_;
+  std::string package_name_;
 };
 
 }

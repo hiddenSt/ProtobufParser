@@ -23,5 +23,13 @@ const std::string& FileBuilder::GetName() const {
   return file_.GetName();
 }
 
+void FileBuilder::SetUpPackageName(const std::string& package_name) {
+  package_name_ = package_name;
+}
+
+const std::string& FileBuilder::GetPackageName() const {
+  return package_name_;
+}
+
 }
 }
