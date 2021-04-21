@@ -8,7 +8,7 @@ namespace builders {
 
 class MessageBuilder {
  public:
-  explicit MessageBuilder() = default;
+  MessageBuilder() = default;
   ~MessageBuilder() = default;
 
   void SetUpName(const std::string& name) noexcept;
@@ -28,7 +28,7 @@ class MessageBuilder {
 
  private:
   Message message_;
-  std::string& file_name_;
+  std::string file_name_;
 };
 
 }

@@ -29,8 +29,8 @@ const Storage& StorageBuilder::GetStorage() {
 
 void StorageBuilder::BuildDirectories() {
   std::sort(directory_builders_.begin(), directory_builders_.end(),
-            [](const DirectoryBuilder& a, const DirectoryBuilder& b) {
-              return a.GetName() > b.GetName();
+            [](const DirectoryBuilder* a, const DirectoryBuilder* b) {
+              return a->GetName() > b->GetName();
   });
 
   for (auto& builder: directory_builders_) {
@@ -42,8 +42,8 @@ void StorageBuilder::BuildDirectories() {
 
 void StorageBuilder::BuildPackages() {
   std::sort(package_builders_.begin(), package_builders_.end(),
-            [](const PackageBuilder& a, const PackageBuilder& b) {
-              return a.GetName() > b.GetName();
+            [](const PackageBuilder* a, const PackageBuilder* b) {
+              return a->GetName() > b->GetName();
             });
 
   for (auto& builder: package_builders_) {
@@ -86,6 +86,7 @@ Directory* StorageBuilder::FindDirectoryForFile(const std::string& file_name) {
       return &directory;
     }
   }
+  return nullptr;
 }
 
 void StorageBuilder::BuildMessages() {
@@ -105,6 +106,7 @@ File* StorageBuilder::FindFile(const std::string& name) {
   }
   return nullptr;
 }
+
 Package* StorageBuilder::FindPackage(const std::string& file_name) {
   for (auto& package: storage_.packages_) {
     if (package.GetName() == file_name) {
