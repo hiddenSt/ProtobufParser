@@ -10,17 +10,22 @@
 namespace protobuf_parser {
 namespace serializer {
 
+template <typename View>
 class JsonSerializer {
  public:
-  JsonSerializer();
-
-  void AddMessage(const Message& message);
+  JsonSerializer(const View& view);
   std::string Serialize();
 
  private:
+
   void AddNestedMessages(const Message& message, nlohmann::json& parent_json);
   nlohmann::json json_representation_;
+  const View& view_;
 };
+
+template <typename View>
+JsonSerializer<View>::JsonSerializer(const View& view) : view_(view) {
+}
 
 }  // namespace serializer
 }  // namespace protobuf_parser

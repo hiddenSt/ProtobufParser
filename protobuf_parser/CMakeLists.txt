@@ -32,7 +32,6 @@ set(PROTOBUF_PARSER_CXX_SOURCES
   builders/directory_builder.cpp
   builders/package_builder.cpp
   builders/storage_builder.cpp
-  serializers/json_serializer.cpp
   view/view.cpp)
 
 set(PROTOBUF_PARSER_HEADERS
