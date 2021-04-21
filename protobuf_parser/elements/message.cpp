@@ -38,7 +38,7 @@ bool Message::operator!=(const Message& other) {
   return !(*this == other);
 }
 
-const Directory& Message::GetDirectory() {
+const Directory& Message::GetDirectory() const {
   return file_->GetDirectory();
 }
 

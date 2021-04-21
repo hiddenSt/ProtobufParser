@@ -30,7 +30,7 @@ class Message {
 
   const Package& GetPackage() const noexcept;
   const File& GetFile() const noexcept;
-  const Directory& GetDirectory();
+  const Directory& GetDirectory() const;
   const Message& GetParentMessage() const noexcept;
   const std::string& GetName() const;
   const std::vector<Field>& GetFields() const;

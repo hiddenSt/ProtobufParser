@@ -13,7 +13,12 @@ void View<Directory>::EmplaceElementChildren(const Directory* directory, std::qu
 }
 
 template <>
-void View<Directory>::AddElementsMessages(const Directory* element) {
+void View<Directory>::AddElementsMessages(const Directory* directory) {
+  for (auto& message: storage_->messages_) {
+    if (message.GetDirectory().GetName() == directory->GetName()) {
+      messages_.push_back(&message);
+    }
+  }
 }
 
 template <>
@@ -26,8 +31,12 @@ void View<Package>::EmplaceElementChildren(const Package* package, std::queue<co
 }
 
 template <>
-void View<Package>::AddElementsMessages(const Package* element) {
-
+void View<Package>::AddElementsMessages(const Package* package) {
+  for (auto& message: storage_->messages_) {
+    if (message.GetPackage().GetName() == package->GetName()) {
+      messages_.push_back(&message);
+    }
+  }
 }
 
 }
