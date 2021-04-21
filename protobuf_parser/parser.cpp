@@ -116,9 +116,29 @@ void Parser::AddNestedMessages(builders::MessageBuilder* builder,
 
 void Parser::AddMessageFields(builders::MessageBuilder* builder,
                               const google::protobuf::Descriptor* descriptor) {
+  for (std::size_t i = 0; i < descriptor->field_count(); ++i) {
+    auto field_descriptor = descriptor->field(i);
+    builder->AddFiled(Field{field_descriptor->name(),
+                            static_cast<std::size_t>(field_descriptor->number()),
+                            field_descriptor->type_name(),
+                            field_descriptor->is_optional(),
+                            field_descriptor->is_repeated()
+    });
+  }
 }
 void Parser::AddMessageReservedFieldsAndNumbers(builders::MessageBuilder* builder,
                                                 const google::protobuf::Descriptor* descriptor) {
+  for (std::size_t i = 0; i < descriptor->reserved_name_count(); ++i) {
+    builder->AddReservedName(descriptor->reserved_name(i));
+  }
+
+  for (std::size_t i = 0; i < descriptor->reserved_range_count(); ++i) {
+    auto range = descriptor->reserved_range(i);
+    for (std::size_t reserved_number = range->start; reserved_number < range->end; ++reserved_number) {
+      builder->AddReservedNumber(reserved_number);
+    }
+  }
+
 }
 
 }
