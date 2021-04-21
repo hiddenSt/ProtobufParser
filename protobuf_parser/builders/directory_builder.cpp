@@ -36,5 +36,8 @@ bool DirectoryBuilder::IsParent(const std::string& directory_name) {
   return false;
 }
 
+DirectoryBuilder::DirectoryBuilder(DirectoryBuilder&& other) noexcept : directory_(std::move(other.directory_)) {
+}
+
 }
 }

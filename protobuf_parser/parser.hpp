@@ -52,6 +52,7 @@ class Parser {
   std::set<std::string> packages_names_;
   std::set<std::string> files_names_;
   builders::StorageBuilder storage_builder_;
+  Storage storage_;
 };
 
 

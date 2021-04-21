@@ -52,10 +52,10 @@ void Parser::Parse() {
 }
 
 void Parser::AddDirectories() {
-  builders::DirectoryBuilder builder;
   for (auto& directory_name : directories_names_) {
+    builders::DirectoryBuilder builder;
     builder.SetUpName(directory_name);
-    directories_builders_.push_back(builder);
+    directories_builders_.push_back(std::move(builder));
   }
 
   for (auto& directory_builder : directories_builders_) {
@@ -64,23 +64,23 @@ void Parser::AddDirectories() {
 }
 
 void Parser::AddPackages() {
-  builders::PackageBuilder builder;
   for (auto& package_name: packages_names_) {
+    builders::PackageBuilder builder;
     builder.SetUpName(package_name);
-    packages_builders_.push_back(builder);
+    packages_builders_.push_back(std::move(builder));
   }
 
   for (auto& package_builder : packages_builders_) {
-    storage_builder_.AddPackageBuilder(&builder);
+    storage_builder_.AddPackageBuilder(&package_builder);
   }
 }
 
 void Parser::AddFiles() {
-  builders::FileBuilder builder;
   for (auto& file_name: files_names_) {
+    builders::FileBuilder builder;
     builder.SetUpName(file_name);
     builder.SetUpPackageName(importer_->pool()->FindFileByName(file_name)->package());
-    files_builders_.push_back(builder);
+    files_builders_.push_back(std::move(builder));
   }
 
   for (auto& file_builder : files_builders_) {
@@ -90,14 +90,15 @@ void Parser::AddFiles() {
 
 void Parser::AddMessages() {
   const google::protobuf::DescriptorPool* pool = importer_->pool();
-  builders::MessageBuilder builder;
   for (auto& file_name: files_names_) {
     auto* file_descriptor = pool->FindFileByName(file_name);
     for (std::size_t i = 0; i < file_descriptor->message_type_count(); ++i) {
+      builders::MessageBuilder builder;
       builder.SetUpName(file_descriptor->message_type(i)->name());
       AddNestedMessages(&builder, file_descriptor->message_type(i));
       AddMessageReservedFieldsAndNumbers(&builder, file_descriptor->message_type(i));
       AddMessageFields(&builder, file_descriptor->message_type(i));
+      messages_builders_.push_back(std::move(builder));
     }
   }
 

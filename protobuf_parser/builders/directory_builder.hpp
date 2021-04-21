@@ -9,6 +9,11 @@ namespace builders {
 class DirectoryBuilder {
  public:
   DirectoryBuilder() = default;
+  DirectoryBuilder(DirectoryBuilder&& other) noexcept;
+
+  // Non-copyable
+  DirectoryBuilder(const DirectoryBuilder&) = delete;
+  DirectoryBuilder& operator=(const DirectoryBuilder&) = delete;
 
   void SetUpParent(Directory* parent) noexcept;
   void SetUpName(const std::string& name) noexcept;

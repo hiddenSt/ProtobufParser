@@ -65,5 +65,10 @@ void MessageBuilder::AddFile(File* file) noexcept {
   }
 }
 
+MessageBuilder::MessageBuilder(MessageBuilder&& other) noexcept
+    : message_(std::move(other.message_)),
+      file_name_(std::move(other.file_name_)) {
+}
+
 }
 }

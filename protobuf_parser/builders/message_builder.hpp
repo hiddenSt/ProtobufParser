@@ -9,6 +9,7 @@ namespace builders {
 class MessageBuilder {
  public:
   MessageBuilder() = default;
+  MessageBuilder(MessageBuilder&& other) noexcept;
   ~MessageBuilder() = default;
 
   void SetUpName(const std::string& name) noexcept;

@@ -36,5 +36,8 @@ bool PackageBuilder::IsParent(const std::string& package_name) {
   return false;
 }
 
+PackageBuilder::PackageBuilder(PackageBuilder&& other) noexcept : package_(std::move(other.package_)) {
+}
+
 }
 }

@@ -11,6 +11,11 @@ namespace builders {
 class FileBuilder {
  public:
   FileBuilder() = default;
+  FileBuilder(FileBuilder&& other) noexcept;
+
+  // Non-copyable
+  FileBuilder(const FileBuilder&) = delete;
+  FileBuilder& operator=(const FileBuilder&) = delete;
 
   void SetUpName(const std::string& name) noexcept;
   void SetUpDirectory(Directory* directory) noexcept;

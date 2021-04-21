@@ -11,6 +11,11 @@ namespace builders {
 class PackageBuilder {
  public:
   PackageBuilder() = default;
+  PackageBuilder(PackageBuilder&& other) noexcept;
+
+  // Non-copyable
+  PackageBuilder(const PackageBuilder&) = delete;
+  PackageBuilder& operator=(const PackageBuilder&) = delete;
 
   void SetUpName(const std::string& name) noexcept;
   void SetUpParent(Package* parent) noexcept;
