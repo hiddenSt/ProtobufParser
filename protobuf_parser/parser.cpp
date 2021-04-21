@@ -44,4 +44,66 @@ Storage Parser::GetStorage() {
   return Storage();
 }
 
+void Parser::Parse() {
+  AddDirectories();
+  AddPackages();
+  AddFiles();
+  AddMessages();
+}
+
+void Parser::AddDirectories() {
+  builders::DirectoryBuilder builder;
+  for (auto& directory_name : directories_names_) {
+    builder.SetUpName(directory_name);
+    directories_builders_.push_back(builder);
+  }
+
+  for (auto& directory_builder : directories_builders_) {
+    storage_builder_.AddDirectoryBuilder(&directory_builder);
+  }
+}
+
+void Parser::AddPackages() {
+  builders::PackageBuilder builder;
+  for (auto& package_name: packages_names_) {
+    builder.SetUpName(package_name);
+    packages_builders_.push_back(builder);
+  }
+
+  for (auto& package_builder : packages_builders_) {
+    storage_builder_.AddPackageBuilder(&builder);
+  }
+}
+
+void Parser::AddFiles() {
+  builders::FileBuilder builder;
+  for (auto& file_name: files_names_) {
+    builder.SetUpName(file_name);
+    builder.SetUpPackageName(importer_->pool()->FindFileByName(file_name)->package());
+    files_builders_.push_back(builder);
+  }
+
+  for (auto& file_builder : files_builders_) {
+    storage_builder_.AddFileBuilder(&file_builder);
+  }
+}
+
+void Parser::AddMessages() {
+  const google::protobuf::DescriptorPool* pool = importer_->pool();
+  builders::MessageBuilder builder;
+  for (auto& file_name: files_names_) {
+    auto* file_descriptor = pool->FindFileByName(file_name);
+    for (std::size_t i = 0; i < file_descriptor->message_type_count(); ++i) {
+      builder.SetUpName(file_descriptor->message_type(i)->name());
+      AddNestedMessages(&builder, file_descriptor->message_type(i));
+      AddMessageReservedFieldsAndNumbers(&builder, file_descriptor->message_type(i));
+      AddMessageFields(&builder, file_descriptor->message_type(i));
+    }
+  }
+
+  for (auto& message_builder: messages_builders_) {
+    storage_builder_.AddMessageBuilder(&message_builder);
+  }
+}
+
 }
