@@ -21,9 +21,7 @@ TEST(ParserTests, CanGetStorage) {
   std::filesystem::path protos_path{"../../tests"};
   protobuf_parser::Parser parser{protos_path};
   parser.Parse();
-  auto storage = std::move(parser.GetStorage());
-  int a = 1;
-  ++a;
+  ASSERT_NO_THROW(parser.GetStorage());
 }
 
 }  // namespace tests
