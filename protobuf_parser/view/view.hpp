@@ -14,7 +14,6 @@ namespace view {
 template <typename T>
 class View {
  public:
-
   class Iterator {
    public:
     using value_type = Message;
@@ -65,6 +64,12 @@ class View {
   Iterator cend() {
     return Iterator(*this, messages_.size());
   }
+  Iterator begin();
+  Iterator end();
+  Iterator rbegin();
+  Iterator rend();
+  Iterator crbegin();
+  Iterator crend();
 
  private:
   void EmplaceElementChildren(const T* element, std::queue<const T*>& elements_queue);

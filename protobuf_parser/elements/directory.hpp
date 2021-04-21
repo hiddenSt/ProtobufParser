@@ -21,7 +21,7 @@ class Directory {
   const std::string& GetName() const;
   bool HasParent() const noexcept;
   const Directory& GetParentDirectory() const;
-  bool Contains(const std::string& file_name);
+  bool Contains(const std::string& file_name) const;
 
  private:
   friend class builders::DirectoryBuilder;

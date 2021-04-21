@@ -25,8 +25,8 @@ class File {
 
   const std::string& GetName() const noexcept;
   const std::string GetPath() const noexcept;
-  const Directory& GetDirectory();
-  const Package& GetPackage();
+  const Directory& GetDirectory() const;
+  const Package& GetPackage() const;
 
  private:
   friend class builders::FileBuilder;

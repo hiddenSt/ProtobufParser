@@ -10,7 +10,7 @@ const Directory& Directory::GetParentDirectory() const {
   return *parent_directory_;
 }
 
-bool Directory::Contains(const std::string& file_name) {
+bool Directory::Contains(const std::string& file_name) const {
   std::size_t i = 0;
   while (file_name[i] == name_[i]) {
     ++i;

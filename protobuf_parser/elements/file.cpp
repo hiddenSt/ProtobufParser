@@ -12,11 +12,11 @@ const std::string File::GetPath() const noexcept {
   return directory_->GetName() + "/" + name_;
 }
 
-const Directory& File::GetDirectory() {
+const Directory& File::GetDirectory() const {
   return *directory_;
 }
 
-const Package& File::GetPackage() {
+const Package& File::GetPackage() const {
   return *package_;
 }
 
