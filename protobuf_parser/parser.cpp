@@ -111,6 +111,17 @@ void Parser::AddMessages() {
 
 void Parser::AddNestedMessages(builders::MessageBuilder* builder,
                                const google::protobuf::Descriptor* descriptor) {
+  for (std::size_t i = 0; i < descriptor->nested_type_count(); ++i) {
+    builders::MessageBuilder nested_builder{};
+    auto nested_message_descriptor = descriptor->nested_type(i);
+    nested_builder.SetUpName(nested_message_descriptor->name());
+    if (nested_message_descriptor->nested_type_count() > 0) {
+      AddNestedMessages(builder, nested_message_descriptor);
+    }
+    AddMessageFields(&nested_builder, nested_message_descriptor);
+    AddMessageReservedFieldsAndNumbers(&nested_builder, nested_message_descriptor);
+    builder->AddNestedMessage(std::move(nested_builder.GetMessage()));
+  }
 
 }
 
@@ -126,6 +137,7 @@ void Parser::AddMessageFields(builders::MessageBuilder* builder,
     });
   }
 }
+
 void Parser::AddMessageReservedFieldsAndNumbers(builders::MessageBuilder* builder,
                                                 const google::protobuf::Descriptor* descriptor) {
   for (std::size_t i = 0; i < descriptor->reserved_name_count(); ++i) {
@@ -138,7 +150,6 @@ void Parser::AddMessageReservedFieldsAndNumbers(builders::MessageBuilder* builde
       builder->AddReservedNumber(reserved_number);
     }
   }
-
 }
 
 }
