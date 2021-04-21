@@ -19,7 +19,7 @@ void StorageBuilder::AddMessageBuilder(MessageBuilder* message_builder) {
   message_builders_.push_back(message_builder);
 }
 
-const Storage& StorageBuilder::GetStorage() {
+Storage& StorageBuilder::GetStorage() {
   BuildDirectories();
   BuildPackages();
   BuildFiles();

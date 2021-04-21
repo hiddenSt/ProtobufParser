@@ -30,6 +30,7 @@ bool DirectoryBuilder::IsParent(const std::string& directory_name) {
       if (directory_name[i] == '/') {
         return false;
       }
+      ++i;
     }
     return true;
   }

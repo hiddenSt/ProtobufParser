@@ -22,7 +22,7 @@ class StorageBuilder {
   void AddPackageBuilder(PackageBuilder* package_builder);
   void AddFileBuilder(FileBuilder* file_builder);
   void AddMessageBuilder(MessageBuilder* message_builder);
-  const Storage& GetStorage();
+  Storage& GetStorage();
 
  private:
   void BuildDirectories();

@@ -49,6 +49,7 @@ void Parser::Parse() {
   AddPackages();
   AddFiles();
   AddMessages();
+  storage_ = std::move(storage_builder_.GetStorage());
 }
 
 void Parser::AddDirectories() {
@@ -95,6 +96,7 @@ void Parser::AddMessages() {
     for (std::size_t i = 0; i < file_descriptor->message_type_count(); ++i) {
       builders::MessageBuilder builder;
       builder.SetUpName(file_descriptor->message_type(i)->name());
+      builder.SetUpFileName(file_descriptor->name());
       AddNestedMessages(&builder, file_descriptor->message_type(i));
       AddMessageReservedFieldsAndNumbers(&builder, file_descriptor->message_type(i));
       AddMessageFields(&builder, file_descriptor->message_type(i));

@@ -30,6 +30,7 @@ bool PackageBuilder::IsParent(const std::string& package_name) {
       if (package_name[i] == '.') {
         false;
       }
+      ++i;
     }
     return true;
   }
