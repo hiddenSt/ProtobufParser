@@ -15,7 +15,8 @@ class Package {
   bool operator==(const Package& other);
   bool operator!=(const Package& other);
 
-  Package& GetParentPackage() noexcept;
+  bool HasParent() const noexcept;
+  const Package& GetParentPackage() const noexcept;
   const std::string& GetName() const;
 
  private:

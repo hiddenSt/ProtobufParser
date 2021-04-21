@@ -71,10 +71,11 @@ class View {
   void AddElementsMessages(const T* element);
   std::vector<const Message*> messages_;
   T* root_;
+  const Storage* storage_;
 };
 
 template <typename T>
-View<T>::View(T* root, const Storage* storage) {
+View<T>::View(T* root, const Storage* storage): storage_(storage) {
   std::queue<const T*> elements_queue;
   elements_queue.emplace(root);
 

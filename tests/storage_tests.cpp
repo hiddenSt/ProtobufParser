@@ -7,4 +7,18 @@
 
 #include <google/protobuf/compiler/importer.h>
 
-namespace tests {}  // namespace tests
+namespace tests {
+
+TEST(StorageTests, CanCreateStorage) {
+
+}
+
+TEST(StorageTests, CanGetPackageView) {
+
+}
+
+TEST(StorageTests, CanGetDirectoryView) {
+
+}
+
+}  // namespace tests

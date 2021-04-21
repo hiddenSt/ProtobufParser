@@ -2,7 +2,7 @@
 
 namespace protobuf_parser {
 
-Package& Package::GetParentPackage() noexcept {
+const Package& Package::GetParentPackage() const noexcept {
   return *parent_package_;
 }
 
@@ -24,6 +24,13 @@ bool Package::operator==(const Package& other) {
 
 bool Package::operator!=(const Package& other) {
   return !(*this == other);
+}
+
+bool Package::HasParent() const noexcept {
+  if (parent_package_ == nullptr) {
+    return false;
+  }
+  return true;
 }
 
 }  // namespace protobuf_parser

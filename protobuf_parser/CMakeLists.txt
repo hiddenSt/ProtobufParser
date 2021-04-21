@@ -33,7 +33,7 @@ set(PROTOBUF_PARSER_CXX_SOURCES
   builders/package_builder.cpp
   builders/storage_builder.cpp
   serializers/json_serializer.cpp
-  )
+  view/view.cpp)
 
 set(PROTOBUF_PARSER_HEADERS
   storage.hpp

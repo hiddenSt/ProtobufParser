@@ -36,6 +36,8 @@ class Storage {
 
  private:
   friend class builders::StorageBuilder;
+  template <typename T>
+  friend class view::View;
 
   std::vector<Message> messages_;
   std::vector<File> files_;
