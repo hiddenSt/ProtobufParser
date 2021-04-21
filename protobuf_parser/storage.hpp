@@ -25,9 +25,6 @@ class View;
 
 class Storage {
  public:
-  using PackageView = view::View<Package>;
-  using DirectoryView = view::View<Directory>;
-
   Storage() = default;
   ~Storage() = default;
   Storage(Storage&& other) noexcept;
@@ -37,13 +34,8 @@ class Storage {
   Storage(const Storage&) = delete;
   Storage& operator=(const Storage&) = delete;
 
-  const PackageView GetPackageView(const std::string& package_name) const;
-  const DirectoryView GetDirectoryView(const std::string& directory_name) const;
-
  private:
   friend class builders::StorageBuilder;
-  template <typename T>
-  friend class view::View;
 
   std::vector<Message> messages_;
   std::vector<File> files_;

@@ -1,63 +1,53 @@
 # ProtoBuff parser to json
 
-Парсер protocol buffers 3 в json. Данная библиотека представляет собой обёртку над google protobuf c++ runtime api
+This is a wrapper around google protobuf runtime library
 
-## Зависимости
-Для использования необходимо следующее:
+## Prerequisites
+Before you begin, ensure you have met the following requirements:
 * cmake
 * [protobuf-cpp-3.15.8](https://github.com/protocolbuffers/protobuf/)
-* компилятор поддерживающий ``C++20``
+* compiler supporting ``C++17``
 
-### Сторонние библиотеки устанавливаемые автоматически
+### Third-party
 * [nlohmann/json](https://github.com/nlohmann/json)
 * [p-ranav/argparse](https://github.com/p-ranav/argparse)
 * [google test](https://github.com/google/googletest)
 
-## Использование
+## Installing Parser
 
-Есть два способа применения:
-1) Как библиотека
-2) Как консольная утилита
-
-### Пример использования
-
-Создайте парсер со своим сериалайзером. В библиотеке есть JsonSerializer
-```c++
-protobuf_parser::Parser<protobuf_parser::serializer::JsonSerializer> parser('root_directory_to_parse');
-```
-
-Можно парсить messages по директории или по package. Будет возвращён std::string в формате указаноого сериалайзера
-```
-parser.SerializeDirectory('path_relative_to_the_root_directory')
-parser.SerializePackage('package_name')
-```
-
-Для того чтобы реализовать свой парсер необходимо определить класс со следующими методами
-```c++
-class Serializer {
-  public:
-   void AddMessageBuilder(const Message& message);
-   std::string Serialize();
-};
-```
-
-## Запуск тестов
-``WARNING`` Для корректной работы тестов папка сборки должна находится в корневой директории проекта<br>
-Для запуска тестов необходимо вызвать cmake с флагом ``-DPROTOBUF_PARSER_TESTS=ON``
-
-Исполняемый файл ``tests/run_protobuf_parser_tests`` для запуска тестов будет находится в директории сборки
-
-## Сборка консольной утилиты
-Для того чтобы собрать консольную утилиту необходимо вызвать cmake с флагом ``-DPROTOBUF_PARSER_CONSOLE_UTILITY=ON``
-В диретории сборки будет находится исполняемый файл ``console_utility/protobuf_parser_utility``
-
-### Использование консольной утилиты
-При запуске утилиты первый позиционный параметр - директории для разбора, второй позиционный параметр - источник для парсинга (имя директории или package)
+To install Parser, follow these steps:
+In your build directory run<br><br>
+Linux
 ```shell script
-./protobuf_parser_utility protos_files_dir dir1
+cmake --build path_to_sources -DPROTOBUF_PARSER_CONSOLE_UTILITY=ON
 ```
-Для вспомогательной информации запустите консольную утилиту с флагом ``-h``
-Для того чтобы распарсить package необходимо указать параметр ``--package``
+
+After build go to ``console_utility`` dir inside your build directory<br><br>
+Linux
 ```shell script
-./protobuf_parser_utility --package protos_files_dir package_name
+cd console_utility
 ```
+
+Execute binary to see available options and usage pattern<br><br>
+Linux
+```shell script
+./protobuf_parser_utility -h
+```
+
+## Running tests
+``WARNING`` For correct tests run ensure that build directory is placed inside the root source directory<br>
+To enable tests run cmake with flag ``-DPROTOBUF_PARSER_TESTS=ON``<br><br>
+Linux
+```shell script
+cmake --build -DPROTOBUF_PARSER_TESTS=ON ..
+```
+
+Execute binary ``tests/run_protobuf_parser_tests`` to run tests
+```shell script
+./tests/run_protobuf_parser_tests
+```
+
+## Contact
+If you want to contact me you can reach me at
+* Telegram: ``@hiddenSt1``
+* Email: ``hiddenstmail@gnail.com``
