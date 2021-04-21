@@ -12,9 +12,6 @@ class Package {
  public:
   Package() = default;
 
-  bool operator==(const Package& other);
-  bool operator!=(const Package& other);
-
   bool HasParent() const noexcept;
   const Package& GetParentPackage() const noexcept;
   const std::string& GetName() const;

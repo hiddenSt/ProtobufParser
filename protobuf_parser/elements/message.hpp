@@ -25,9 +25,6 @@ class Message {
   Message(const Message&) = delete;
   Message& operator=(const Message&) = delete;
 
-  bool operator==(const Message& other);
-  bool operator!=(const Message& other);
-
   const Package& GetPackage() const noexcept;
   const File& GetFile() const noexcept;
   const Directory& GetDirectory() const;

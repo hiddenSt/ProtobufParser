@@ -28,9 +28,6 @@ class File {
   const Directory& GetDirectory();
   const Package& GetPackage();
 
-  bool operator==(const File& other) const noexcept;
-  bool operator!=(const File& other) const noexcept;
-
  private:
   friend class builders::FileBuilder;
 
