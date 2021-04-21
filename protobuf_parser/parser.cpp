@@ -40,8 +40,8 @@ std::string Parser::GetPathRelativeToRootDirectory(
   return changed_path;
 }
 
-Storage Parser::GetStorage() {
-  return Storage();
+Storage& Parser::GetStorage() {
+  return storage_;
 }
 
 void Parser::Parse() {

@@ -22,14 +22,12 @@ class Storage {
  public:
   Storage() = default;
   ~Storage() = default;
+  Storage(Storage&& other) noexcept;
+  Storage& operator=(Storage&& other) noexcept;
 
   // Non-copyable
   Storage(const Storage&) = delete;
   Storage& operator=(const Storage&) = delete;
-
-  // Non-movable
-  Storage(Storage&&) = delete;
-  Storage& operator=(Storage&&) = delete;
 
  private:
   friend class builders::StorageBuilder;

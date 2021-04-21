@@ -24,7 +24,7 @@ class Parser {
   explicit Parser(const std::filesystem::path& root_path);
   ~Parser() = default;
 
-  Storage GetStorage();
+  Storage& GetStorage();
 
  private:
   using ProtobufImporter = google::protobuf::compiler::Importer;
