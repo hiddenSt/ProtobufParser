@@ -2,9 +2,7 @@
 
 namespace protobuf_parser {
 
-
-Parser::Parser(const std::filesystem::path& root_path)
-    : root_path_(root_path) {
+Parser::Parser(const std::filesystem::path& root_path) : root_path_(root_path) {
   // Add empty string argument as virtual_path parameter to indicate DiskSourceTree to map
   // root_path_ as a root
   // (https://developers.google.com/protocol-buffers/docs/reference/cpp/google.protobuf.compiler.importer#DiskSourceTree.MapPath.details)
@@ -25,8 +23,7 @@ Parser::Parser(const std::filesystem::path& root_path)
   }
 }
 
-std::string Parser::GetPathRelativeToRootDirectory(
-    const std::string& full_path) {
+std::string Parser::GetPathRelativeToRootDirectory(const std::string& full_path) {
   std::string changed_path{};
   std::size_t i = 0;
   std::string root_path = root_path_.string();
@@ -65,7 +62,7 @@ void Parser::AddDirectories() {
 }
 
 void Parser::AddPackages() {
-  for (auto& package_name: packages_names_) {
+  for (auto& package_name : packages_names_) {
     builders::PackageBuilder builder;
     builder.SetUpName(package_name);
     packages_builders_.push_back(std::move(builder));
@@ -77,7 +74,7 @@ void Parser::AddPackages() {
 }
 
 void Parser::AddFiles() {
-  for (auto& file_name: files_names_) {
+  for (auto& file_name : files_names_) {
     builders::FileBuilder builder;
     builder.SetUpName(file_name);
     builder.SetUpPackageName(importer_->pool()->FindFileByName(file_name)->package());
@@ -91,7 +88,7 @@ void Parser::AddFiles() {
 
 void Parser::AddMessages() {
   const google::protobuf::DescriptorPool* pool = importer_->pool();
-  for (auto& file_name: files_names_) {
+  for (auto& file_name : files_names_) {
     auto* file_descriptor = pool->FindFileByName(file_name);
     for (std::size_t i = 0; i < file_descriptor->message_type_count(); ++i) {
       builders::MessageBuilder builder;
@@ -104,7 +101,7 @@ void Parser::AddMessages() {
     }
   }
 
-  for (auto& message_builder: messages_builders_) {
+  for (auto& message_builder : messages_builders_) {
     storage_builder_.AddMessageBuilder(&message_builder);
   }
 }
@@ -122,7 +119,6 @@ void Parser::AddNestedMessages(builders::MessageBuilder* builder,
     AddMessageReservedFieldsAndNumbers(&nested_builder, nested_message_descriptor);
     builder->AddNestedMessage(std::move(nested_builder.GetMessage()));
   }
-
 }
 
 void Parser::AddMessageFields(builders::MessageBuilder* builder,
@@ -131,10 +127,8 @@ void Parser::AddMessageFields(builders::MessageBuilder* builder,
     auto field_descriptor = descriptor->field(i);
     builder->AddFiled(Field{field_descriptor->name(),
                             static_cast<std::size_t>(field_descriptor->number()),
-                            field_descriptor->type_name(),
-                            field_descriptor->is_optional(),
-                            field_descriptor->is_repeated()
-    });
+                            field_descriptor->type_name(), field_descriptor->is_optional(),
+                            field_descriptor->is_repeated()});
   }
 }
 
@@ -146,10 +140,11 @@ void Parser::AddMessageReservedFieldsAndNumbers(builders::MessageBuilder* builde
 
   for (std::size_t i = 0; i < descriptor->reserved_range_count(); ++i) {
     auto range = descriptor->reserved_range(i);
-    for (std::size_t reserved_number = range->start; reserved_number < range->end; ++reserved_number) {
+    for (std::size_t reserved_number = range->start; reserved_number < range->end;
+         ++reserved_number) {
       builder->AddReservedNumber(reserved_number);
     }
   }
 }
 
-}
+}  // namespace protobuf_parser

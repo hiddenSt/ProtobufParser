@@ -52,23 +52,22 @@ const std::string& MessageBuilder::GetFileName() {
 void MessageBuilder::AddFile(File* file) noexcept {
   message_.file_ = file;
   std::queue<Message*> messages_queue;
-  for (auto& message: message_.nested_messages_) {
+  for (auto& message : message_.nested_messages_) {
     messages_queue.emplace(&message);
   }
   while (!messages_queue.empty()) {
     auto* message = messages_queue.front();
     messages_queue.pop();
     message->file_ = message_.file_;
-    for (auto& nested: message->nested_messages_) {
+    for (auto& nested : message->nested_messages_) {
       messages_queue.emplace(&nested);
     }
   }
 }
 
 MessageBuilder::MessageBuilder(MessageBuilder&& other) noexcept
-    : message_(std::move(other.message_)),
-      file_name_(std::move(other.file_name_)) {
+    : message_(std::move(other.message_)), file_name_(std::move(other.file_name_)) {
 }
 
-}
-}
+}  // namespace builders
+}  // namespace protobuf_parser

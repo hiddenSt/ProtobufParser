@@ -7,8 +7,6 @@ JsonSerializer::JsonSerializer() {
   json_representation_ = nlohmann::json::array();
 }
 
-
-
 std::string JsonSerializer::Serialize() {
   return json_representation_.dump(2);
 }

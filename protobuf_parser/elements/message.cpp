@@ -50,7 +50,6 @@ const std::vector<Message>& Message::GetNestedMessages() const {
   return nested_messages_;
 }
 
-
 const std::vector<std::string>& Message::GetReservedNames() const {
   return reserved_names_;
 }
@@ -59,8 +58,8 @@ const std::vector<std::size_t>& Message::GetReservedNumbers() const {
   return reserved_numbers_;
 }
 
-Message::Message(Message&& other) noexcept :
-      name_(std::move(other.name_)),
+Message::Message(Message&& other) noexcept
+    : name_(std::move(other.name_)),
       parent_message_(other.parent_message_),
       nested_messages_(std::move(other.nested_messages_)),
       file_(other.file_),
@@ -69,7 +68,7 @@ Message::Message(Message&& other) noexcept :
       reserved_names_(std::move(other.reserved_names_)) {
   other.file_ = nullptr;
   other.parent_message_ = nullptr;
-  for (auto& nested_message: nested_messages_) {
+  for (auto& nested_message : nested_messages_) {
     nested_message.parent_message_ = this;
   }
 }

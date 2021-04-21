@@ -31,4 +31,4 @@ TEST(PackageBuilderTests, CanSetUpParent) {
   ASSERT_EQ(&child_package.GetParentPackage(), &parent_package);
 }
 
-}
+}  // namespace tests

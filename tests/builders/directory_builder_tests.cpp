@@ -33,4 +33,4 @@ TEST(DirectoryBuilderTests, CanSetUpParent) {
   ASSERT_EQ(&child_dir.GetParentDirectory(), &parent_dir);
 }
 
-}
+}  // namespace tests

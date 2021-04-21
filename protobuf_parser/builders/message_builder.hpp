@@ -32,7 +32,7 @@ class MessageBuilder {
   std::string file_name_;
 };
 
-}
-}
+}  // namespace builders
+}  // namespace protobuf_parser
 
 #endif  // PROTOBUF_PARSER_PROTOBUF_PARSER_BUILDER_MESSAGE_BUILDER_HPP_

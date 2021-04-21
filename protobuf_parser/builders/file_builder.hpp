@@ -32,8 +32,7 @@ class FileBuilder {
   std::string package_name_;
 };
 
-}
-}
-
+}  // namespace builders
+}  // namespace protobuf_parser
 
 #endif  // PROTOBUF_PARSER_PROTOBUF_PARSER_BUILDERS_FILE_BUILDER_HPP_

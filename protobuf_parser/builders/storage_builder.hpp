@@ -42,8 +42,7 @@ class StorageBuilder {
   std::vector<PackageBuilder*> package_builders_;
 };
 
-}
-}
-
+}  // namespace builders
+}  // namespace protobuf_parser
 
 #endif  // PROTOBUF_PARSER_PROTOBUF_PARSER_BUILDERS_STORAGE_BUILDER_HPP_

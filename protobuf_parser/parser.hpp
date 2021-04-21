@@ -35,8 +35,10 @@ class Parser {
   void AddPackages();
   void AddFiles();
   void AddMessages();
-  void AddNestedMessages(builders::MessageBuilder* builder, const google::protobuf::Descriptor* descriptor);
-  void AddMessageFields(builders::MessageBuilder* builder, const google::protobuf::Descriptor* descriptor);
+  void AddNestedMessages(builders::MessageBuilder* builder,
+                         const google::protobuf::Descriptor* descriptor);
+  void AddMessageFields(builders::MessageBuilder* builder,
+                        const google::protobuf::Descriptor* descriptor);
   void AddMessageReservedFieldsAndNumbers(builders::MessageBuilder* builder,
                                           const google::protobuf::Descriptor* descriptor);
 
@@ -54,7 +56,6 @@ class Parser {
   std::set<std::string> files_names_;
   Storage storage_;
 };
-
 
 }  // namespace protobuf_parser
 

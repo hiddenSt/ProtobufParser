@@ -77,15 +77,12 @@ TEST(MessageBuilderTests, NestedMessagesHasCorrectParent) {
 }
 
 TEST(MessageBuilderTests, CanAddField) {
-
 }
 
 TEST(MessageBuilderTests, CanAddReservedName) {
-
 }
 
 TEST(MessageBuilderTests, CanAddReservedNumber) {
-
 }
 
-}
+}  // namespace tests

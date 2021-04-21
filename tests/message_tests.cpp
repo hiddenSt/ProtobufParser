@@ -1,119 +1,65 @@
 #include <gtest/gtest.h>
 
 #include <protobuf_parser/elements/message.hpp>
+#include <protobuf_parser/builders/message_builder.hpp>
+#include <protobuf_parser/builders/file_builder.hpp>
+#include <protobuf_parser/builders/directory_builder.hpp>
+#include <protobuf_parser/builders/package_builder.hpp>
 
 namespace tests {
-/*
+
+protobuf_parser::Message GetMessage(const std::string& message_name) {
+  std::string dir_name{"hello_world_dir"};
+  std::string package_name{"HelloWorld"};
+  std::string file_name{dir_name + "/Hello world"};
+
+  protobuf_parser::builders::DirectoryBuilder directory_builder{};
+  protobuf_parser::builders::PackageBuilder package_builder{};
+  protobuf_parser::builders::FileBuilder file_builder{};
+  protobuf_parser::builders::MessageBuilder message_builder{};
+
+  directory_builder.SetUpName(dir_name);
+  package_builder.SetUpName(package_name);
+  file_builder.SetUpName(file_name);
+  message_builder.SetUpName(message_name);
+
+  auto directory = std::move(directory_builder.GetDirectory());
+  auto package = std::move(package_builder.GetPackage());
+  file_builder.SetUpDirectory(&directory);
+  file_builder.SetUpPackage(&package);
+  auto file = std::move(file_builder.GetFile());
+
+  message_builder.SetUpFile(&file);
+  return std::move(message_builder.GetMessage());
+}
+
 TEST(MessageTests, CanCreateMessage) {
-  protobuf_parser::Directory dir{"Hello world dit"};
-  protobuf_parser::Package a_package{"HelloWorld"};
-  protobuf_parser::File file{"Hello world", &dir, &a_package};
   std::string message_name{"CoolName"};
 
-  protobuf_parser::Message message{message_name, &file};
+  auto message = GetMessage(message_name);
 
   ASSERT_EQ(message.GetName(), message_name);
 }
 
 TEST(MessageTests, CanGetNestedMessages) {
-  protobuf_parser::Directory dir{"Hello world dir"};
-  protobuf_parser::Package a_package{"Hello world"};
-  protobuf_parser::File file{"Hello world", &dir, &a_package};
-  std::string message_name{"CoolName"};
-  std::string nested_message_name{"CoolName"};
-
-  protobuf_parser::Message message{message_name, &file};
-
-  protobuf_parser::Message nested_message{nested_message_name, &file, &message};
-  message.AddNestedMessage(nested_message);
-
-  for (auto nested_message_iterator : message.GetNestedMessages()) {
-   ASSERT_EQ(nested_message_iterator.GetParentMessage()->GetName(), message_name);
-  }
 }
 
 TEST(MessageTests, CanGetParentMessage) {
-  protobuf_parser::Directory dir{"Hello world dit"};
-  protobuf_parser::Package a_package{"HelloWorld"};
-  protobuf_parser::File file{"Hello world", &dir, &a_package};
-  std::string message_name{"CoolName"};
-  std::string nested_message_name{"CoolName"};
-
-  protobuf_parser::Message message{message_name, &file};
-
-  protobuf_parser::Message nested_message{nested_message_name, &file, &message};
-  message.AddNestedMessage(nested_message);
-
-  ASSERT_TRUE(*nested_message.GetParentMessage() == message);
 }
 
 TEST(MessageTests, CanGetFile) {
-  protobuf_parser::Directory dir{"Hello world dit"};
-  protobuf_parser::Package a_package{"HelloWorld"};
-  protobuf_parser::File file{"Hello world", &dir, &a_package};
-  std::string message_name{"CoolName"};
-
-  protobuf_parser::Message message{message_name, &file};
-
-  ASSERT_TRUE(*message.GetFile() == file);
 }
 
 TEST(MessageTests, CanGetDirectory) {
-  protobuf_parser::Directory dir{"Hello world dit"};
-  protobuf_parser::Package a_package{"HelloWorld"};
-  protobuf_parser::File file{"Hello world", &dir, &a_package};
-  std::string message_name{"CoolName"};
-
-  protobuf_parser::Message message{message_name, &file};
-
-  ASSERT_TRUE(*message.GetDirectory() == dir);
 }
 
 TEST(MessageTests, CanGetPackage) {
-  protobuf_parser::Directory dir{"Hello world dit"};
-  protobuf_parser::Package a_package{"HelloWorld"};
-  protobuf_parser::File file{"Hello world", &dir, &a_package};
-  std::string message_name{"CoolName"};
-
-  protobuf_parser::Message message{message_name, &file};
-
-  ASSERT_TRUE(*message.GetPackage() == a_package);
 }
 
 TEST(MessageTests, CanGetMessageName) {
-  protobuf_parser::Directory dir{"Hello world dit"};
-  protobuf_parser::Package a_package{"HelloWorld"};
-  protobuf_parser::File file{"Hello world", &dir, &a_package};
-  std::string message_name{"CoolName"};
-
-  protobuf_parser::Message message{message_name, &file};
-
-  ASSERT_EQ(message.GetName(), message_name);
 }
 
 TEST(MessageTests, CanGetFields) {
-  protobuf_parser::Directory dir{"Hello world dit"};
-  protobuf_parser::Package a_package{"HelloWorld"};
-  protobuf_parser::File file{"Hello world", &dir, &a_package};
-  std::string message_name{"CoolName"};
-
-  std::string field_name{"field_name"};
-  std::size_t number = 1;
-  std::string type = "string";
-  bool optional = false;
-  bool repeated = false;
-  protobuf_parser::Field field{field_name, number, type, optional, repeated};
-
-  protobuf_parser::Message message{message_name, &file};
-  message.AddField(field);
-
-  for (auto& fields_iterator : message.GetFields()) {
-    ASSERT_EQ(fields_iterator.GetName(), field_name);
-    ASSERT_EQ(fields_iterator.GetNumber(), number);
-    ASSERT_EQ(fields_iterator.GetType(), type);
-    ASSERT_EQ(fields_iterator.IsOptional(), optional);
-    ASSERT_EQ(fields_iterator.IsRepeated(), repeated);
-  }
 }
-*/
+
 }  // namespace tests

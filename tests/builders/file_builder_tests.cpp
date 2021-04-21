@@ -41,4 +41,4 @@ TEST(FileBuildetTests, CanSetUpDirectory) {
   auto directory = std::move(directory_builder.GetDirectory());
 }
 
-}
+}  // namespace tests

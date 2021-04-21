@@ -41,8 +41,7 @@ bool Directory::Contains(const std::string& file_name) {
   return true;
 }
 Directory::Directory(Directory&& directory)
-    : parent_directory_(directory.parent_directory_),
-      name_(std::move(directory.name_)) {
+    : parent_directory_(directory.parent_directory_), name_(std::move(directory.name_)) {
   directory.parent_directory_ = nullptr;
 }
 

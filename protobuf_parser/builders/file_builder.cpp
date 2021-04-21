@@ -31,10 +31,9 @@ const std::string& FileBuilder::GetPackageName() const {
   return package_name_;
 }
 
-FileBuilder::FileBuilder(FileBuilder&& other) noexcept :
-      package_name_(std::move(other.package_name_)),
-      file_(std::move(other.file_)) {
+FileBuilder::FileBuilder(FileBuilder&& other) noexcept
+    : package_name_(std::move(other.package_name_)), file_(std::move(other.file_)) {
 }
 
-}
-}
+}  // namespace builders
+}  // namespace protobuf_parser

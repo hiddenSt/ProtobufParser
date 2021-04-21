@@ -23,7 +23,7 @@ class Message {
 
   // Non-copyable
   Message(const Message&) = delete;
-  Message& operator= (const Message&) = delete;
+  Message& operator=(const Message&) = delete;
 
   bool operator==(const Message& other);
   bool operator!=(const Message& other);

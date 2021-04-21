@@ -7,6 +7,4 @@
 
 #include <google/protobuf/compiler/importer.h>
 
-namespace tests {
-
-}  // namespace tests
+namespace tests {}  // namespace tests

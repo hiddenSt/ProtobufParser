@@ -27,7 +27,7 @@ class PackageBuilder {
   Package package_;
 };
 
-}
-}
+}  // namespace builders
+}  // namespace protobuf_parser
 
 #endif  // PROTOBUF_PARSER_PROTOBUF_PARSER_BUILDERS_PACKAGE_BUILDER_HPP_

@@ -31,9 +31,9 @@ void StorageBuilder::BuildDirectories() {
   std::sort(directory_builders_.begin(), directory_builders_.end(),
             [](const DirectoryBuilder* a, const DirectoryBuilder* b) {
               return a->GetName() > b->GetName();
-  });
+            });
 
-  for (auto& builder: directory_builders_) {
+  for (auto& builder : directory_builders_) {
     Directory* parent = FindParentForDirectory(builder);
     builder->SetUpParent(parent);
     storage_.directories_.emplace_back(std::move(builder->GetDirectory()));
@@ -41,12 +41,11 @@ void StorageBuilder::BuildDirectories() {
 }
 
 void StorageBuilder::BuildPackages() {
-  std::sort(package_builders_.begin(), package_builders_.end(),
-            [](const PackageBuilder* a, const PackageBuilder* b) {
-              return a->GetName() > b->GetName();
-            });
+  std::sort(
+      package_builders_.begin(), package_builders_.end(),
+      [](const PackageBuilder* a, const PackageBuilder* b) { return a->GetName() > b->GetName(); });
 
-  for (auto& builder: package_builders_) {
+  for (auto& builder : package_builders_) {
     Package* parent = FindParentForPackage(builder);
     builder->SetUpParent(parent);
     storage_.packages_.emplace_back(std::move(builder->GetPackage()));
@@ -54,7 +53,7 @@ void StorageBuilder::BuildPackages() {
 }
 
 Package* StorageBuilder::FindParentForPackage(PackageBuilder* builder) {
-  for (auto& package: storage_.packages_) {
+  for (auto& package : storage_.packages_) {
     if (builder->IsParent(package.GetName())) {
       return &package;
     }
@@ -63,7 +62,7 @@ Package* StorageBuilder::FindParentForPackage(PackageBuilder* builder) {
 }
 
 Directory* StorageBuilder::FindParentForDirectory(DirectoryBuilder* builder) {
-  for (auto& directory: storage_.directories_) {
+  for (auto& directory : storage_.directories_) {
     builder->IsParent(directory.GetName());
     return &directory;
   }
@@ -71,7 +70,7 @@ Directory* StorageBuilder::FindParentForDirectory(DirectoryBuilder* builder) {
 }
 
 void StorageBuilder::BuildFiles() {
-  for (auto& builder: file_builders_) {
+  for (auto& builder : file_builders_) {
     Directory* directory = FindDirectoryForFile(builder->GetName());
     Package* package = FindPackage(builder->GetPackageName());
     builder->SetUpDirectory(directory);
@@ -81,7 +80,7 @@ void StorageBuilder::BuildFiles() {
 }
 
 Directory* StorageBuilder::FindDirectoryForFile(const std::string& file_name) {
-  for (auto& directory: storage_.directories_) {
+  for (auto& directory : storage_.directories_) {
     if (directory.Contains(file_name)) {
       return &directory;
     }
@@ -95,11 +94,10 @@ void StorageBuilder::BuildMessages() {
     builder->AddFile(file);
     storage_.messages_.emplace_back(std::move(builder->GetMessage()));
   }
-
 }
 
 File* StorageBuilder::FindFile(const std::string& name) {
-  for (auto& file: storage_.files_) {
+  for (auto& file : storage_.files_) {
     if (file.GetName() == name) {
       return &file;
     }
@@ -108,7 +106,7 @@ File* StorageBuilder::FindFile(const std::string& name) {
 }
 
 Package* StorageBuilder::FindPackage(const std::string& file_name) {
-  for (auto& package: storage_.packages_) {
+  for (auto& package : storage_.packages_) {
     if (package.GetName() == file_name) {
       return &package;
     }
@@ -116,5 +114,5 @@ Package* StorageBuilder::FindPackage(const std::string& file_name) {
   return nullptr;
 }
 
-}
-}
+}  // namespace builders
+}  // namespace protobuf_parser

@@ -31,5 +31,4 @@ TEST(StorageBuilderTests, CanAddMessage) {
   storage_builder.AddMessageBuilder(&message_builder);
 }
 
-
-}
+}  // namespace test
