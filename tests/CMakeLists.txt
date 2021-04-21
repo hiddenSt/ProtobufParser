@@ -1,6 +1,5 @@
 include(FetchContent)
 
-
 FetchContent_Declare(
   gtest
   GIT_REPOSITORY https://github.com/google/googletest.git
@@ -13,9 +12,6 @@ if (NOT ${gtest}_POPULATED)
   FetchContent_Populate(gtest)
   add_subdirectory(${gtest_SOURCE_DIR} ${gtest_BINARY_DIR})
 endif()
-
-
-
 
 set(TESTS_SOURCES
   file_tests.cpp

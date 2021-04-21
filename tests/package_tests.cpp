@@ -1,75 +1,33 @@
 #include <gtest/gtest.h>
 
 #include <protobuf_parser/elements/package.hpp>
+#include <protobuf_parser/builders/package_builder.hpp>
 
 namespace tests {
 
-/*
 TEST(PackageTests, CanGetPackageName) {
   std::string package_name{"PackageName1"};
-  protobuf_parser::Package package{package_name};
-  ASSERT_EQ(package.GetName(), package_name);
-}
+  protobuf_parser::builders::PackageBuilder builder{};
+  builder.SetUpName(package_name);
 
-TEST(PackageTests, ReturnsNullptrIfHasNoParent) {
-  std::string package_name{"PackageName1"};
-  protobuf_parser::Package package{package_name};
-  ASSERT_EQ(package.GetParentPackage(), nullptr);
+  auto package = std::move(builder.GetPackage());
+  ASSERT_EQ(package.GetName(), package_name);
 }
 
 TEST(PackageTests, CanGetParentPackage) {
   std::string parent_package_name{"ParentPackageName1"};
   std::string package_name{"PackageName"};
+  protobuf_parser::builders::PackageBuilder child_builder{};
+  protobuf_parser::builders::PackageBuilder parent_builder{};
 
-  protobuf_parser::Package parent_package{parent_package_name};
+  parent_builder.SetUpName(parent_package_name);
+  child_builder.SetUpName(package_name);
 
-  protobuf_parser::Package package{package_name, &parent_package};
-  ASSERT_EQ(package.GetParentPackage(), &parent_package);
+  auto parent = std::move(parent_builder.GetPackage());
+
+  child_builder.SetUpParent(&parent);
+  auto child = std::move(child_builder.GetPackage());
+  ASSERT_EQ(&child.GetParentPackage(), &parent);
 }
 
-TEST(PackageTests, ReturnsTrueIfCompareEqualPackages) {
-  std::string parent_package_name{"ParentPackageName1"};
-  std::string package_name{"PackageName"};
-
-  protobuf_parser::Package parent_package{parent_package_name};
-
-  protobuf_parser::Package package{package_name, &parent_package};
-  protobuf_parser::Package package2{package_name, &parent_package};
-
-  ASSERT_TRUE(package == package2);
-}
-
-TEST(PackageTests, ReturnsFalseIfComparePackagesWithDifferentNames) {
-  std::string parent_package_name{"ParentPackageName1"};
-  std::string package_name{"PackageName"};
-  std::string package_name2{"DifferentPackageName"};
-
-  protobuf_parser::Package parent_package{parent_package_name};
-
-  protobuf_parser::Package package{package_name, &parent_package};
-  protobuf_parser::Package package2{package_name2, &parent_package};
-
-  ASSERT_FALSE(package == package2);
-}
-
-TEST(PackageTests, ReturnsFalseIfComparePackagesWithDifferentParents) {
-  std::string parent_package_name{"ParentPackageName1"};
-  std::string package_name{"PackageName"};
-
-  protobuf_parser::Package parent_package{parent_package_name};
-
-  protobuf_parser::Package package{package_name, &parent_package};
-  protobuf_parser::Package package2{package_name};
-
-  ASSERT_FALSE(package == package2);
-}
-
-TEST(PackageTests, CanComparePackages) {
-  std::string package_name{"ParentPackageName1"};
-  std::string package_name_2{"PackageName"};
-  protobuf_parser::Package package{package_name};
-  protobuf_parser::Package package2{package_name_2};
-  ASSERT_FALSE(package == package2);
-}
-*/
 }  // namespace tests

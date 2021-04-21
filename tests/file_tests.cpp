@@ -1,59 +1,48 @@
 #include <gtest/gtest.h>
 
 #include <protobuf_parser/elements/file.hpp>
+#include <protobuf_parser/builders/file_builder.hpp>
+#include <protobuf_parser/builders/package_builder.hpp>
+#include <protobuf_parser/builders/directory_builder.hpp>
 
 namespace tests {
-/*
+
 TEST(FileTests, CanGetFileName) {
   std::string file_name{"FileName1"};
-  protobuf_parser::Directory dir{"outer"};
-  protobuf_parser::Package a_package{"HelloWorld"};
-  protobuf_parser::File file{file_name, &dir, &a_package};
+  protobuf_parser::builders::FileBuilder builder{};
+  builder.SetUpName(file_name);
+  auto file = std::move(builder.GetFile());
   ASSERT_EQ(file.GetName(), file_name);
 }
 
 TEST(FileTests, CanGetFilePath) {
   std::string file_name{"FileName1"};
-  protobuf_parser::Directory outer_dir{"outer"};
-  protobuf_parser::Directory inner_dir{"outer/inner", &outer_dir};
-  protobuf_parser::Package a_package{"HelloWorld"};
-  protobuf_parser::File file{file_name, &inner_dir, &a_package};
+  std::string outer_dir_name{"outer"};
+  std::string inner_dir_name{"outer/inner"};
+  std::string package_name{"Hello world"};
 
-  std::string file_path = inner_dir.GetName() + "/" + file_name;
+  protobuf_parser::builders::DirectoryBuilder outer_dir_builder{};
+  protobuf_parser::builders::DirectoryBuilder inner_dir_builder{};
+  protobuf_parser::builders::PackageBuilder package_builder{};
+  protobuf_parser::builders::FileBuilder file_builder{};
+
+  outer_dir_builder.SetUpName(outer_dir_name);
+  auto outer_dir = std::move(outer_dir_builder.GetDirectory());
+  inner_dir_builder.SetUpName(inner_dir_name);
+  inner_dir_builder.SetUpParent(&outer_dir);
+  auto inner_dir = std::move(inner_dir_builder.GetDirectory());
+
+  package_builder.SetUpName(package_name);
+
+  auto package = std::move(package_builder.GetPackage());
+
+  file_builder.SetUpPackage(&package);
+  file_builder.SetUpDirectory(&inner_dir);
+
+  auto file = std::move(file_builder.GetFile());
+
+  std::string file_path = inner_dir.GetName() + "/";
   ASSERT_EQ(file.GetPath(), file_path);
 }
 
-TEST(FileTests, ReturnsTrueIfCompareEqualFiles) {
-  std::string file_name{"FileName1"};
-  protobuf_parser::Directory dir{"outer"};
-  protobuf_parser::Package a_package{"HelloWorld"};
-  protobuf_parser::File file{file_name, &dir, &a_package};
-  protobuf_parser::File file2{file};
-  ASSERT_TRUE(file == file2);
-}
-
-TEST(FileTests, ReturnsFalseIfCompareFilesWithDifferentNames) {
-  std::string file_name{"FileName1"};
-  protobuf_parser::Directory dir{"outer"};
-  protobuf_parser::Package a_package{"HelloWorld"};
-  protobuf_parser::File file{file_name, &dir, &a_package};
-
-  std::string file_name2{"File"};
-  protobuf_parser::File file2{file_name2, &dir, &a_package};
-
-  ASSERT_FALSE(file == file2);
-}
-
-TEST(FileTests, ReturnsFalseIfCompareFilesWithDifferentPaths) {
-  std::string file_name{"FileName1"};
-  protobuf_parser::Directory dir1{"outer"};
-  protobuf_parser::Package a_package{"HelloWorld"};
-  protobuf_parser::File file{file_name, &dir1, &a_package};
-
-  protobuf_parser::Directory dir2{"different_dit"};
-  protobuf_parser::File file2{file_name, &dir2, &a_package};
-
-  ASSERT_TRUE(file != file2);
-}
-*/
 }  // namespace tests
