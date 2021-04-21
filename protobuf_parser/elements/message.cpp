@@ -18,26 +18,6 @@ const std::string& Message::GetName() const {
   return name_;
 }
 
-bool Message::operator==(const Message& other) {
-  if (name_ != other.name_) {
-    return false;
-  }
-
-  if (file_ != other.file_) {
-    return false;
-  }
-
-  if (parent_message_ != other.parent_message_) {
-    return false;
-  }
-
-  return true;
-}
-
-bool Message::operator!=(const Message& other) {
-  return !(*this == other);
-}
-
 const Directory& Message::GetDirectory() const {
   return file_->GetDirectory();
 }

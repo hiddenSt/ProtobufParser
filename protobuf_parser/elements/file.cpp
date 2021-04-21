@@ -12,22 +12,6 @@ const std::string File::GetPath() const noexcept {
   return directory_->GetName() + "/" + name_;
 }
 
-bool File::operator==(const File& other) const noexcept {
-  if (name_ != other.name_) {
-    return false;
-  }
-
-  if (directory_ != other.directory_) {
-    return false;
-  }
-
-  return true;
-}
-
-bool File::operator!=(const File& other) const noexcept {
-  return !(*this == other);
-}
-
 const Directory& File::GetDirectory() {
   return *directory_;
 }

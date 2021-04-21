@@ -6,22 +6,6 @@ const std::string& Directory::GetName() const {
   return name_;
 }
 
-bool Directory::operator==(const Directory& other) const noexcept {
-  if (name_ != other.name_) {
-    return false;
-  }
-
-  if (parent_directory_ != other.parent_directory_) {
-    return false;
-  }
-
-  return true;
-}
-
-bool Directory::operator!=(const Directory& other) const noexcept {
-  return !(*this == other);
-}
-
 const Directory& Directory::GetParentDirectory() const {
   return *parent_directory_;
 }
