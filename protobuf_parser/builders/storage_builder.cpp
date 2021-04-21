@@ -34,7 +34,7 @@ void StorageBuilder::BuildDirectories() {
   });
 
   for (auto& builder: directory_builders_) {
-    Directory* parent = FindParentForDirectory(builder->GetName());
+    Directory* parent = FindParentForDirectory(builder);
     builder->SetUpParent(parent);
     storage_.directories_.emplace_back(std::move(builder->GetDirectory()));
   }
@@ -47,46 +47,25 @@ void StorageBuilder::BuildPackages() {
             });
 
   for (auto& builder: package_builders_) {
-    Package* parent = FindParentForPackage(builder->GetName());
+    Package* parent = FindParentForPackage(builder);
     builder->SetUpParent(parent);
     storage_.packages_.emplace_back(std::move(builder->GetPackage()));
   }
 }
 
-Package* StorageBuilder::FindParentForPackage(const std::string& package_name) {
+Package* StorageBuilder::FindParentForPackage(PackageBuilder* builder) {
   for (auto& package: storage_.packages_) {
-    if (package_name.find(package.GetName() + ".") == 0) {
-      std::size_t i = 0;
-      while (package.GetName()[i] == package_name[i]) {
-        ++i;
-      }
-      ++i;
-      while (i < package_name.size()) {
-        if (package_name[i] == '.') {
-          continue;
-        }
-      }
+    if (builder->IsParent(package.GetName())) {
       return &package;
     }
   }
   return nullptr;
 }
 
-Directory* StorageBuilder::FindParentForDirectory(const std::string& directory_name) {
+Directory* StorageBuilder::FindParentForDirectory(DirectoryBuilder* builder) {
   for (auto& directory: storage_.directories_) {
-    if (directory_name.find(directory.GetName() + "/") == 0) {
-      std::size_t i = 0;
-      while (directory.GetName()[i] == directory_name[i]) {
-        ++i;
-      }
-      ++i;
-      while (i < directory_name.size()) {
-        if (directory_name[i] == '/') {
-          continue;
-        }
-      }
-      return &directory;
-    }
+    builder->IsParent(directory.GetName());
+    return &directory;
   }
   return nullptr;
 }

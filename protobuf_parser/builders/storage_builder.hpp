@@ -29,8 +29,8 @@ class StorageBuilder {
   void BuildPackages();
   void BuildFiles();
   void BuildMessages();
-  Package* FindParentForPackage(const std::string& package_name);
-  Directory* FindParentForDirectory(const std::string& directory_name);
+  Package* FindParentForPackage(PackageBuilder* builder);
+  Directory* FindParentForDirectory(DirectoryBuilder* builder);
   Package* FindPackage(const std::string& package_name);
   Directory* FindDirectoryForFile(const std::string& file_name);
   File* FindFile(const std::string& name);

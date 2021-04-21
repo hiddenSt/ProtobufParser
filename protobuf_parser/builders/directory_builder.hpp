@@ -13,6 +13,7 @@ class DirectoryBuilder {
   void SetUpParent(Directory* parent) noexcept;
   void SetUpName(const std::string& name) noexcept;
   Directory& GetDirectory();
+  bool IsParent(const std::string& directory_name);
   const std::string& GetName() const;
 
  private:
