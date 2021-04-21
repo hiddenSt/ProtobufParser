@@ -32,7 +32,8 @@ set(PROTOBUF_PARSER_CXX_SOURCES
   builders/directory_builder.cpp
   builders/package_builder.cpp
   builders/storage_builder.cpp
-  view/view.cpp)
+  view/view.cpp
+  parse_exception.cpp )
 
 set(PROTOBUF_PARSER_HEADERS
   storage.hpp
@@ -50,7 +51,7 @@ set(PROTOBUF_PARSER_HEADERS
   builders/storage_builder.hpp
   serializers/json_serializer.hpp
   view/view.hpp
-  )
+  parse_exception.hpp)
 
 add_library(protobuf_parser STATIC "${PROTOBUF_PARSER_HEADERS}" "${PROTOBUF_PARSER_CXX_SOURCES}")
 target_include_directories(protobuf_parser PRIVATE "${LIB_INCLUDE_PATH}" "${Protobuf_INCLUDE_DIRS}")
