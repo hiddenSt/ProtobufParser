@@ -3,12 +3,14 @@
 
 #include <string>
 
+#include <protobuf_parser/elements/element.hpp>
+
 namespace protobuf_parser {
 namespace builders {
 class PackageBuilder;
 }
 
-class Package {
+class Package : public Element {
  public:
   Package() = default;
 

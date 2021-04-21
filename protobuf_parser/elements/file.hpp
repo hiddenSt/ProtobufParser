@@ -3,6 +3,7 @@
 
 #include <string>
 
+#include <protobuf_parser/elements/element.hpp>
 #include <protobuf_parser/elements/package.hpp>
 #include <protobuf_parser/elements/directory.hpp>
 
@@ -11,7 +12,7 @@ namespace builders {
 class FileBuilder;
 }
 
-class File {
+class File : public Element {
  public:
   File() = default;
   ~File() = default;

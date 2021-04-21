@@ -2,13 +2,14 @@
 #define PROTOBUF_PARSER_PROTOBUF_PARSER_PARSE_ELEMENTS_DIRECTORY_HPP_
 
 #include <string>
+#include <protobuf_parser/elements/element.hpp>
 
 namespace protobuf_parser {
 namespace builders {
 class DirectoryBuilder;
 }
 
-class Directory {
+class Directory : public Element {
  public:
   Directory() = default;
   Directory(Directory&& directory);

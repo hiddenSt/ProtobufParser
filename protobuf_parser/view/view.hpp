@@ -19,14 +19,14 @@ class View {
     using value_type = Message;
     using iterator_category = std::forward_iterator_tag;
 
-    Iterator(const View<T>& view, std::size_t index): view_(view), current_message_index_(index) {
+    Iterator(const View<T>& view, std::size_t index) : view_(view), current_message_index_(index) {
     }
 
     const value_type& operator*() const {
-        return *view_.messages_[current_message_index_];
+      return *view_.messages_[current_message_index_];
     }
     const value_type* operator->() {
-        return view_.messages_[current_message_index_];
+      return view_.messages_[current_message_index_];
     }
 
     Iterator& operator++() {
@@ -39,7 +39,8 @@ class View {
     }
 
     friend bool operator==(const Iterator& a, const Iterator& b) {
-      if (a.current_message_index_ >= a.view_.messages_.size() && b.current_message_index_ >= b.view_.messages_.size()) {
+      if (a.current_message_index_ >= a.view_.messages_.size() &&
+          b.current_message_index_ >= b.view_.messages_.size()) {
         return true;
       }
       if (a.view_ == b.view_ && a.current_message_index_ == b.current_message_index_) {
@@ -59,7 +60,7 @@ class View {
   explicit View(T* root, const Storage* storage);
 
   Iterator cbegin() {
-      return Iterator(*this, 0);
+    return Iterator(*this, 0);
   }
   Iterator cend() {
     return Iterator(*this, messages_.size());
@@ -80,7 +81,7 @@ class View {
 };
 
 template <typename T>
-View<T>::View(T* root, const Storage* storage): storage_(storage) {
+View<T>::View(T* root, const Storage* storage) : storage_(storage) {
   std::queue<const T*> elements_queue;
   elements_queue.emplace(root);
 

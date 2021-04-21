@@ -22,6 +22,7 @@ set(PROTOBUF_PARSER_CXX_SOURCES
   storage.cpp
   parser.cpp
   stub_multiple_error_collector.cpp
+  elements/element.cpp
   elements/field.cpp
   elements/message.cpp
   elements/file.cpp
@@ -39,6 +40,7 @@ set(PROTOBUF_PARSER_HEADERS
   storage.hpp
   parser.hpp
   stub_multiple_error_collector.hpp
+  elements/element.hpp
   elements/field.hpp
   elements/message.hpp
   elements/file.hpp

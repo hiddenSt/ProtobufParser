@@ -18,6 +18,6 @@ class ParseException : public std::exception {
   int column_;
 };
 
-}
+}  // namespace protobuf_parser
 
 #endif  // PROTOBUF_PARSER_PROTOBUF_PARSER_PARSE_EXCEPTION_HPP_

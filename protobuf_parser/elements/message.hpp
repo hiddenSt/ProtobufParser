@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+#include <protobuf_parser/elements/element.hpp>
 #include <protobuf_parser/elements/file.hpp>
 #include <protobuf_parser/elements/package.hpp>
 #include <protobuf_parser/elements/field.hpp>
@@ -14,7 +15,7 @@ namespace builders {
 class MessageBuilder;
 }
 
-class Message {
+class Message : public Element {
  public:
   Message() = default;
   ~Message() = default;

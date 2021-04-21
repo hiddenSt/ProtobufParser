@@ -4,9 +4,11 @@
 #include <string>
 #include <vector>
 
+#include <protobuf_parser/elements/element.hpp>
+
 namespace protobuf_parser {
 
-class Field {
+class Field : public Element {
  public:
   explicit Field(const std::string& name, std::size_t number, const std::string& type,
                  bool optional, bool repeated);
