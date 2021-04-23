@@ -6,7 +6,6 @@ Field::Field(const std::string& name, std::size_t number, const std::string& typ
              bool repeated)
     : name_(name),
       number_(number),
-      type_(type),
       optional_(optional),
       enum_(false),
       repeated_(repeated),
@@ -17,7 +16,6 @@ Field::Field(std::string&& name, std::size_t number, const std::string& type, bo
              bool repeated) noexcept
     : name_(std::move(name)),
       number_(number),
-      type_(type),
       optional_(optional),
       enum_(false),
       repeated_(repeated),
@@ -28,19 +26,8 @@ const std::string& Field::GetName() const {
   return name_;
 }
 
-const std::string& Field::GetType() const {
-  return type_;
-}
-
-std::size_t Field::GetNumber() const {
+const std::size_t Field::GetNumber() const {
   return number_;
-}
-
-Field& Field::operator=(const Field& other) {
-  name_ = other.name_;
-  number_ = other.number_;
-  type_ = other.type_;
-  return *this;
 }
 
 bool Field::IsOptional() const noexcept {

@@ -13,6 +13,7 @@ class PackageBuilder;
 class Package : public Element {
  public:
   Package() = default;
+  ~Package() = default;
 
   bool HasParent() const noexcept;
   const Package& GetParentPackage() const noexcept;
