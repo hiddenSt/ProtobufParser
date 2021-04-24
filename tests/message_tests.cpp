@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 
+#include <filesystem>
+
 #include <protobuf_parser/elements/message.hpp>
 #include <protobuf_parser/builders/message_builder.hpp>
 #include <protobuf_parser/builders/file_builder.hpp>
@@ -8,37 +10,61 @@
 
 namespace tests {
 
-protobuf_parser::Message GetMessage(const std::string& message_name) {
-  std::string dir_name{"hello_world_dir"};
-  std::string package_name{"HelloWorld"};
-  std::string file_name{dir_name + "/Hello world"};
+class MessageTests : public ::testing::Test {
+ protected:
+  void SetUp() override {
+    SetUpTestData();
+    SetUpDirectories();
+    SetUpPackages();
+    SetUpFile();
+    SetUpMessage();
+  }
 
-  protobuf_parser::builders::DirectoryBuilder directory_builder{};
-  protobuf_parser::builders::PackageBuilder package_builder{};
-  protobuf_parser::builders::FileBuilder file_builder{};
-  protobuf_parser::builders::MessageBuilder message_builder{};
+  void TearDown() override {
 
-  directory_builder.SetUpName(dir_name);
-  package_builder.SetUpName(package_name);
-  file_builder.SetUpName(file_name);
-  message_builder.SetUpName(message_name);
+  }
 
-  auto directory = std::move(directory_builder.GetDirectory());
-  auto package = std::move(package_builder.GetPackage());
-  file_builder.SetUpDirectory(&directory);
-  file_builder.SetUpPackage(&package);
-  auto file = std::move(file_builder.GetFile());
+  void SetUpDirectories() {
 
-  message_builder.SetUpFile(&file);
-  return std::move(message_builder.GetMessage());
-}
+  }
+
+  void SetUpPackages() {
+
+  }
+
+  void SetUpFile() {
+
+  }
+
+  void SetUpMessage() {
+
+  }
+
+  void SetUpTestData() {
+    
+  }
+
+  protobuf_parser::Directory outer_dir_;
+  protobuf_parser::Directory inner_dir_;
+  protobuf_parser::Package parent_package_;
+  protobuf_parser::Package child_package_;
+  protobuf_parser::File file_;
+  protobuf_parser::Message message_;
+
+  std::filesystem::path outer_dir_path_;
+  std::filesystem::path inner_dir_path_;
+  std::string parent_package_name_;
+  std::string child_package_name_;
+  std::string file_name_;
+  std::string message_name_;
+};
 
 TEST(MessageTests, CanCreateMessage) {
   std::string message_name{"CoolName"};
 
   auto message = GetMessage(message_name);
 
-  ASSERT_EQ(message.GetName(), message_name);
+  ASSERT_EQ(message.GetPath(), message_name);
 }
 
 TEST(MessageTests, CanGetNestedMessages) {

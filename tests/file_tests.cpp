@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 
+#include <filesystem>
+
 #include <protobuf_parser/elements/file.hpp>
 #include <protobuf_parser/builders/file_builder.hpp>
 #include <protobuf_parser/builders/package_builder.hpp>
@@ -7,42 +9,78 @@
 
 namespace tests {
 
-TEST(FileTests, CanGetFileName) {
-  std::string file_name{"FileName1"};
-  protobuf_parser::builders::FileBuilder builder{};
-  builder.SetUpName(file_name);
-  auto file = std::move(builder.GetFile());
-  ASSERT_EQ(file.GetName(), file_name);
+class FileTests : public ::testing::Test {
+ protected:
+  void SetUp() override {
+    SetUpTestData();
+    SetUpDirectories();
+    SetUpPackages();
+    SetUpFile();
+  }
+
+  void TearDown() override {
+
+  }
+
+  void SetUpTestData() {
+
+  }
+
+  void SetUpDirectories() {
+    protobuf_parser::builders::DirectoryBuilder outer_directory_builder{};
+    outer_directory_builder.SetUpPath(outer_dir_path);
+    outer_dir_ = std::move(outer_directory_builder.GetDirectory());
+
+    protobuf_parser::builders::DirectoryBuilder inner_directory_builder{};
+    inner_directory_builder.SetUpPath(inner_dir_path);
+    inner_directory_builder.SetUpParent(&outer_dir_);
+    inner_dir_ = std::move(inner_directory_builder.GetDirectory());
+  }
+
+  void SetUpPackages() {
+    protobuf_parser::builders::PackageBuilder parent_package_builder{};
+    parent_package_builder.SetUpName(parent_package_name_);
+    parent_package_ = std::move(parent_package_builder.GetPackage());
+
+    protobuf_parser::builders::PackageBuilder child_package_builder{};
+    child_package_builder.SetUpName(child_package_name_);
+    child_package_builder.SetUpParent(&parent_package_);
+    child_package_ = std::move(child_package_builder.GetPackage());
+  }
+
+  void SetUpFile() {
+    protobuf_parser::builders::FileBuilder file_builder{};
+    file_builder.SetUpName(file_name_);
+    file_builder.SetUpPackage(&child_package_);
+    file_builder.SetUpDirectory(&inner_dir_);
+    file_ = std::move(file_builder.GetFile());
+  }
+
+
+  std::filesystem::path inner_dir_path;
+  std::filesystem::path outer_dir_path;
+  std::string parent_package_name_;
+  std::string child_package_name_;
+  std::string file_name_;
+  protobuf_parser::Directory outer_dir_;
+  protobuf_parser::Directory inner_dir_;
+  protobuf_parser::Package parent_package_;
+  protobuf_parser::Package child_package_;
+  protobuf_parser::File file_;
+};
+
+
+TEST_F(FileTests, CanGetFileName) {
+  ASSERT_EQ(file_.GetName(), file_name_);
 }
 
-TEST(FileTests, CanGetFilePath) {
-  std::string file_name{"FileName1"};
-  std::string outer_dir_name{"outer"};
-  std::string inner_dir_name{"outer/inner"};
-  std::string package_name{"Hello world"};
+TEST_F(FileTests, CanGetFilePath) {
+  std::string file_path = inner_dir_.GetName() + "/";
+  ASSERT_EQ(file_.GetPath(), file_path);
+}
 
-  protobuf_parser::builders::DirectoryBuilder outer_dir_builder{};
-  protobuf_parser::builders::DirectoryBuilder inner_dir_builder{};
-  protobuf_parser::builders::PackageBuilder package_builder{};
-  protobuf_parser::builders::FileBuilder file_builder{};
-
-  outer_dir_builder.SetUpName(outer_dir_name);
-  auto outer_dir = std::move(outer_dir_builder.GetDirectory());
-  inner_dir_builder.SetUpName(inner_dir_name);
-  inner_dir_builder.SetUpParent(&outer_dir);
-  auto inner_dir = std::move(inner_dir_builder.GetDirectory());
-
-  package_builder.SetUpName(package_name);
-
-  auto package = std::move(package_builder.GetPackage());
-
-  file_builder.SetUpPackage(&package);
-  file_builder.SetUpDirectory(&inner_dir);
-
-  auto file = std::move(file_builder.GetFile());
-
-  std::string file_path = inner_dir.GetName() + "/";
-  ASSERT_EQ(file.GetPath(), file_path);
+TEST_F(FileTests, CanGetFileDirectory) {
+  ASSERT_EQ(file_.GetDirectory(), inner_dir_);
 }
 
 }  // namespace tests

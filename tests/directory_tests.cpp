@@ -7,7 +7,7 @@ namespace tests {
 TEST(DirectoryTests, CanGetDirectoryName) {
   std::string dir_name{"cool_name"};
   protobuf_parser::builders::DirectoryBuilder builder{};
-  builder.SetUpName(dir_name);
+  builder.SetUpPath(dir_name);
 
   auto directory = std::move(builder.GetDirectory());
 
@@ -19,8 +19,8 @@ TEST(DirectoryTests, CanGetParentDirectory) {
   std::string dir_name{"cool_name"};
   protobuf_parser::builders::DirectoryBuilder child_builder;
   protobuf_parser::builders::DirectoryBuilder parent_builder;
-  parent_builder.SetUpName(parent_dir_name);
-  child_builder.SetUpName(dir_name);
+  parent_builder.SetUpPath(parent_dir_name);
+  child_builder.SetUpPath(dir_name);
   auto parent_directory = std::move(parent_builder.GetDirectory());
 
   child_builder.SetUpParent(&parent_directory);

@@ -52,7 +52,7 @@ void Parser::Parse() {
 void Parser::AddDirectories() {
   for (auto& directory_name : directories_names_) {
     builders::DirectoryBuilder builder;
-    builder.SetUpName(directory_name);
+    builder.SetUpPath(directory_name);
     directories_builders_.push_back(std::move(builder));
   }
 

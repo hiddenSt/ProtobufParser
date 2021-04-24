@@ -16,14 +16,13 @@ class Field : public Element {
                  bool repeated) noexcept;
 
   const std::string& GetName() const;
-  virtual const std::string& GetType() const = 0;
+  const std::string& GetType() const;
   const std::size_t GetNumber() const;
 
   bool IsOptional() const noexcept;
   bool IsRepeated() const noexcept;
   bool IsEnum() const noexcept;
   bool IsMap() const noexcept;
-  const std::vector<std::string>& GetEnumValues() const;
 
  private:
   std::string name_;

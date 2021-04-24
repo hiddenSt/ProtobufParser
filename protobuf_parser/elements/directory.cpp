@@ -2,8 +2,8 @@
 
 namespace protobuf_parser {
 
-const std::string& Directory::GetName() const {
-  return name_;
+const std::filesystem::path& Directory::GetPath() const {
+  return path_;
 }
 
 const Directory& Directory::GetParentDirectory() const {
@@ -11,21 +11,10 @@ const Directory& Directory::GetParentDirectory() const {
 }
 
 bool Directory::Contains(const std::string& file_name) const {
-  std::size_t i = 0;
-  while (file_name[i] == name_[i]) {
-    ++i;
-  }
-  ++i;
-  while (i < file_name.size()) {
-    if (file_name[i] == '/') {
-      return false;
-    }
-    ++i;
-  }
-  return true;
+  // TODO:
 }
 Directory::Directory(Directory&& directory)
-    : parent_directory_(directory.parent_directory_), name_(std::move(directory.name_)) {
+    : parent_directory_(directory.parent_directory_), path_(std::move(directory.path_)) {
   directory.parent_directory_ = nullptr;
 }
 
@@ -34,6 +23,13 @@ bool Directory::HasParent() const noexcept {
     return false;
   }
   return true;
+}
+
+Directory& Directory::operator=(Directory&& other) {
+  this->path_ = std::move(other.path_);
+  this->parent_directory_ = other.parent_directory_;
+  other.parent_directory_ = nullptr;
+  return *this;
 }
 
 }  // namespace protobuf_parser

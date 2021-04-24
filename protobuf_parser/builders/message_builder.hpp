@@ -19,7 +19,6 @@ class MessageBuilder {
   void AddFiled(const Field& field);
   void AddReservedName(const std::string& name);
   void AddReservedNumber(std::size_t number);
-  void AddFile(File* file) noexcept;
   const std::string& GetName() const;
 
   void SetUpFileName(const std::string& file_name);

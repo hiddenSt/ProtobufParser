@@ -30,7 +30,7 @@ Storage& StorageBuilder::GetStorage() {
 void StorageBuilder::BuildDirectories() {
   std::sort(directory_builders_.begin(), directory_builders_.end(),
             [](const DirectoryBuilder* a, const DirectoryBuilder* b) {
-              return a->GetName() > b->GetName();
+              return a->GetPath() > b->GetPath();
             });
 
   for (auto& builder : directory_builders_) {
@@ -91,7 +91,7 @@ Directory* StorageBuilder::FindDirectoryForFile(const std::string& file_name) {
 void StorageBuilder::BuildMessages() {
   for (auto& builder : message_builders_) {
     File* file = FindFile(builder->GetFileName());
-    builder->AddFile(file);
+    builder->SetUpFile(file);
     storage_.messages_.emplace_back(std::move(builder->GetMessage()));
   }
 }

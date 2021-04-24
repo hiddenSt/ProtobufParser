@@ -7,7 +7,7 @@
 #include <protobuf_parser/elements/element.hpp>
 #include <protobuf_parser/elements/file.hpp>
 #include <protobuf_parser/elements/package.hpp>
-#include <protobuf_parser/elements/field.hpp>
+#include <protobuf_parser/elements/fields/field.hpp>
 
 namespace protobuf_parser {
 

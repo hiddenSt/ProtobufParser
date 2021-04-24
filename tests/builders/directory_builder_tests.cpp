@@ -11,7 +11,7 @@ TEST(DirectoryBuilderTests, CanCreate) {
 TEST(DirectoryBuilderTests, CanSetUpName) {
   std::string name{"dir_name"};
   protobuf_parser::builders::DirectoryBuilder builder{};
-  builder.SetUpName(name);
+  builder.SetUpPath(name);
   ASSERT_EQ(builder.GetDirectory().GetName(), name);
 }
 
@@ -22,8 +22,8 @@ TEST(DirectoryBuilderTests, CanSetUpParent) {
   protobuf_parser::builders::DirectoryBuilder parent_builder{};
   protobuf_parser::builders::DirectoryBuilder child_builder{};
 
-  parent_builder.SetUpName(parent_name);
-  child_builder.SetUpName(child_name);
+  parent_builder.SetUpPath(parent_name);
+  child_builder.SetUpPath(child_name);
 
   auto parent_dir = std::move(parent_builder.GetDirectory());
 

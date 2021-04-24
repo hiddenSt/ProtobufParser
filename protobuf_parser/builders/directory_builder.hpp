@@ -16,10 +16,10 @@ class DirectoryBuilder {
   DirectoryBuilder& operator=(const DirectoryBuilder&) = delete;
 
   void SetUpParent(Directory* parent) noexcept;
-  void SetUpName(const std::string& name) noexcept;
-  Directory& GetDirectory();
+  void SetUpPath(const std::filesystem::path& path) noexcept;
   bool IsParent(const std::string& directory_name);
-  const std::string& GetName() const;
+  const std::filesystem::path& GetPath() const;
+  Directory& GetDirectory();
 
  private:
   Directory directory_;

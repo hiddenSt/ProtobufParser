@@ -7,16 +7,16 @@ void DirectoryBuilder::SetUpParent(Directory* parent) noexcept {
   directory_.parent_directory_ = parent;
 }
 
-void DirectoryBuilder::SetUpName(const std::string& name) noexcept {
-  directory_.name_ = name;
+void DirectoryBuilder::SetUpPath(const std::filesystem::path& path) noexcept {
+  directory_.path_ = path;
 }
 
 Directory& DirectoryBuilder::GetDirectory() {
   return directory_;
 }
 
-const std::string& DirectoryBuilder::GetName() const {
-  return directory_.GetName();
+const std::filesystem::path& DirectoryBuilder::GetPath() const {
+  return directory_.GetPath();
 }
 
 bool DirectoryBuilder::IsParent(const std::string& directory_name) {

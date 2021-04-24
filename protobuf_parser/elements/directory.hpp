@@ -2,6 +2,8 @@
 #define PROTOBUF_PARSER_PROTOBUF_PARSER_PARSE_ELEMENTS_DIRECTORY_HPP_
 
 #include <string>
+#include <filesystem>
+
 #include <protobuf_parser/elements/element.hpp>
 
 namespace protobuf_parser {
@@ -15,11 +17,13 @@ class Directory : public Element {
   Directory(Directory&& directory);
   ~Directory() = default;
 
+  Directory& operator=(Directory&& other);
+
   // Non-copyable
   Directory(const Directory&) = delete;
   Directory& operator=(const Directory&) = delete;
 
-  const std::string& GetName() const;
+  const std::filesystem::path& GetPath() const;
   bool HasParent() const noexcept;
   const Directory& GetParentDirectory() const;
   bool Contains(const std::string& file_name) const;
@@ -27,7 +31,7 @@ class Directory : public Element {
  private:
   friend class builders::DirectoryBuilder;
 
-  std::string name_;
+  std::filesystem::path path_;
   Directory* parent_directory_;
 };
 

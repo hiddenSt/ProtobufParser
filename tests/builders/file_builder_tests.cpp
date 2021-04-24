@@ -37,7 +37,7 @@ TEST(FileBuilderTests, CanSetUpPackage) {
 TEST(FileBuildetTests, CanSetUpDirectory) {
   std::string directory_name{"directory_name"};
   protobuf_parser::builders::DirectoryBuilder directory_builder{};
-  directory_builder.SetUpName(directory_name);
+  directory_builder.SetUpPath(directory_name);
   auto directory = std::move(directory_builder.GetDirectory());
 }
 

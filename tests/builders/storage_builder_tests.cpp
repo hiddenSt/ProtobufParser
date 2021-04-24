@@ -17,7 +17,7 @@ TEST(StorageBuilderTests, CanAddMessage) {
   protobuf_parser::builders::PackageBuilder package_builder{};
   protobuf_parser::builders::FileBuilder file_builder{};
   protobuf_parser::builders::MessageBuilder message_builder{};
-  directory_builder.SetUpName(directory_name);
+  directory_builder.SetUpPath(directory_name);
   package_builder.SetUpName(package_name);
   file_builder.SetUpName(file_name);
   file_builder.SetUpPackageName(package_name);

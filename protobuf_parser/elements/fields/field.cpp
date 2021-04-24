@@ -45,13 +45,6 @@ bool Field::IsEnum() const noexcept {
 bool Field::IsMap() const noexcept {
   return map_;
 }
-const std::vector<std::string>& Field::GetEnumValues() const {
-  return enum_values_;
-}
 
-void Field::AddEnumValue(const std::string& name) {
-  enum_ = true;
-  enum_values_.push_back(name);
-}
 
 }  // namespace protobuf_parser

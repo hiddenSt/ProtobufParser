@@ -13,10 +13,6 @@ void MessageBuilder::SetUpParent(Message* parent) noexcept {
   message_.parent_message_ = parent;
 }
 
-void MessageBuilder::SetUpFile(File* file) noexcept {
-  message_.file_ = file;
-}
-
 void MessageBuilder::AddNestedMessage(Message&& message) {
   message_.nested_messages_.emplace_back(std::move(message));
   message_.nested_messages_[message_.nested_messages_.size() - 1].parent_message_ = &message_;
@@ -49,7 +45,7 @@ const std::string& MessageBuilder::GetFileName() {
   return file_name_;
 }
 
-void MessageBuilder::AddFile(File* file) noexcept {
+void MessageBuilder::SetUpFile(File* file) noexcept {
   message_.file_ = file;
   std::queue<Message*> messages_queue;
   for (auto& message : message_.nested_messages_) {
