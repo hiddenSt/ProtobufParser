@@ -4,12 +4,12 @@
 
 namespace protobuf_parser {
 
-const std::string& File::GetName() const noexcept {
-  return name_;
+const std::string File::GetName() const noexcept {
+  return path_.filename().string();
 }
 
-const std::string File::GetPath() const noexcept {
-  return directory_->GetName() + "/" + name_;
+const std::filesystem::path& File::GetPath() const noexcept {
+  return path_;
 }
 
 const Directory& File::GetDirectory() const {
@@ -21,9 +21,18 @@ const Package& File::GetPackage() const {
 }
 
 File::File(File&& other) noexcept
-    : name_(std::move(other.name_)), directory_(other.directory_), package_(other.package_) {
+    : path_(std::move(other.path_)), directory_(other.directory_), package_(other.package_) {
   other.directory_ = nullptr;
   other.package_ = nullptr;
+}
+
+File& File::operator=(File&& other) noexcept {
+  path_ = std::move(other.path_);
+  directory_ = other.directory_;
+  package_ = other.package_;
+  other.directory_ = nullptr;
+  other.package_ = nullptr;
+  return *this;
 }
 
 }  // namespace protobuf_parser

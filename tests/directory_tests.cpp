@@ -4,14 +4,14 @@
 
 namespace tests {
 
-TEST(DirectoryTests, CanGetDirectoryName) {
-  std::string dir_name{"cool_name"};
+TEST(DirectoryTests, CanGetDirectoryPath) {
+  std::filesystem::path dir_path{"/cool_path/dir"};
   protobuf_parser::builders::DirectoryBuilder builder{};
-  builder.SetUpPath(dir_name);
+  builder.SetUpPath(dir_path);
 
   auto directory = std::move(builder.GetDirectory());
 
-  ASSERT_EQ(directory.GetName(), dir_name);
+  ASSERT_EQ(directory.GetPath(), dir_path);
 }
 
 TEST(DirectoryTests, CanGetParentDirectory) {
@@ -27,7 +27,7 @@ TEST(DirectoryTests, CanGetParentDirectory) {
 
   auto directory = std::move(child_builder.GetDirectory());
 
-  ASSERT_EQ(directory.GetParentDirectory().GetName(), parent_dir_name);
+  ASSERT_EQ(directory.GetParentDirectory().GetPath(), parent_dir_name);
 }
 
 }  // namespace tests

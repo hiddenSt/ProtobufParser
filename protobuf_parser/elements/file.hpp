@@ -19,20 +19,21 @@ class File : public Element {
 
   // Movable
   File(File&& other) noexcept;
+  File& operator=(File&& other) noexcept;
 
   // Non-copyable
   File(const File&) = delete;
   const File& operator=(const File&) = delete;
 
-  const std::string& GetName() const noexcept;
-  const std::string GetPath() const noexcept;
+  const std::string GetName() const noexcept;
+  const std::filesystem::path& GetPath() const noexcept;
   const Directory& GetDirectory() const;
   const Package& GetPackage() const;
 
  private:
   friend class builders::FileBuilder;
 
-  std::string name_;
+  std::filesystem::path path_;
   Directory* directory_;
   Package* package_;
 };

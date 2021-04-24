@@ -10,8 +10,8 @@ const Directory& Directory::GetParentDirectory() const {
   return *parent_directory_;
 }
 
-bool Directory::Contains(const std::string& file_name) const {
-  // TODO:
+bool Directory::Contains(const std::filesystem::path& file_path) const {
+    return file_path.parent_path() == path_;
 }
 Directory::Directory(Directory&& directory)
     : parent_directory_(directory.parent_directory_), path_(std::move(directory.path_)) {

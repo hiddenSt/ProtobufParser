@@ -19,22 +19,8 @@ const std::filesystem::path& DirectoryBuilder::GetPath() const {
   return directory_.GetPath();
 }
 
-bool DirectoryBuilder::IsParent(const std::string& directory_name) {
-  if (directory_name.find(directory_.GetName() + "/") == 0) {
-    std::size_t i = 0;
-    while (directory_.GetName()[i] == directory_name[i]) {
-      ++i;
-    }
-    ++i;
-    while (i < directory_name.size()) {
-      if (directory_name[i] == '/') {
-        return false;
-      }
-      ++i;
-    }
-    return true;
-  }
-  return false;
+bool DirectoryBuilder::IsParentOf(const std::filesystem::path directory_path) {
+  return directory_path.root_path() == directory_.path_;
 }
 
 DirectoryBuilder::DirectoryBuilder(DirectoryBuilder&& other) noexcept

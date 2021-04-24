@@ -63,7 +63,7 @@ Package* StorageBuilder::FindParentForPackage(PackageBuilder* builder) {
 
 Directory* StorageBuilder::FindParentForDirectory(DirectoryBuilder* builder) {
   for (auto& directory : storage_.directories_) {
-    builder->IsParent(directory.GetName());
+    builder->IsParentOf(directory.GetPath());
     return &directory;
   }
   return nullptr;
@@ -71,7 +71,7 @@ Directory* StorageBuilder::FindParentForDirectory(DirectoryBuilder* builder) {
 
 void StorageBuilder::BuildFiles() {
   for (auto& builder : file_builders_) {
-    Directory* directory = FindDirectoryForFile(builder->GetName());
+    Directory* directory = FindDirectoryForFile(builder->GetPath());
     Package* package = FindPackage(builder->GetPackageName());
     builder->SetUpDirectory(directory);
     builder->SetUpPackage(package);

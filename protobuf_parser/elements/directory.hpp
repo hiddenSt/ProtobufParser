@@ -26,7 +26,7 @@ class Directory : public Element {
   const std::filesystem::path& GetPath() const;
   bool HasParent() const noexcept;
   const Directory& GetParentDirectory() const;
-  bool Contains(const std::string& file_name) const;
+  bool Contains(const std::filesystem::path& file_path) const;
 
  private:
   friend class builders::DirectoryBuilder;

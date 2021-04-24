@@ -17,11 +17,11 @@ class FileBuilder {
   FileBuilder(const FileBuilder&) = delete;
   FileBuilder& operator=(const FileBuilder&) = delete;
 
-  void SetUpName(const std::string& name) noexcept;
+  void SetUpPath(const std::filesystem::path& file_path) noexcept;
   void SetUpDirectory(Directory* directory) noexcept;
   void SetUpPackage(Package* package) noexcept;
   void SetUpPackageName(const std::string& package_name);
-  const std::string& GetName() const;
+  const std::filesystem::path& GetPath() const;
 
   const std::string& GetPackageName() const;
 

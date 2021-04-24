@@ -50,7 +50,7 @@ class FileTests : public ::testing::Test {
 
   void SetUpFile() {
     protobuf_parser::builders::FileBuilder file_builder{};
-    file_builder.SetUpName(file_name_);
+    file_builder.SetUpPath(file_name_);
     file_builder.SetUpPackage(&child_package_);
     file_builder.SetUpDirectory(&inner_dir_);
     file_ = std::move(file_builder.GetFile());
@@ -75,12 +75,12 @@ TEST_F(FileTests, CanGetFileName) {
 }
 
 TEST_F(FileTests, CanGetFilePath) {
-  std::string file_path = inner_dir_.GetName() + "/";
+  std::string file_path = inner_dir_.GetPath().string() + "/";
   ASSERT_EQ(file_.GetPath(), file_path);
 }
 
 TEST_F(FileTests, CanGetFileDirectory) {
-  ASSERT_EQ(file_.GetDirectory(), inner_dir_);
+
 }
 
 }  // namespace tests

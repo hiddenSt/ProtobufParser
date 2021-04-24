@@ -3,8 +3,8 @@
 namespace protobuf_parser {
 namespace builders {
 
-void FileBuilder::SetUpName(const std::string& name) noexcept {
-  file_.name_ = name;
+void FileBuilder::SetUpPath(const std::filesystem::path& file_path) noexcept {
+  file_.path_ = file_path;
 }
 
 void FileBuilder::SetUpDirectory(Directory* directory) noexcept {
@@ -19,8 +19,8 @@ File& FileBuilder::GetFile() {
   return file_;
 }
 
-const std::string& FileBuilder::GetName() const {
-  return file_.GetName();
+const std::filesystem::path& FileBuilder::GetPath() const {
+  return file_.path_;
 }
 
 void FileBuilder::SetUpPackageName(const std::string& package_name) {

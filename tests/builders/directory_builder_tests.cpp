@@ -8,11 +8,11 @@ TEST(DirectoryBuilderTests, CanCreate) {
   ASSERT_NO_THROW(protobuf_parser::builders::DirectoryBuilder{});
 }
 
-TEST(DirectoryBuilderTests, CanSetUpName) {
-  std::string name{"dir_name"};
+TEST(DirectoryBuilderTests, CanSetUpPath) {
+  std::filesystem::path dir_path{"dir_path/cool_path"};
   protobuf_parser::builders::DirectoryBuilder builder{};
-  builder.SetUpPath(name);
-  ASSERT_EQ(builder.GetDirectory().GetName(), name);
+  builder.SetUpPath(dir_path);
+  ASSERT_EQ(builder.GetDirectory().GetPath(), dir_path);
 }
 
 TEST(DirectoryBuilderTests, CanSetUpParent) {

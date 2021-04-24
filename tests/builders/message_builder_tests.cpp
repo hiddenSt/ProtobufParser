@@ -36,7 +36,7 @@ TEST(MessageBuilderTests, CanSetUpFile) {
   std::string message_name{"message_name"};
   std::string file_name{"file_name"};
   protobuf_parser::builders::FileBuilder file_builder{};
-  file_builder.SetUpName(file_name);
+  file_builder.SetUpPath(file_name);
   auto file = std::move(file_builder.GetFile());
 
   protobuf_parser::builders::MessageBuilder message_builder{};

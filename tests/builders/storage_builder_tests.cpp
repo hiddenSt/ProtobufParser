@@ -19,7 +19,7 @@ TEST(StorageBuilderTests, CanAddMessage) {
   protobuf_parser::builders::MessageBuilder message_builder{};
   directory_builder.SetUpPath(directory_name);
   package_builder.SetUpName(package_name);
-  file_builder.SetUpName(file_name);
+  file_builder.SetUpPath(file_name);
   file_builder.SetUpPackageName(package_name);
   message_builder.SetUpName(message_name);
   message_builder.SetUpFileName(file_name);

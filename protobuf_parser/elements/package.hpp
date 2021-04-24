@@ -15,6 +15,9 @@ class Package : public Element {
   Package() = default;
   ~Package() = default;
 
+  Package(Package&& other) noexcept;
+  Package& operator=(Package&& other) noexcept;
+
   bool HasParent() const noexcept;
   const Package& GetParentPackage() const noexcept;
   const std::string& GetName() const;

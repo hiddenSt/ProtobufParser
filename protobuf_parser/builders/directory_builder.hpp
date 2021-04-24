@@ -17,7 +17,7 @@ class DirectoryBuilder {
 
   void SetUpParent(Directory* parent) noexcept;
   void SetUpPath(const std::filesystem::path& path) noexcept;
-  bool IsParent(const std::string& directory_name);
+  bool IsParentOf(const std::filesystem::path directory_path);
   const std::filesystem::path& GetPath() const;
   Directory& GetDirectory();
 

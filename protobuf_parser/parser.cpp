@@ -76,7 +76,7 @@ void Parser::AddPackages() {
 void Parser::AddFiles() {
   for (auto& file_name : files_names_) {
     builders::FileBuilder builder;
-    builder.SetUpName(file_name);
+    builder.SetUpPath(file_name);
     builder.SetUpPackageName(importer_->pool()->FindFileByName(file_name)->package());
     files_builders_.push_back(std::move(builder));
   }

@@ -14,7 +14,7 @@ TEST(FileBuilderTests, CanSetUpName) {
   std::string file_name{"file_name"};
   protobuf_parser::builders::FileBuilder builder{};
 
-  builder.SetUpName(file_name);
+  builder.SetUpPath(file_name);
 
   ASSERT_EQ(builder.GetFile().GetName(), file_name);
 }
@@ -23,7 +23,7 @@ TEST(FileBuilderTests, CanSetUpPackage) {
   std::string package_name{"package_name"};
   std::string file_name{"file_name"};
   protobuf_parser::builders::FileBuilder file_builder{};
-  file_builder.SetUpName(file_name);
+  file_builder.SetUpPath(file_name);
   protobuf_parser::builders::PackageBuilder package_builder{};
   package_builder.SetUpName(package_name);
   auto package = std::move(package_builder.GetPackage());

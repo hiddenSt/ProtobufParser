@@ -60,11 +60,7 @@ class MessageTests : public ::testing::Test {
 };
 
 TEST(MessageTests, CanCreateMessage) {
-  std::string message_name{"CoolName"};
 
-  auto message = GetMessage(message_name);
-
-  ASSERT_EQ(message.GetPath(), message_name);
 }
 
 TEST(MessageTests, CanGetNestedMessages) {
