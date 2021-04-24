@@ -24,4 +24,8 @@ TEST(ParserTests, CanGetStorage) {
   ASSERT_NO_THROW(parser.GetStorage());
 }
 
+TEST(ParserTests, ThrowsExceptionIfGivenProtoFileHasSyntaxErrors) {
+
+}
+
 }  // namespace tests

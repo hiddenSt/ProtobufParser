@@ -5,53 +5,58 @@
 
 namespace tests {
 
-TEST(PackageTests, CanGetPackageName) {
-  std::string package_name{"PackageName1"};
-  protobuf_parser::builders::PackageBuilder builder{};
-  builder.SetUpName(package_name);
+class PackageTests : public ::testing::Test {
+ protected:
+  PackageTests()
+      : package_name_("parent_package.child_package"),
+        parent_package_name_("parent_package") {}
 
-  auto package = std::move(builder.GetPackage());
-  ASSERT_EQ(package.GetName(), package_name);
+  void SetUp() override {
+    parent_package_builder_.SetUpName(parent_package_name_);
+    package_builder_.SetUpName(package_name_);
+    parent_package_ = std::move(parent_package_builder_.GetPackage());
+    package_builder_.SetUpParent(&parent_package_);
+    package_ = std::move(package_builder_.GetPackage());
+  }
+
+  void TearDown() override {
+
+  }
+  std::string package_name_;
+  std::string parent_package_name_;
+  protobuf_parser::builders::PackageBuilder package_builder_;
+  protobuf_parser::builders::PackageBuilder parent_package_builder_;
+  protobuf_parser::Package parent_package_;
+  protobuf_parser::Package package_;
+};
+
+TEST_F(PackageTests, CanGetPackageName) {
+  ASSERT_NO_THROW(package_.GetName());
 }
 
-TEST(PackageTests, CanGetParentPackage) {
-  std::string parent_package_name{"ParentPackageName1"};
-  std::string package_name{"PackageName"};
-  protobuf_parser::builders::PackageBuilder child_builder{};
-  protobuf_parser::builders::PackageBuilder parent_builder{};
-
-  parent_builder.SetUpName(parent_package_name);
-  child_builder.SetUpName(package_name);
-
-  auto parent = std::move(parent_builder.GetPackage());
-
-  child_builder.SetUpParent(&parent);
-  auto child = std::move(child_builder.GetPackage());
-  ASSERT_EQ(&child.GetParentPackage(), &parent);
+TEST_F(PackageTests, MethodGetPackageNameReturnsCorrectName) {
+  ASSERT_EQ(package_.GetName(), package_name_);
 }
 
-TEST(PackageTests, MethodHasParentReturnsTrueIfPackageHasParent) {
-  std::string parent_package_name{"ParentPackageName1"};
-  std::string package_name{"PackageName"};
-  protobuf_parser::builders::PackageBuilder child_builder{};
-  protobuf_parser::builders::PackageBuilder parent_builder{};
-
-  parent_builder.SetUpName(parent_package_name);
-  child_builder.SetUpName(package_name);
-
-  auto parent = std::move(parent_builder.GetPackage());
-
-  child_builder.SetUpParent(&parent);
-  auto child = std::move(child_builder.GetPackage());
-  ASSERT_TRUE(child.HasParent());
+TEST_F(PackageTests, CanGetParentPackage) {
+  ASSERT_NO_THROW(package_.GetParentPackage());
 }
 
-TEST(PackageTests, MethodHasParentReturnsFalsIfPackageHasNoParent) {
-  std::string parent_package_name{"ParentPackageName1"};
-  protobuf_parser::builders::PackageBuilder child_builder{};
-  auto child = std::move(child_builder.GetPackage());
+TEST_F(PackageTests, MethodGetParentPackageReturnsCorrectPackage) {
+  ASSERT_EQ(package_.GetParentPackage().GetId(), parent_package_.GetId());
+  ASSERT_EQ(package_.GetParentPackage().GetName(), parent_package_name_);
+}
 
-  ASSERT_FALSE(child.HasParent());
+TEST_F(PackageTests, CanCallMethodHasParent) {
+  ASSERT_NO_THROW(package_.HasParent());
+}
+
+TEST_F(PackageTests, MethodHasParentReturnsTrueIfPackageHasParent) {
+  ASSERT_TRUE(package_.HasParent());
+}
+
+TEST_F(PackageTests, MethodHasParentReturnsFalsIfPackageHasNoParent) {
+  ASSERT_FALSE(parent_package_.HasParent());
 }
 
 }  // namespace tests
