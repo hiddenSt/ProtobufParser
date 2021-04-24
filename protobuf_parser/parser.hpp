@@ -30,7 +30,6 @@ class Parser {
  private:
   using ProtobufImporter = google::protobuf::compiler::Importer;
 
-  std::string GetPathRelativeToRootDirectory(const std::string& full_path);
   void AddDirectories();
   void AddPackages();
   void AddFiles();
