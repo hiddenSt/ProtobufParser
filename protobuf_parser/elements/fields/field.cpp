@@ -2,19 +2,9 @@
 
 namespace protobuf_parser {
 
-Field::Field(const std::string& name, std::size_t number, const std::string& type, bool optional,
+Field::Field(const std::string& name, std::size_t number, bool optional,
              bool repeated)
     : name_(name),
-      number_(number),
-      optional_(optional),
-      enum_(false),
-      repeated_(repeated),
-      map_(false) {
-}
-
-Field::Field(std::string&& name, std::size_t number, const std::string& type, bool optional,
-             bool repeated) noexcept
-    : name_(std::move(name)),
       number_(number),
       optional_(optional),
       enum_(false),
@@ -38,13 +28,20 @@ bool Field::IsRepeated() const noexcept {
   return repeated_;
 }
 
-bool Field::IsEnum() const noexcept {
-  return enum_;
+bool Field::IsEnumType() const noexcept {
+  return false;
 }
 
-bool Field::IsMap() const noexcept {
-  return map_;
+bool Field::IsMapType() const noexcept {
+  return false;
 }
 
+bool Field::IsBuiltinType() const noexcept {
+  return false;
+}
+
+bool Field::IsMessageType() const noexcept {
+  return false;
+}
 
 }  // namespace protobuf_parser

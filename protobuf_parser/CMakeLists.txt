@@ -28,8 +28,11 @@ set(PROTOBUF_PARSER_CXX_SOURCES
   elements/file.cpp
   elements/package.cpp
   elements/directory.cpp
-  elements/fields/builtin.cpp
   elements/fields/field.cpp
+  elements/fields/builtin_field.cpp
+  elements/fields/enum_field.cpp
+  elements/fields/map_field.cpp
+  elements/fields/message_field.cpp
   builders/message_builder.cpp
   builders/file_builder.cpp
   builders/directory_builder.cpp
@@ -50,7 +53,10 @@ set(PROTOBUF_PARSER_HEADERS
   elements/directory.hpp
   elements/enum.hpp
   elements/fields/field.hpp
-  elements/fields/builtin.hpp
+  elements/fields/builtin_field.hpp
+  elements/fields/message_field.hpp
+  elements/fields/map_field.hpp
+  elements/fields/enum_field.hpp
   builders/message_builder.hpp
   builders/file_builder.hpp
   builders/directory_builder.hpp

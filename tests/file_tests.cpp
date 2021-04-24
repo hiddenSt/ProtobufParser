@@ -54,7 +54,6 @@ class FileTests : public ::testing::Test {
   protobuf_parser::File file_;
 };
 
-
 TEST_F(FileTests, CanGetName) {
   ASSERT_NO_THROW(file_.GetName());
 }
