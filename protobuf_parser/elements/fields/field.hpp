@@ -16,7 +16,7 @@ class Field : public Element {
                  bool repeated) noexcept;
 
   const std::string& GetName() const;
-  const std::string& GetType() const;
+  //const std::string& GetType() const;
   const std::size_t GetNumber() const;
 
   bool IsOptional() const noexcept;

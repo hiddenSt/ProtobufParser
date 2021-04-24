@@ -11,18 +11,18 @@ namespace tests {
 
 class FileTests : public ::testing::Test {
  protected:
+  FileTests()
+      : inner_dir_path("outer_dir/inner_dir"),
+        outer_dir_path("outer_dir"),
+        file_path_("outer_dir/inner_dir/file.proto") {}
+
   void SetUp() override {
-    SetUpTestData();
     SetUpDirectories();
     SetUpPackages();
     SetUpFile();
   }
 
   void TearDown() override {
-
-  }
-
-  void SetUpTestData() {
 
   }
 
@@ -50,7 +50,7 @@ class FileTests : public ::testing::Test {
 
   void SetUpFile() {
     protobuf_parser::builders::FileBuilder file_builder{};
-    file_builder.SetUpPath(file_name_);
+    file_builder.SetUpPath(file_path_);
     file_builder.SetUpPackage(&child_package_);
     file_builder.SetUpDirectory(&inner_dir_);
     file_ = std::move(file_builder.GetFile());
@@ -61,7 +61,7 @@ class FileTests : public ::testing::Test {
   std::filesystem::path outer_dir_path;
   std::string parent_package_name_;
   std::string child_package_name_;
-  std::string file_name_;
+  std::filesystem::path file_path_;
   protobuf_parser::Directory outer_dir_;
   protobuf_parser::Directory inner_dir_;
   protobuf_parser::Package parent_package_;
@@ -71,16 +71,20 @@ class FileTests : public ::testing::Test {
 
 
 TEST_F(FileTests, CanGetFileName) {
-  ASSERT_EQ(file_.GetName(), file_name_);
+  ASSERT_EQ(file_.GetName(), file_path_.filename().string());
 }
 
 TEST_F(FileTests, CanGetFilePath) {
-  std::string file_path = inner_dir_.GetPath().string() + "/";
-  ASSERT_EQ(file_.GetPath(), file_path);
+  ASSERT_EQ(file_.GetPath(), file_path_);
 }
 
 TEST_F(FileTests, CanGetFileDirectory) {
+  ASSERT_EQ(file_.GetDirectory().GetPath(), inner_dir_.GetPath());
+}
 
+TEST_F(FileTests, CanGetFilePackage) {
+  ASSERT_EQ(file_.GetPackage().GetId(), child_package_.GetId());
+  ASSERT_EQ(file_.GetPackage().GetName(), child_package_.GetName());
 }
 
 }  // namespace tests

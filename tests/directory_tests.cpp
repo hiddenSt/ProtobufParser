@@ -15,19 +15,19 @@ TEST(DirectoryTests, CanGetDirectoryPath) {
 }
 
 TEST(DirectoryTests, CanGetParentDirectory) {
-  std::string parent_dir_name{"CoolName"};
-  std::string dir_name{"cool_name"};
+  std::filesystem::path parent_dir_path{"parent/dir/path"};
+  std::filesystem::path dir_path{"parent/dir/path/child"};
   protobuf_parser::builders::DirectoryBuilder child_builder;
   protobuf_parser::builders::DirectoryBuilder parent_builder;
-  parent_builder.SetUpPath(parent_dir_name);
-  child_builder.SetUpPath(dir_name);
+  parent_builder.SetUpPath(parent_dir_path);
+  child_builder.SetUpPath(dir_path);
   auto parent_directory = std::move(parent_builder.GetDirectory());
 
   child_builder.SetUpParent(&parent_directory);
 
   auto directory = std::move(child_builder.GetDirectory());
 
-  ASSERT_EQ(directory.GetParentDirectory().GetPath(), parent_dir_name);
+  ASSERT_EQ(directory.GetParentDirectory().GetPath(), parent_dir_path);
 }
 
 }  // namespace tests
