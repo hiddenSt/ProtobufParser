@@ -10,11 +10,7 @@ class Builtin : public Field {
   explicit Builtin(const std::string& name, std::size_t number, bool optional, bool repeated, const std::string& type_name);
   Builtin() = delete;
 
-  const std::string& GetType() const override;
   bool IsBuiltinType() const noexcept override;
-
- private:
-  std::string type_name_;
 };
 
 }

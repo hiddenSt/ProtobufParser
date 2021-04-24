@@ -2,19 +2,14 @@
 
 namespace protobuf_parser {
 
-MapField::MapField(const std::string& name, std::size_t number, bool optional,
+MapField::MapField(const std::string& name, const std::string& type_name, std::size_t number, bool optional,
                    const std::string& key_type, const std::string& value_type)
-    : Field(name, number, optional, false),
+    : Field(name, type_name, number, optional, false),
       key_type_(key_type),
-      value_type_(value_type),
-      type_name_("Map") {
+      value_type_(value_type) {
 }
 
-const std::string& MapField::GetType() const {
-  return type_name_;
-}
-
-bool MapField::IsMap() const noexcept {
+bool MapField::IsMapType() const noexcept {
   return true;
 }
 

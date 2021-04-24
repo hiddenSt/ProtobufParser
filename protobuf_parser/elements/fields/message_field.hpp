@@ -10,11 +10,7 @@ class MessageField : public Field {
   MessageField(const std::string& name, std::size_t number, bool optional, bool repeated, const std::string& type_name);
   MessageField() = delete;
 
-  const std::string& GetType() const override;
   bool IsMessageType() const noexcept override;
-
- private:
-  std::string type_name_;
 };
 
 }

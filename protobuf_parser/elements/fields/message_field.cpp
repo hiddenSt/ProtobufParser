@@ -4,11 +4,7 @@ namespace protobuf_parser {
 
 MessageField::MessageField(const std::string& name, std::size_t number, bool optional,
                            bool repeated, const std::string& type_name)
-    : Field(name, number, optional, repeated), type_name_(type_name) {
-}
-
-const std::string& MessageField::GetType() const {
-  return type_name_;
+    : Field(name, type_name, number, optional, repeated) {
 }
 
 bool MessageField::IsMessageType() const noexcept {

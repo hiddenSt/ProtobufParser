@@ -109,13 +109,13 @@ void Parser::AddNestedMessages(builders::MessageBuilder* builder,
 
 void Parser::AddMessageFields(builders::MessageBuilder* builder,
                               const google::protobuf::Descriptor* descriptor) {
-  for (std::size_t i = 0; i < descriptor->field_count(); ++i) {
+  /*for (std::size_t i = 0; i < descriptor->field_count(); ++i) {
     auto field_descriptor = descriptor->field(i);
     builder->AddFiled(Field{field_descriptor->name(),
                             static_cast<std::size_t>(field_descriptor->number()),
                             field_descriptor->type_name(), field_descriptor->is_optional(),
                             field_descriptor->is_repeated()});
-  }
+  }*/
 }
 
 void Parser::AddMessageReservedFieldsAndNumbers(builders::MessageBuilder* builder,

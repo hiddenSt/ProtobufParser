@@ -10,10 +10,10 @@ namespace protobuf_parser {
 
 class Field : public Element {
  public:
-  explicit Field(const std::string& name, std::size_t number, bool optional, bool repeated);
+  explicit Field(const std::string& name, const std::string& type_name, std::size_t number, bool optional, bool repeated);
 
   const std::string& GetName() const;
-  virtual const std::string& GetType() const = 0;
+  const std::string& GetType() const;
   const std::size_t GetNumber() const;
 
   bool IsOptional() const noexcept;
@@ -24,6 +24,7 @@ class Field : public Element {
   virtual bool IsMessageType() const noexcept;
 
  private:
+  std::string type_name_;
   std::string name_;
   std::size_t number_;
   bool optional_;

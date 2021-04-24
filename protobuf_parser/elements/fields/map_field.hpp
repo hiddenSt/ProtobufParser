@@ -7,16 +7,14 @@ namespace protobuf_parser {
 
 class MapField : public Field {
  public:
-  MapField(const std::string& name, std::size_t number, bool optional, const std::string& key_type, const std::string& value_type);
+  MapField(const std::string& name, const std::string& type_name, std::size_t number, bool optional, const std::string& key_type, const std::string& value_type);
   MapField() = delete;
 
-  const std::string& GetType() const override;
-  bool IsMap() const noexcept override;
+  bool IsMapType() const noexcept override;
 
  private:
   std::string key_type_;
   std::string value_type_;
-  std::string type_name_;
 };
 
 }
