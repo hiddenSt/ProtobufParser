@@ -4,50 +4,68 @@
 
 namespace tests {
 
-TEST(DirectoryTests, CanGetDirectoryPath) {
-  std::filesystem::path dir_path{"/cool_path/dir"};
-  protobuf_parser::builders::DirectoryBuilder builder{};
-  builder.SetUpPath(dir_path);
+class DirectoryTests : public ::testing::Test {
+ protected:
+  DirectoryTests()
+      : dir_path_("parent_dir_path/dir"),
+        parent_dir_path_("parent_dir_path") {
+  }
 
-  auto directory = std::move(builder.GetDirectory());
+  void SetUp() override {
+    parent_dir_builder_.SetUpPath(parent_dir_path_);
+    parent_dir_ = std::move(parent_dir_builder_.GetDirectory());
+    dir_builder_.SetUpPath(dir_path_);
+    dir_builder_.SetUpParent(&parent_dir_);
+    dir_ = std::move(dir_builder_.GetDirectory());
+  }
 
-  ASSERT_EQ(directory.GetPath(), dir_path);
+  void TearDown() override {
+
+  }
+
+  std::filesystem::path dir_path_;
+  std::filesystem::path parent_dir_path_;
+  protobuf_parser::Directory dir_;
+  protobuf_parser::Directory parent_dir_;
+  protobuf_parser::builders::DirectoryBuilder dir_builder_;
+  protobuf_parser::builders::DirectoryBuilder parent_dir_builder_;
+};
+
+TEST_F(DirectoryTests, CanGetPath) {
+  ASSERT_NO_THROW(dir_.GetPath());
 }
 
-TEST(DirectoryTests, CanGetParentDirectory) {
-  std::filesystem::path parent_dir_path{"parent/dir/path"};
-  std::filesystem::path dir_path{"parent/dir/path/child"};
-  protobuf_parser::builders::DirectoryBuilder child_builder;
-  protobuf_parser::builders::DirectoryBuilder parent_builder;
-  parent_builder.SetUpPath(parent_dir_path);
-  child_builder.SetUpPath(dir_path);
-  auto parent_directory = std::move(parent_builder.GetDirectory());
-
-  child_builder.SetUpParent(&parent_directory);
-
-  auto directory = std::move(child_builder.GetDirectory());
-
-  ASSERT_EQ(directory.GetParentDirectory().GetPath(), parent_dir_path);
+TEST_F(DirectoryTests, MethodGetPathReturnsCorrectPath) {
+  ASSERT_EQ(dir_.GetPath(), dir_path_);
 }
 
-TEST(DirectoryTests, MethodContainsReturnsTrueIfArgumentIsContainingFile) {
-  std::filesystem::path parent_dir_path{"parent/dir/path"};
-  std::filesystem::path dir_path{"parent/dir/path/child"};
-  protobuf_parser::builders::DirectoryBuilder parent_builder;
-  parent_builder.SetUpPath(parent_dir_path);
-  auto parent_directory = std::move(parent_builder.GetDirectory());
-
-  ASSERT_TRUE(parent_directory.Contains(dir_path));
+TEST_F(DirectoryTests, CanCallMethodHasParent) {
+  ASSERT_NO_THROW(dir_.HasParent());
 }
 
-TEST(DirectoryTests, MethodContainsReturnsFalseIfArgumentIsNotContainingFile) {
-  std::filesystem::path parent_dir_path{"parent/dir/path"};
-  std::filesystem::path dir_path{"another/dir/path"};
-  protobuf_parser::builders::DirectoryBuilder parent_builder;
-  parent_builder.SetUpPath(parent_dir_path);
-  auto parent_directory = std::move(parent_builder.GetDirectory());
+TEST_F(DirectoryTests, MethodHasParentReturnsTrueIfDirectoryHasParent) {
+  ASSERT_TRUE(dir_.HasParent());
+}
 
-  ASSERT_FALSE(parent_directory.Contains(dir_path));
+TEST_F(DirectoryTests, MethodHasParentReturnsFalseIfDirectoryHasNoParent) {
+  ASSERT_FALSE(parent_dir_.HasParent());
+}
+
+TEST_F(DirectoryTests, MethodContainsReturnsTrueIfArgumentIsContainingFile) {
+  ASSERT_TRUE(parent_dir_.Contains(dir_path_));
+}
+
+TEST_F(DirectoryTests, MethodContainsReturnsFalseIfArgumentIsNotContainingFile) {
+  ASSERT_FALSE(dir_.Contains(parent_dir_path_));
+}
+
+TEST_F(DirectoryTests, CanGetParentDirectory) {
+  ASSERT_NO_THROW(dir_.GetParentDirectory());
+}
+
+TEST_F(DirectoryTests, MethodGetParentDirectoryReturnsCorrectDirectory) {
+  ASSERT_EQ(dir_.GetParentDirectory().GetId(), parent_dir_.GetId());
+  ASSERT_EQ(dir_.GetParentDirectory().GetPath(), parent_dir_.GetPath());
 }
 
 }  // namespace tests
