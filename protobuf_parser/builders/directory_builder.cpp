@@ -20,7 +20,7 @@ const std::filesystem::path& DirectoryBuilder::GetPath() const {
 }
 
 bool DirectoryBuilder::IsParentOf(const std::filesystem::path directory_path) {
-  return directory_path.root_path() == directory_.path_;
+  return directory_path.parent_path() == directory_.path_;
 }
 
 DirectoryBuilder::DirectoryBuilder(DirectoryBuilder&& other) noexcept

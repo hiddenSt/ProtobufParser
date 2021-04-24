@@ -30,4 +30,24 @@ TEST(DirectoryTests, CanGetParentDirectory) {
   ASSERT_EQ(directory.GetParentDirectory().GetPath(), parent_dir_path);
 }
 
+TEST(DirectoryTests, MethodContainsReturnsTrueIfArgumentIsContainingFile) {
+  std::filesystem::path parent_dir_path{"parent/dir/path"};
+  std::filesystem::path dir_path{"parent/dir/path/child"};
+  protobuf_parser::builders::DirectoryBuilder parent_builder;
+  parent_builder.SetUpPath(parent_dir_path);
+  auto parent_directory = std::move(parent_builder.GetDirectory());
+
+  ASSERT_TRUE(parent_directory.Contains(dir_path));
+}
+
+TEST(DirectoryTests, MethodContainsReturnsFalseIfArgumentIsNotContainingFile) {
+  std::filesystem::path parent_dir_path{"parent/dir/path"};
+  std::filesystem::path dir_path{"another/dir/path"};
+  protobuf_parser::builders::DirectoryBuilder parent_builder;
+  parent_builder.SetUpPath(parent_dir_path);
+  auto parent_directory = std::move(parent_builder.GetDirectory());
+
+  ASSERT_FALSE(parent_directory.Contains(dir_path));
+}
+
 }  // namespace tests
