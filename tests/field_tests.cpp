@@ -39,10 +39,11 @@ TEST(FieldTests, CanCreateMapFieldType) {
 
 TEST(FieldTests, CanCreateEnumFieldType) {
   std::string name{"field_name"};
-  std::string key_type_name{"key_type"};
-  std::string value_type_name{"value_type"};
+  std::string enum_type_name{"enum_type"};
   std::size_t number = 1;
   bool optional = true;
+  bool repeated = true;
+  ASSERT_NO_THROW(protobuf_parser::EnumField(enum_type_name, name, number, optional, repeated));
 }
 
 TEST(FieldTests, MethodIsBuiltinOfBuiltinTypeFieldReturnsTrue) {
@@ -83,6 +84,16 @@ TEST(FieldTests, MethodIsRepeatedOfMapFieldTypeReturnsFalse) {
   bool optional = true;
   protobuf_parser::MapField field{name, number, optional, key_type_name, value_type_name};
   ASSERT_FALSE(field.IsRepeated());
+}
+
+TEST(FieldTests, MethodIsEnumTypeOfEnumFieldTypeReturnsTrue) {
+  std::string name{"field_name"};
+  std::string enum_type_name{"enum_type"};
+  std::size_t number = 1;
+  bool optional = true;
+  bool repeated = true;
+  protobuf_parser::EnumField field{enum_type_name, name, number, optional, repeated};
+  ASSERT_TRUE(field.IsEnumType());
 }
 
 }  // namespace tests

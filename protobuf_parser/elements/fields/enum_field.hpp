@@ -5,7 +5,13 @@
 
 namespace protobuf_parser {
 
-class EnumField : public Field {};
+class EnumField : public Field {
+ public:
+  EnumField(const std::string& type_name, const std::string& name, std::size_t number,
+            bool optional, bool repeated);
+
+  bool IsEnumType() const noexcept override;
+};
 
 }  // namespace protobuf_parser
 
