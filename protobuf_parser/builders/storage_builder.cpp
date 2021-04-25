@@ -19,6 +19,10 @@ void StorageBuilder::AddMessageBuilder(MessageBuilder* message_builder) {
   message_builders_.push_back(message_builder);
 }
 
+void StorageBuilder::AddEnumBuilder(EnumBuilder* builder) {
+  enum_builders_.push_back(builder);
+}
+
 Storage& StorageBuilder::GetStorage() {
   BuildDirectories();
   BuildPackages();

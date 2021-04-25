@@ -50,9 +50,9 @@ class Parser {
   std::vector<builders::FileBuilder> files_builders_;
   std::vector<builders::DirectoryBuilder> directories_builders_;
   builders::StorageBuilder storage_builder_;
-  std::set<std::string> directories_names_;
+  std::set<std::filesystem::path> directories_path_;
   std::set<std::string> packages_names_;
-  std::set<std::string> files_names_;
+  std::set<std::filesystem::path> files_path_;
   Storage storage_;
 };
 

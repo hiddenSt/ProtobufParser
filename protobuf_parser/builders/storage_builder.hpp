@@ -22,6 +22,7 @@ class StorageBuilder {
   void AddPackageBuilder(PackageBuilder* package_builder);
   void AddFileBuilder(FileBuilder* file_builder);
   void AddMessageBuilder(MessageBuilder* message_builder);
+  void AddEnumBuilder(EnumBuilder* builder);
   Storage& GetStorage();
 
  private:
@@ -41,6 +42,7 @@ class StorageBuilder {
   std::vector<DirectoryBuilder*> directory_builders_;
   std::vector<FileBuilder*> file_builders_;
   std::vector<PackageBuilder*> package_builders_;
+  std::vector<EnumBuilder*> enum_builders_;
 };
 
 }  // namespace builders

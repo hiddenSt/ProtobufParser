@@ -12,13 +12,11 @@ Parser::Parser(const std::filesystem::path& root_path) : root_path_(root_path) {
 
   for (auto& dir_entry : recursive_directory_iterator) {
     if (dir_entry.is_regular_file() && dir_entry.path().extension() == ".proto") {
-      /*std::string relative_to_root_file_path =
-          GetPathRelativeToRootDirectory(dir_entry.path().string());
-      auto* file_descriptor = importer_->Import(relative_to_root_file_path);
-      directories_names_.insert(
-          GetPathRelativeToRootDirectory(dir_entry.path().parent_path().string()));
+      auto current_path = dir_entry.path().lexically_proximate(root_path_);
+      auto* file_descriptor = importer_->Import(current_path.string());
+      directories_path_.insert(dir_entry.path().parent_path().lexically_proximate(root_path_));
       packages_names_.insert(file_descriptor->package());
-      files_names_.insert(relative_to_root_file_path);*/
+      files_path_.insert(current_path);
     }
   }
 }
@@ -36,7 +34,7 @@ void Parser::Parse() {
 }
 
 void Parser::AddDirectories() {
-  for (auto& directory_name : directories_names_) {
+  for (auto& directory_name : directories_path_) {
     builders::DirectoryBuilder builder;
     builder.SetUpPath(directory_name);
     directories_builders_.push_back(std::move(builder));
@@ -60,7 +58,7 @@ void Parser::AddPackages() {
 }
 
 void Parser::AddFiles() {
-  for (auto& file_name : files_names_) {
+  for (auto& file_name : files_path_) {
     builders::FileBuilder builder;
     builder.SetUpPath(file_name);
     builder.SetUpPackageName(importer_->pool()->FindFileByName(file_name)->package());
@@ -74,7 +72,7 @@ void Parser::AddFiles() {
 
 void Parser::AddMessages() {
   const google::protobuf::DescriptorPool* pool = importer_->pool();
-  for (auto& file_name : files_names_) {
+  for (auto& file_name : files_path_) {
     auto* file_descriptor = pool->FindFileByName(file_name);
     for (std::size_t i = 0; i < file_descriptor->message_type_count(); ++i) {
       builders::MessageBuilder builder;
