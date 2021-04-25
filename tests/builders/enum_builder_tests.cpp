@@ -95,4 +95,13 @@ TEST(EnumBuilderTests, MethodGetMessageNameReturnsCorrectName) {
   ASSERT_EQ(builder.GetMessageName(), message_name);
 }
 
+TEST(EnumBuilderTests, CanAddValue) {
+  std::string enum_name{"EnumName"};
+  std::string value_name{"ValueName"};
+  std::size_t value_number = 1;
+  protobuf_parser::builders::EnumBuilder builder{};
+  builder.SetUpName(enum_name);
+  ASSERT_NO_THROW(builder.AddValue(value_name, value_number));
+}
+
 }

@@ -1,38 +1,88 @@
 #include <gtest/gtest.h>
 
-#include <protobuf_parser/elements/fields/field.hpp>
+#include <protobuf_parser/elements/fields/builtin_field.hpp>
+#include <protobuf_parser/elements/fields/message_field.hpp>
+#include <protobuf_parser/elements/fields/enum_field.hpp>
+#include <protobuf_parser/elements/fields/map_field.hpp>
+
 #include <protobuf_parser/elements/package.hpp>
 
 namespace tests {
 
-TEST(FieldTests, CanGetFieldType) {
-  std::string field_name{"Hello world"};
-  std::string type_name{"TypeName"};
+TEST(FieldTests, CanCreateBuiltinFieldType) {
+  std::string name{"field_name"};
+  std::string type_name{"int64"};
   std::size_t number = 1;
-
-//  protobuf_parser::Field field{field_name, number, type_name, false, false};
-
-//  ASSERT_EQ(field.GetType(), type_name);
+  bool optional = true;
+  bool repeated = true;
+  ASSERT_NO_THROW(protobuf_parser::BuiltinField(type_name, name, number, optional, repeated));
 }
 
-TEST(FieldTests, ReturnsCorrectNumber) {
-  std::string field_name{"Hello world"};
-  std::string type_name{"TypeName"};
+TEST(FieldTests, CanCreateMessageFieldType) {
+  std::string name{"field_name"};
+  std::string type_name{"int64"};
   std::size_t number = 1;
-
-  //protobuf_parser::Field field{field_name, number, type_name, false, false};
-
-  //ASSERT_EQ(field.GetNumber(), number);
+  bool optional = true;
+  bool repeated = true;
+  ASSERT_NO_THROW(protobuf_parser::MessageField(type_name, name, number, optional, repeated));
 }
 
-TEST(FieldTests, ReturnsCorrectName) {
-  std::string field_name{"Hello world"};
-  std::string type_name{"TypeName"};
+TEST(FieldTests, CanCreateMapFieldType) {
+  std::string name{"field_name"};
+  std::string key_type_name{"key_type"};
+  std::string value_type_name{"value_type"};
   std::size_t number = 1;
+  bool optional = true;
+  ASSERT_NO_THROW(protobuf_parser::MapField(name, number, optional, key_type_name, value_type_name));
+}
 
- // protobuf_parser::Field field{field_name, number, type_name, false, false};
+TEST(FieldTests, CanCreateEnumFieldType) {
+  std::string name{"field_name"};
+  std::string key_type_name{"key_type"};
+  std::string value_type_name{"value_type"};
+  std::size_t number = 1;
+  bool optional = true;
 
-  //ASSERT_EQ(field.GetName(), field_name);
+}
+
+TEST(FieldTests, MethodIsBuiltinOfBuiltinTypeFieldReturnsTrue) {
+  std::string name{"field_name"};
+  std::string type_name{"int64"};
+  std::size_t number = 1;
+  bool optional = true;
+  bool repeated = true;
+  protobuf_parser::BuiltinField field{type_name, name, number, optional, repeated};
+  ASSERT_TRUE(field.IsBuiltinType());
+}
+
+TEST(FieldTests, MethodIsMessageTypeOfMessageTypeFieldReturnsTrue) {
+  std::string name{"field_name"};
+  std::string type_name{"int64"};
+  std::size_t number = 1;
+  bool optional = true;
+  bool repeated = true;
+  protobuf_parser::MessageField field{type_name, name, number, optional, repeated};
+  ASSERT_TRUE(field.IsMessageType());
+}
+
+TEST(FieldTests, MethodIsMapOfMapFieldTypeReturnsTrue) {
+  std::string name{"field_name"};
+  std::string key_type_name{"key_type"};
+  std::string value_type_name{"value_type"};
+  std::size_t number = 1;
+  bool optional = true;
+  protobuf_parser::MapField field{name, number, optional, key_type_name, value_type_name};
+  ASSERT_TRUE(field.IsMapType());
+}
+
+TEST(FieldTests, MethodIsRepeatedOfMapFieldTypeReturnsFalse) {
+  std::string name{"field_name"};
+  std::string key_type_name{"key_type"};
+  std::string value_type_name{"value_type"};
+  std::size_t number = 1;
+  bool optional = true;
+  protobuf_parser::MapField field{name, number, optional, key_type_name, value_type_name};
+  ASSERT_FALSE(field.IsRepeated());
 }
 
 }  // namespace tests
