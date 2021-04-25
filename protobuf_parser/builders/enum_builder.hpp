@@ -12,7 +12,7 @@ class EnumBuilder {
 
   void SetUpName(const std::string& name);
   void SetUpParentMessage(Message* message);
-  void SetUpFile(File*  file);
+  void SetUpFile(File* file);
   void AddValue(const std::string& name, std::size_t number);
   void SetUpFilePath(const std::filesystem::path& path);
   void SetUpMessageName(const std::string& name);
@@ -28,8 +28,7 @@ class EnumBuilder {
   std::string message_name_;
 };
 
-}
-}
-
+}  // namespace builders
+}  // namespace protobuf_parser
 
 #endif  // PROTOBUF_PARSER_PROTOBUF_PARSER_BUILDERS_ENUM_BUILDER_HPP_

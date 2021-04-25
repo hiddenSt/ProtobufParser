@@ -6,9 +6,7 @@ namespace tests {
 
 class DirectoryTests : public ::testing::Test {
  protected:
-  DirectoryTests()
-      : dir_path_("parent_dir_path/dir"),
-        parent_dir_path_("parent_dir_path") {
+  DirectoryTests() : dir_path_("parent_dir_path/dir"), parent_dir_path_("parent_dir_path") {
   }
 
   void SetUp() override {
@@ -20,7 +18,6 @@ class DirectoryTests : public ::testing::Test {
   }
 
   void TearDown() override {
-
   }
 
   std::filesystem::path dir_path_;

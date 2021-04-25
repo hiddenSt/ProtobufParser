@@ -7,7 +7,8 @@ namespace protobuf_parser {
 
 class MapField : public Field {
  public:
-  MapField(const std::string& name, std::size_t number, bool optional, const std::string& key_type, const std::string& value_type);
+  MapField(const std::string& name, std::size_t number, bool optional, const std::string& key_type,
+           const std::string& value_type);
   MapField() = delete;
 
   bool IsMapType() const noexcept override;
@@ -19,6 +20,6 @@ class MapField : public Field {
   std::string value_type_;
 };
 
-}
+}  // namespace protobuf_parser
 
 #endif  // PROTOBUF_PARSER_PROTOBUF_PARSER_ELEMENTS_FIELDS_MAP_FIELD_HPP_

@@ -5,9 +5,8 @@
 
 namespace protobuf_parser {
 
-class EnumField : public Field {
-};
+class EnumField : public Field {};
 
-}
+}  // namespace protobuf_parser
 
 #endif  // PROTOBUF_PARSER_PROTOBUF_PARSER_ELEMENTS_FIELDS_ENUM_FIELD_HPP_

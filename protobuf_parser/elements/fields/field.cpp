@@ -2,8 +2,8 @@
 
 namespace protobuf_parser {
 
-Field::Field(const std::string& name, const std::string& type_name_, std::size_t number, bool optional,
-             bool repeated)
+Field::Field(const std::string& name, const std::string& type_name_, std::size_t number,
+             bool optional, bool repeated)
     : name_(name),
       type_name_(type_name_),
       number_(number),

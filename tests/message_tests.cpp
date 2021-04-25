@@ -21,27 +21,21 @@ class MessageTests : public ::testing::Test {
   }
 
   void TearDown() override {
-
   }
 
   void SetUpDirectories() {
-
   }
 
   void SetUpPackages() {
-
   }
 
   void SetUpFile() {
-
   }
 
   void SetUpMessage() {
-
   }
 
   void SetUpTestData() {
-    
   }
 
   protobuf_parser::Directory outer_dir_;
@@ -60,7 +54,6 @@ class MessageTests : public ::testing::Test {
 };
 
 TEST(MessageTests, CanCreateMessage) {
-
 }
 
 TEST(MessageTests, CanGetNestedMessages) {

@@ -108,5 +108,4 @@ TEST(PackageBuilderTests, MethodIsParentReturnsFalseIfArgumentIsNotChildPackageN
   ASSERT_FALSE(parent_builder.IsParent(not_child_name));
 }
 
-
 }  // namespace tests

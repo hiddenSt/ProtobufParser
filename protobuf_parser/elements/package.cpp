@@ -17,9 +17,8 @@ bool Package::HasParent() const noexcept {
   return true;
 }
 
-Package::Package(Package&& other) noexcept :
-      name_(std::move(other.name_)),
-      parent_package_(other.parent_package_) {
+Package::Package(Package&& other) noexcept
+    : name_(std::move(other.name_)), parent_package_(other.parent_package_) {
   other.parent_package_ = nullptr;
 }
 

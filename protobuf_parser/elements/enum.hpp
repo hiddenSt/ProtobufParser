@@ -43,6 +43,6 @@ class Enum : public Element {
   Message* parent_message_;
 };
 
-}
+}  // namespace protobuf_parser
 
 #endif  // PROTOBUF_PARSER_PROTOBUF_PARSER_ELEMENTS_ENUM_HPP_

@@ -33,7 +33,8 @@ TEST(FieldTests, CanCreateMapFieldType) {
   std::string value_type_name{"value_type"};
   std::size_t number = 1;
   bool optional = true;
-  ASSERT_NO_THROW(protobuf_parser::MapField(name, number, optional, key_type_name, value_type_name));
+  ASSERT_NO_THROW(
+      protobuf_parser::MapField(name, number, optional, key_type_name, value_type_name));
 }
 
 TEST(FieldTests, CanCreateEnumFieldType) {
@@ -42,7 +43,6 @@ TEST(FieldTests, CanCreateEnumFieldType) {
   std::string value_type_name{"value_type"};
   std::size_t number = 1;
   bool optional = true;
-
 }
 
 TEST(FieldTests, MethodIsBuiltinOfBuiltinTypeFieldReturnsTrue) {

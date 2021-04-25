@@ -43,4 +43,4 @@ Enum& Enum::operator=(Enum&& other) noexcept {
   return *this;
 }
 
-}
+}  // namespace protobuf_parser

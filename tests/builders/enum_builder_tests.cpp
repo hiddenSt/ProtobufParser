@@ -104,4 +104,4 @@ TEST(EnumBuilderTests, CanAddValue) {
   ASSERT_NO_THROW(builder.AddValue(value_name, value_number));
 }
 
-}
+}  // namespace tests

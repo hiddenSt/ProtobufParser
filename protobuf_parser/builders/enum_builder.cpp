@@ -39,5 +39,5 @@ Enum& EnumBuilder::GetEnum() {
   return enum_;
 }
 
-}
-}
+}  // namespace builders
+}  // namespace protobuf_parser

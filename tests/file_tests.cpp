@@ -12,9 +12,8 @@ namespace tests {
 class FileTests : public ::testing::Test {
  protected:
   FileTests()
-      : dir_path_("outer_dir"),
-        package_name_("package_name"),
-        file_path_("outer_dir/file.proto") {}
+      : dir_path_("outer_dir"), package_name_("package_name"), file_path_("outer_dir/file.proto") {
+  }
 
   void SetUp() override {
     SetUpDirectory();
@@ -23,7 +22,6 @@ class FileTests : public ::testing::Test {
   }
 
   void TearDown() override {
-
   }
 
   void SetUpDirectory() {

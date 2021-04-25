@@ -25,7 +25,6 @@ TEST(ParserTests, CanGetStorage) {
 }
 
 TEST(ParserTests, ThrowsExceptionIfGivenProtoFileHasSyntaxErrors) {
-
 }
 
 }  // namespace tests

@@ -8,8 +8,8 @@ namespace tests {
 class PackageTests : public ::testing::Test {
  protected:
   PackageTests()
-      : package_name_("parent_package.child_package"),
-        parent_package_name_("parent_package") {}
+      : package_name_("parent_package.child_package"), parent_package_name_("parent_package") {
+  }
 
   void SetUp() override {
     parent_package_builder_.SetUpName(parent_package_name_);
@@ -20,7 +20,6 @@ class PackageTests : public ::testing::Test {
   }
 
   void TearDown() override {
-
   }
   std::string package_name_;
   std::string parent_package_name_;
