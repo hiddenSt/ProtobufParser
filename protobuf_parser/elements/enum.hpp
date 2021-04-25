@@ -19,6 +19,13 @@ class EnumBuilder;
 class Enum : public Element {
  public:
   Enum() = default;
+  Enum(Enum&& other) noexcept;
+
+  Enum& operator=(Enum&& other) noexcept;
+
+  // Non copyable
+  Enum(const Enum&) = delete;
+  Enum& operator=(const Enum&) = delete;
 
   bool HasParentMessage() const noexcept;
   const Message& GetParentMessage() const;

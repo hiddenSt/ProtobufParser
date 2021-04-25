@@ -20,11 +20,17 @@ set(TESTS_SOURCES
   package_tests.cpp
   message_tests.cpp
   storage_tests.cpp
-  builders/message_builder_tests.cpp)
+  parser_tests.cpp
+  builders/message_builder_tests.cpp
+  builders/package_builder_tests.cpp
+  builders/directory_builder_tests.cpp
+  builders/file_builder_tests.cpp
+  builders/storage_builder_tests.cpp
+  builders/enum_builder_tests.cpp)
 
 set(UTIL_SOURCES
   util/mock_multiple_error_collector.cpp
-  util/mock_multiple_error_collector.hpp parser_tests.cpp builders/package_builder_tests.cpp builders/directory_builder_tests.cpp builders/file_builder_tests.cpp builders/storage_builder_tests.cpp)
+  util/mock_multiple_error_collector.hpp)
 
 add_executable(run_protobuf_parser_tests "${TESTS_SOURCES}" "${UTIL_SOURCES}")
 
