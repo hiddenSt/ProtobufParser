@@ -28,6 +28,7 @@ Storage& StorageBuilder::GetStorage() {
   BuildPackages();
   BuildFiles();
   BuildMessages();
+  BuildEnums();
   return storage_;
 }
 

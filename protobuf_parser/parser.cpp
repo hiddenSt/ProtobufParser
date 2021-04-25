@@ -88,7 +88,7 @@ void Parser::AddEnums() {
       for (std::size_t j = 0; j < file_descriptor->enum_type(i)->value_count(); ++j) {
         builder.AddValue(file_descriptor->enum_type(i)->value(j)->name(), file_descriptor->enum_type(i)->value(j)->index());
       }
-      enum_builders_.push_back(builder);
+      enum_builders_.push_back(std::move(builder));
     }
   }
 

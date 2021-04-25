@@ -39,5 +39,18 @@ Enum& EnumBuilder::GetEnum() {
   return enum_;
 }
 
+EnumBuilder::EnumBuilder(EnumBuilder&& other) noexcept
+    : message_name_(std::move(other.message_name_)),
+      enum_(std::move(other.enum_)),
+      file_path_(std::move(other.file_path_)) {
+}
+
+EnumBuilder& EnumBuilder::operator=(EnumBuilder&& other) noexcept {
+  message_name_ = std::move(other.message_name_);
+  enum_ = std::move(other.enum_);
+  file_path_ = std::move(file_path_);
+  return *this;
+}
+
 }  // namespace builders
 }  // namespace protobuf_parser

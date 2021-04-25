@@ -10,6 +10,13 @@ class EnumBuilder {
  public:
   EnumBuilder() = default;
 
+  EnumBuilder(EnumBuilder&& other) noexcept;
+  EnumBuilder& operator=(EnumBuilder&& other) noexcept;
+
+  // Non-copyable
+  EnumBuilder(const EnumBuilder&) = delete;
+  EnumBuilder& operator=(const EnumBuilder&) = delete;
+
   void SetUpName(const std::string& name);
   void SetUpParentMessage(Message* message);
   void SetUpFile(File* file);

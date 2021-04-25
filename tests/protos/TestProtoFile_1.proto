@@ -1,6 +1,11 @@
 syntax = "proto3";
 package test_package;
 
+enum CoolEnum {
+  HELLO_WORLD = 0;
+  HELLO_MAN = 1;
+}
+
 message TestMessage_1 {
   int32 test_field = 2;
   int32 test_field_2 = 3;
