@@ -12,6 +12,7 @@
 #include <protobuf_parser/elements/message.hpp>
 #include <protobuf_parser/elements/package.hpp>
 #include <protobuf_parser/elements/file.hpp>
+#include <protobuf_parser/elements/enum.hpp>
 
 namespace protobuf_parser {
 namespace builders {
@@ -43,6 +44,7 @@ class Storage {
   std::vector<File> files_;
   std::vector<Package> packages_;
   std::vector<Directory> directories_;
+  std::vector<Enum> enums_;
 };
 
 }  // namespace protobuf_parser

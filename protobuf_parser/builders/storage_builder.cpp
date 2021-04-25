@@ -54,7 +54,7 @@ void StorageBuilder::BuildPackages() {
 
 Package* StorageBuilder::FindParentForPackage(PackageBuilder* builder) {
   for (auto& package : storage_.packages_) {
-    if (builder->IsParent(package.GetName())) {
+    if (builder->IsParentOf(package.GetName())) {
       return &package;
     }
   }
@@ -79,9 +79,9 @@ void StorageBuilder::BuildFiles() {
   }
 }
 
-Directory* StorageBuilder::FindDirectoryForFile(const std::string& file_name) {
+Directory* StorageBuilder::FindDirectoryForFile(const std::filesystem::path& file_path) {
   for (auto& directory : storage_.directories_) {
-    if (directory.Contains(file_name)) {
+    if (directory.Contains(file_path)) {
       return &directory;
     }
   }
@@ -90,24 +90,24 @@ Directory* StorageBuilder::FindDirectoryForFile(const std::string& file_name) {
 
 void StorageBuilder::BuildMessages() {
   for (auto& builder : message_builders_) {
-    File* file = FindFile(builder->GetFileName());
+    File* file = FindFile(builder->GetFilePath());
     builder->SetUpFile(file);
     storage_.messages_.emplace_back(std::move(builder->GetMessage()));
   }
 }
 
-File* StorageBuilder::FindFile(const std::string& name) {
+File* StorageBuilder::FindFile(const std::filesystem::path& file_path) {
   for (auto& file : storage_.files_) {
-    if (file.GetName() == name) {
+    if (file.GetPath() == file_path) {
       return &file;
     }
   }
   return nullptr;
 }
 
-Package* StorageBuilder::FindPackage(const std::string& file_name) {
+Package* StorageBuilder::FindPackage(const std::string& package_name) {
   for (auto& package : storage_.packages_) {
-    if (package.GetName() == file_name) {
+    if (package.GetName() == package_name) {
       return &package;
     }
   }

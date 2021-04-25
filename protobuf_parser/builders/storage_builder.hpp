@@ -29,11 +29,12 @@ class StorageBuilder {
   void BuildPackages();
   void BuildFiles();
   void BuildMessages();
+  void BuildEnums();
   Package* FindParentForPackage(PackageBuilder* builder);
   Directory* FindParentForDirectory(DirectoryBuilder* builder);
   Package* FindPackage(const std::string& package_name);
-  Directory* FindDirectoryForFile(const std::string& file_name);
-  File* FindFile(const std::string& name);
+  Directory* FindDirectoryForFile(const std::filesystem::path& file_path);
+  File* FindFile(const std::filesystem::path& file_path);
 
   Storage storage_;
   std::vector<MessageBuilder*> message_builders_;

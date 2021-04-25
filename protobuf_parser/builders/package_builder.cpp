@@ -19,7 +19,7 @@ const std::string& PackageBuilder::GetName() const {
   return package_.GetName();
 }
 
-bool PackageBuilder::IsParent(const std::string& package_name) {
+bool PackageBuilder::IsParentOf(const std::string& package_name) {
   if (package_name.find(package_.GetName() + ".") == 0) {
     std::size_t i = 0;
     while (package_.GetName()[i] == package_name[i]) {

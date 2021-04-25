@@ -95,7 +95,7 @@ TEST(PackageBuilderTests, MethodIsParentReturnsTrueIfArgumentIsChildPackageName)
   protobuf_parser::builders::PackageBuilder parent_builder{};
   parent_builder.SetUpName(parent_name);
 
-  ASSERT_TRUE(parent_builder.IsParent(child_name));
+  ASSERT_TRUE(parent_builder.IsParentOf(child_name));
 }
 
 TEST(PackageBuilderTests, MethodIsParentReturnsFalseIfArgumentIsNotChildPackageName) {
@@ -105,7 +105,7 @@ TEST(PackageBuilderTests, MethodIsParentReturnsFalseIfArgumentIsNotChildPackageN
   protobuf_parser::builders::PackageBuilder parent_builder{};
   parent_builder.SetUpName(parent_name);
 
-  ASSERT_FALSE(parent_builder.IsParent(not_child_name));
+  ASSERT_FALSE(parent_builder.IsParentOf(not_child_name));
 }
 
 }  // namespace tests

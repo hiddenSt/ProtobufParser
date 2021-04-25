@@ -21,14 +21,14 @@ class MessageBuilder {
   void AddReservedNumber(std::size_t number);
   const std::string& GetName() const;
 
-  void SetUpFileName(const std::string& file_name);
-  const std::string& GetFileName();
+  void SetUpFilePath(const std::filesystem::path& file_path);
+  const std::filesystem::path& GetFilePath();
 
   Message& GetMessage();
 
  private:
   Message message_;
-  std::string file_name_;
+  std::filesystem::path file_path_;
 };
 
 }  // namespace builders

@@ -37,12 +37,12 @@ const std::string& MessageBuilder::GetName() const {
   return message_.GetName();
 }
 
-void MessageBuilder::SetUpFileName(const std::string& file_name) {
-  file_name_ = file_name;
+void MessageBuilder::SetUpFilePath(const std::filesystem::path& file_path) {
+  file_path_ = file_path;
 }
 
-const std::string& MessageBuilder::GetFileName() {
-  return file_name_;
+const std::filesystem::path& MessageBuilder::GetFilePath() {
+  return file_path_;
 }
 
 void MessageBuilder::SetUpFile(File* file) noexcept {
@@ -62,7 +62,7 @@ void MessageBuilder::SetUpFile(File* file) noexcept {
 }
 
 MessageBuilder::MessageBuilder(MessageBuilder&& other) noexcept
-    : message_(std::move(other.message_)), file_name_(std::move(other.file_name_)) {
+    : message_(std::move(other.message_)), file_path_(std::move(other.file_path_)) {
 }
 
 }  // namespace builders
