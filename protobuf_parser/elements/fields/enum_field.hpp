@@ -6,7 +6,6 @@
 namespace protobuf_parser {
 
 class EnumField : public Field {
-
 };
 
 }

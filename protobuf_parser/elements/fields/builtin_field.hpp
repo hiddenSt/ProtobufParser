@@ -7,7 +7,7 @@ namespace protobuf_parser {
 
 class Builtin : public Field {
  public:
-  explicit Builtin(const std::string& name, std::size_t number, bool optional, bool repeated, const std::string& type_name);
+  explicit Builtin(const std::string& type_name, const std::string& name, std::size_t number, bool optional, bool repeated);
   Builtin() = delete;
 
   bool IsBuiltinType() const noexcept override;

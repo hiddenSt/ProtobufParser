@@ -2,8 +2,7 @@
 
 namespace protobuf_parser {
 
-Builtin::Builtin(const std::string& name, std::size_t number, bool optional, bool repeated,
-                 const std::string& type_name)
+Builtin::Builtin(const std::string& type_name, const std::string& name, std::size_t number, bool optional, bool repeated)
     : Field(name, type_name, number, optional, repeated) {
 }
 

@@ -7,7 +7,7 @@ namespace protobuf_parser {
 
 class MessageField : public Field {
  public:
-  MessageField(const std::string& name, std::size_t number, bool optional, bool repeated, const std::string& type_name);
+  MessageField(const std::string& type_name, const std::string& name, std::size_t number, bool optional, bool repeated);
   MessageField() = delete;
 
   bool IsMessageType() const noexcept override;
