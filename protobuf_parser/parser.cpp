@@ -137,9 +137,37 @@ void Parser::AddMessageFields(builders::MessageBuilder* builder,
   for (std::size_t i = 0; i < descriptor->field_count(); ++i) {
     auto field_descriptor = descriptor->field(i);
     if (field_descriptor->is_map()) {
-
+      auto* map_field = new MapField(
+          field_descriptor->name(),
+          field_descriptor->number(),
+          field_descriptor->is_optional(),
+          "Key",
+          "Value");
+      builder->AddFiled(map_field);
+    } else if (field_descriptor->message_type() != nullptr) {
+      auto* message_field = new MessageField(
+          field_descriptor->message_type()->name(),
+          field_descriptor->name(),
+          field_descriptor->number(),
+          field_descriptor->is_optional(),
+          field_descriptor->is_repeated());
+      builder->AddFiled(message_field);
+    } else if (field_descriptor->enum_type() != nullptr) {
+      auto* enum_field = new EnumField(
+          field_descriptor->enum_type()->name(),
+          field_descriptor->name(),
+          field_descriptor->number(),
+          field_descriptor->is_optional(),
+          field_descriptor->is_repeated());
+      builder->AddFiled(enum_field);
     } else {
-
+      auto* builtin_field = new BuiltinField(
+          field_descriptor->type_name(),
+          field_descriptor->name(),
+          field_descriptor->number(),
+          field_descriptor->is_optional(),
+          field_descriptor->is_repeated());
+      builder->AddFiled(builtin_field);
     }
   }
 }

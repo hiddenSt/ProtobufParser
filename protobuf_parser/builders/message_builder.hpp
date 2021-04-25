@@ -16,7 +16,7 @@ class MessageBuilder {
   void SetUpParent(Message* parent) noexcept;
   void SetUpFile(File* file) noexcept;
   void AddNestedMessage(Message&& message);
-  void AddFiled(const Field& field);
+  void AddFiled(Field* field);
   void AddReservedName(const std::string& name);
   void AddReservedNumber(std::size_t number);
   const std::string& GetName() const;

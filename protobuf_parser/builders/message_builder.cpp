@@ -18,7 +18,7 @@ void MessageBuilder::AddNestedMessage(Message&& message) {
   message_.nested_messages_[message_.nested_messages_.size() - 1].parent_message_ = &message_;
 }
 
-void MessageBuilder::AddFiled(const Field& field) {
+void MessageBuilder::AddFiled(Field* field) {
   message_.fields_.push_back(field);
 }
 

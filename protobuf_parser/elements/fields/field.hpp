@@ -30,8 +30,6 @@ class Field : public Element {
   std::size_t number_;
   bool optional_;
   bool repeated_;
-  bool enum_;
-  bool map_;
 };
 
 }  // namespace protobuf_parser

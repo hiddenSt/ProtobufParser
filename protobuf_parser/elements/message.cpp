@@ -22,7 +22,7 @@ const Directory& Message::GetDirectory() const {
   return file_->GetDirectory();
 }
 
-const std::vector<Field>& Message::GetFields() const {
+const std::vector<Field*>& Message::GetFields() const {
   return fields_;
 }
 
