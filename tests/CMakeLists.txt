@@ -28,11 +28,7 @@ set(TESTS_SOURCES
   builders/storage_builder_tests.cpp
   builders/enum_builder_tests.cpp)
 
-set(UTIL_SOURCES
-  util/mock_multiple_error_collector.cpp
-  util/mock_multiple_error_collector.hpp)
-
-add_executable(run_protobuf_parser_tests "${TESTS_SOURCES}" "${UTIL_SOURCES}")
+add_executable(run_protobuf_parser_tests "${TESTS_SOURCES}")
 
 target_include_directories(run_protobuf_parser_tests
   PRIVATE

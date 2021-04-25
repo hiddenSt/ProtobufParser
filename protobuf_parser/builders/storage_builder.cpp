@@ -100,6 +100,14 @@ void StorageBuilder::BuildMessages() {
   }
 }
 
+void StorageBuilder::BuildEnums() {
+  for (auto& builder : enum_builders_) {
+    File* file = FindFile(builder->GetFilePath());
+    builder->SetUpFile(file);
+    storage_.enums_.emplace_back(std::move(builder->GetEnum()));
+  }
+}
+
 File* StorageBuilder::FindFile(const std::filesystem::path& file_path) {
   for (auto& file : storage_.files_) {
     if (file.GetPath() == file_path) {

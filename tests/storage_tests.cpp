@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include <tests/util/mock_multiple_error_collector.hpp>
 
 #include <filesystem>
 

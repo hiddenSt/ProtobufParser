@@ -1,5 +1,11 @@
 #include "parser.hpp"
 
+#include <protobuf_parser/elements/fields/message_field.hpp>
+#include <protobuf_parser/elements/fields/builtin_field.hpp>
+#include <protobuf_parser/elements/fields/map_field.hpp>
+#include <protobuf_parser/elements/fields/enum_field.hpp>
+#include <protobuf_parser/builders/enum_builder.hpp>
+
 namespace protobuf_parser {
 
 Parser::Parser(const std::filesystem::path& root_path) : root_path_(root_path) {
@@ -30,6 +36,7 @@ void Parser::Parse() {
   AddPackages();
   AddFiles();
   AddMessages();
+  AddEnums();
   storage_ = std::move(storage_builder_.GetStorage());
 }
 
@@ -70,10 +77,30 @@ void Parser::AddFiles() {
   }
 }
 
+void Parser::AddEnums() {
+  decltype(auto) pool = importer_->pool();
+  for (auto& file_path: files_path_) {
+    decltype(auto) file_descriptor = pool->FindFileByName(file_path.string());
+    for (std::size_t i = 0; i < file_descriptor->enum_type_count(); ++i) {
+      builders::EnumBuilder builder;
+      builder.SetUpName(file_descriptor->enum_type(i)->name());
+      builder.SetUpFilePath(file_path);
+      for (std::size_t j = 0; j < file_descriptor->enum_type(i)->value_count(); ++j) {
+        builder.AddValue(file_descriptor->enum_type(i)->value(j)->name(), file_descriptor->enum_type(i)->value(j)->index());
+      }
+      enum_builders_.push_back(builder);
+    }
+  }
+
+  for (auto& enum_builder : enum_builders_) {
+    storage_builder_.AddEnumBuilder(&enum_builder);
+  }
+}
+
 void Parser::AddMessages() {
   const google::protobuf::DescriptorPool* pool = importer_->pool();
-  for (auto& file_name : files_path_) {
-    auto* file_descriptor = pool->FindFileByName(file_name);
+  for (auto& file_path : files_path_) {
+    auto* file_descriptor = pool->FindFileByName(file_path.string());
     for (std::size_t i = 0; i < file_descriptor->message_type_count(); ++i) {
       builders::MessageBuilder builder;
       builder.SetUpName(file_descriptor->message_type(i)->name());
@@ -107,13 +134,14 @@ void Parser::AddNestedMessages(builders::MessageBuilder* builder,
 
 void Parser::AddMessageFields(builders::MessageBuilder* builder,
                               const google::protobuf::Descriptor* descriptor) {
-  /*for (std::size_t i = 0; i < descriptor->field_count(); ++i) {
+  for (std::size_t i = 0; i < descriptor->field_count(); ++i) {
     auto field_descriptor = descriptor->field(i);
-    builder->AddFiled(Field{field_descriptor->name(),
-                            static_cast<std::size_t>(field_descriptor->number()),
-                            field_descriptor->type_name(), field_descriptor->is_optional(),
-                            field_descriptor->is_repeated()});
-  }*/
+    if (field_descriptor->is_map()) {
+
+    } else {
+
+    }
+  }
 }
 
 void Parser::AddMessageReservedFieldsAndNumbers(builders::MessageBuilder* builder,

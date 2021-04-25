@@ -34,6 +34,7 @@ class Parser {
   void AddPackages();
   void AddFiles();
   void AddMessages();
+  void AddEnums();
   void AddNestedMessages(builders::MessageBuilder* builder,
                          const google::protobuf::Descriptor* descriptor);
   void AddMessageFields(builders::MessageBuilder* builder,
@@ -49,6 +50,7 @@ class Parser {
   std::vector<builders::MessageBuilder> messages_builders_;
   std::vector<builders::FileBuilder> files_builders_;
   std::vector<builders::DirectoryBuilder> directories_builders_;
+  std::vector<builders::EnumBuilder> enum_builders_;
   builders::StorageBuilder storage_builder_;
   std::set<std::filesystem::path> directories_path_;
   std::set<std::string> packages_names_;

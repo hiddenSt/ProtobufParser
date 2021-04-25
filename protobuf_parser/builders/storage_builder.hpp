@@ -12,6 +12,7 @@
 #include <protobuf_parser/builders/message_builder.hpp>
 #include <protobuf_parser/builders/directory_builder.hpp>
 #include <protobuf_parser/builders/package_builder.hpp>
+#include <protobuf_parser/builders/enum_builder.hpp>
 
 namespace protobuf_parser {
 namespace builders {
