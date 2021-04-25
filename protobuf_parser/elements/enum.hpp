@@ -10,6 +10,11 @@
 #include <protobuf_parser/elements/message.hpp>
 
 namespace protobuf_parser {
+namespace builders {
+
+class EnumBuilder;
+
+}
 
 class Enum : public Element {
  public:
@@ -20,8 +25,10 @@ class Enum : public Element {
   const File& GetFile() const;
   const std::string& GetName() const;
   const std::map<std::size_t, std::string>& GetValues() const;
-  
+
  private:
+  friend class builders::EnumBuilder;
+
   std::string name_;
   std::map<std::size_t, std::string> values_;
   std::vector<std::size_t> reserved_numbers_;

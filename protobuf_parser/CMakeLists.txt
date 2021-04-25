@@ -38,6 +38,7 @@ set(PROTOBUF_PARSER_CXX_SOURCES
   builders/directory_builder.cpp
   builders/package_builder.cpp
   builders/storage_builder.cpp
+  builders/enum_builder.cpp
   view/view.cpp
   parse_exception.cpp )
 
@@ -62,6 +63,7 @@ set(PROTOBUF_PARSER_HEADERS
   builders/directory_builder.hpp
   builders/package_builder.hpp
   builders/storage_builder.hpp
+  builders/enum_builder.hpp
   serializers/json_serializer.hpp
   view/view.hpp
   parse_exception.hpp)
