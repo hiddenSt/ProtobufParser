@@ -20,7 +20,7 @@ void EnumBuilder::AddValue(const std::string& name, std::size_t number) {
 }
 
 void EnumBuilder::SetUpFilePath(const std::filesystem::path& path) {
-  file_path_ = file_path_;
+  file_path_ = path;
 }
 
 void EnumBuilder::SetUpMessageName(const std::string& name) {
