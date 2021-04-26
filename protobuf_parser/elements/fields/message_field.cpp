@@ -10,5 +10,7 @@ MessageField::MessageField(const std::string& type_name, const std::string& name
 bool MessageField::IsMessageType() const noexcept {
   return true;
 }
+void MessageField::Serialize(serializers::Serializer& serializer) const {
+}
 
 }  // namespace protobuf_parser

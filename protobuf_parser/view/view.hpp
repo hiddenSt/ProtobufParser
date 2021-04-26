@@ -76,7 +76,7 @@ class View {
   Iterator crend();
 
  private:
-  void EmplaceElementChildren(const T* element, std::queue<const T*>& elements_queue);
+  void EmplaceChildElements(const T* element, std::queue<const T*>& elements_queue);
   void AddElementsMessages(const T* element);
   
   std::vector<const Message*> messages_;
@@ -96,10 +96,11 @@ View<T>::View(T* root, const Storage* storage) : root_(root), storage_(storage) 
   while (!elements_queue.empty()) {
     auto element = elements_queue.front();
     elements_queue.pop();
-    EmplaceElementChildren(element, elements_queue);
+    EmplaceChildElements(element, elements_queue);
     AddElementsMessages(element);
   }
 }
+
 
 }  // namespace view
 }  // namespace protobuf_parser

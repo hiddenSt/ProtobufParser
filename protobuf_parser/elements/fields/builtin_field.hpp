@@ -12,6 +12,8 @@ class BuiltinField : public Field {
   BuiltinField() = delete;
 
   bool IsBuiltinType() const noexcept override;
+
+  void Serialize(serializers::Serializer& serializer) const override;
 };
 
 }  // namespace protobuf_parser

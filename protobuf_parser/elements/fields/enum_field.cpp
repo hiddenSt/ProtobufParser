@@ -9,4 +9,7 @@ EnumField::EnumField(const std::string& type_name, const std::string& name, std:
 bool EnumField::IsEnumType() const noexcept {
   return true;
 }
+
+void EnumField::Serialize(serializers::Serializer& serializer) const {
+}
 }  // namespace protobuf_parser

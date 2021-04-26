@@ -12,6 +12,8 @@ class MessageField : public Field {
   MessageField() = delete;
 
   bool IsMessageType() const noexcept override;
+
+  void Serialize(serializers::Serializer& serializer) const override;
 };
 
 }  // namespace protobuf_parser

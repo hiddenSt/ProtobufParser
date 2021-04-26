@@ -17,7 +17,7 @@ Storage& Storage::operator=(Storage&& other) noexcept {
   return *this;
 }
 
-view::View<Directory> Storage::GetDirectoryView(std::filesystem::path& directory_path) {
+view::View<Directory> Storage::GetDirectoryView(const std::filesystem::path& directory_path) {
   Directory* root_dir = nullptr;
   for (auto& dir : directories_) {
     if (dir.GetPath() == directory_path) {
@@ -27,7 +27,7 @@ view::View<Directory> Storage::GetDirectoryView(std::filesystem::path& directory
   return view::View<Directory>(root_dir, this);
 }
 
-view::View<Package> Storage::GetPackageView(std::string& package_name) {
+view::View<Package> Storage::GetPackageView(const std::string& package_name) {
   Package* root_package = nullptr;
   for (auto& package : packages_) {
     if (package.GetName() == package_name) {

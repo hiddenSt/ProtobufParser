@@ -19,4 +19,7 @@ const std::string& MapField::GetValueTypeName() const {
   return value_type_;
 }
 
+void MapField::Serialize(serializers::Serializer& serializer) const {
+}
+
 }  // namespace protobuf_parser

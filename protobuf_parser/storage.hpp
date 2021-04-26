@@ -32,8 +32,8 @@ class Storage {
   Storage(const Storage&) = delete;
   Storage& operator=(const Storage&) = delete;
 
-  view::View<Directory> GetDirectoryView(std::filesystem::path& directory_path);
-  view::View<Package> GetPackageView(std::string& package_name);
+  view::View<Directory> GetDirectoryView(const std::filesystem::path& directory_path);
+  view::View<Package> GetPackageView(const std::string& package_name);
 
  private:
   friend class builders::StorageBuilder;

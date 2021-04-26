@@ -15,6 +15,8 @@ class MapField : public Field {
   const std::string& GetKeyTypeName() const;
   const std::string& GetValueTypeName() const;
 
+  void Serialize(serializers::Serializer& serializer) const override;
+
  private:
   std::string key_type_;
   std::string value_type_;

@@ -24,7 +24,7 @@ class Field : public Element {
   virtual bool IsBuiltinType() const noexcept;
   virtual bool IsMessageType() const noexcept;
 
- private:
+ protected:
   std::string type_name_;
   std::string name_;
   std::size_t number_;

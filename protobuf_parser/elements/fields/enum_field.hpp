@@ -11,6 +11,8 @@ class EnumField : public Field {
             bool optional, bool repeated);
 
   bool IsEnumType() const noexcept override;
+
+  void Serialize(serializers::Serializer& serializer) const override;
 };
 
 }  // namespace protobuf_parser

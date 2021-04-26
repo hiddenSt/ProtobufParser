@@ -11,4 +11,7 @@ bool BuiltinField::IsBuiltinType() const noexcept {
   return true;
 }
 
+void BuiltinField::Serialize(serializers::Serializer& serializer) const {
+}
+
 }  // namespace protobuf_parser
