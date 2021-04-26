@@ -33,6 +33,9 @@ template <typename View>
 std::string JsonSerializer<View>::Serialize() {
   for (auto& message : view_) {
     message.Serialize(*this);
+    for (auto& nested_message: message.GetNestedMessages()) {
+      nested_message.Serialize(*this);
+    }
   }
   return json_representation_.dump(4);
 }

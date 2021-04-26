@@ -20,6 +20,12 @@ const std::string& MapField::GetValueTypeName() const {
 }
 
 void MapField::Serialize(serializers::Serializer& serializer) const {
+  serializer.AddField("type_name", this->GetType());
+  serializer.AddField("key_type", key_type_);
+  serializer.AddField("value_type", value_type_);
+  serializer.AddField("name", this->GetName());
+  serializer.AddField("number", std::to_string(this->GetNumber()));
+  serializer.AddField("is_optional", std::to_string(this->IsOptional()));
 }
 
 }  // namespace protobuf_parser
