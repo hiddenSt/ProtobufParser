@@ -2,7 +2,7 @@
 
 namespace protobuf_parser {
 
-Directory::Directory() : parent_directory_(nullptr {
+Directory::Directory() : parent_directory_(nullptr) {
 }
 
 

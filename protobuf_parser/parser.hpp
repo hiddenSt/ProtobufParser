@@ -30,6 +30,7 @@ class Parser {
  private:
   using ProtobufImporter = google::protobuf::compiler::Importer;
 
+  void ParseFromImporter();
   void AddDirectories();
   void AddPackages();
   void AddFiles();

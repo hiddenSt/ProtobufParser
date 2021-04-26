@@ -27,7 +27,8 @@ TEST(ParserTests, CanGetStorage) {
 
 TEST(ParserTests, ThrowsExceptionIfGivenProtoFileHasSyntaxErrors) {
   std::filesystem::path protos_path{"../../tests/protos_with_errors"};
-  ASSERT_THROW(protobuf_parser::Parser parser{protos_path}, protobuf_parser::ParseException);
+  protobuf_parser::Parser parser{protos_path};
+  ASSERT_THROW(parser.Parse(), protobuf_parser::ParseException);
 }
 
 }  // namespace tests

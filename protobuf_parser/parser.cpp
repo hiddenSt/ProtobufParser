@@ -14,6 +14,23 @@ Parser::Parser(const std::filesystem::path& root_path) : root_path_(root_path) {
   // (https://developers.google.com/protocol-buffers/docs/reference/cpp/google.protobuf.compiler.importer#DiskSourceTree.MapPath.details)
   disk_source_tree_.MapPath(std::string{}, root_path_.string());
   importer_ = std::make_unique<ProtobufImporter>(&disk_source_tree_, &error_collector_);
+}
+
+Storage& Parser::GetStorage() {
+  return storage_;
+}
+
+void Parser::Parse() {
+  ParseFromImporter();
+  AddDirectories();
+  AddPackages();
+  AddFiles();
+  AddMessages();
+  AddEnums();
+  storage_ = std::move(storage_builder_.GetStorage());
+}
+
+void Parser::ParseFromImporter() {
   std::filesystem::recursive_directory_iterator recursive_directory_iterator{root_path_};
 
   for (auto& dir_entry : recursive_directory_iterator) {
@@ -25,19 +42,6 @@ Parser::Parser(const std::filesystem::path& root_path) : root_path_(root_path) {
       files_path_.insert(current_path);
     }
   }
-}
-
-Storage& Parser::GetStorage() {
-  return storage_;
-}
-
-void Parser::Parse() {
-  AddDirectories();
-  AddPackages();
-  AddFiles();
-  AddMessages();
-  AddEnums();
-  storage_ = std::move(storage_builder_.GetStorage());
 }
 
 void Parser::AddDirectories() {

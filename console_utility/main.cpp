@@ -5,6 +5,7 @@
 #include <argparse/argparse.hpp>
 #include <protobuf_parser/parser.hpp>
 #include <protobuf_parser/serializers/json_serializer.hpp>
+#include <protobuf_parser/parse_exception.hpp>
 
 int main(int argc, char* argv[]) {
   argparse::ArgumentParser program{"protobuf_parser", "1.0"};
@@ -28,18 +29,22 @@ int main(int argc, char* argv[]) {
   std::filesystem::path root_path{program.get<std::string>("source_directory")};
 
   protobuf_parser::Parser parser(root_path);
-  parser.Parse();
+  try {
+    parser.Parse();
+  } catch (const protobuf_parser::ParseException& parse_exception) {
+    std::cerr << parse_exception.what() << "\n";
+  }
   auto storage = std::move(parser.GetStorage());
 
   auto parse_source = program.get<std::string>("parse_source");
   if (program["--package"] == true) {
     auto view = storage.GetPackageView(parse_source);
     protobuf_parser::serializers::JsonSerializer serializer{view};
-    std::cout << serializer.Serialize();
+    std::cout << serializer.Serialize() << "\n";
   } else {
     auto view = storage.GetDirectoryView(parse_source);
     protobuf_parser::serializers::JsonSerializer serializer{view};
-    std::cout << serializer.Serialize();
+    std::cout << serializer.Serialize() << "\n";
   }
   return 0;
 }
