@@ -10,4 +10,8 @@ const std::size_t Element::GetId() const noexcept {
   return id_;
 }
 
+Element::Element(Element&& other) noexcept  : id_(other.id_) {
+  other.id_ = -1;
+}
+
 }  // namespace protobuf_parser

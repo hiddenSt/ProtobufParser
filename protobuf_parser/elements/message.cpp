@@ -39,7 +39,8 @@ const std::vector<std::size_t>& Message::GetReservedNumbers() const {
 }
 
 Message::Message(Message&& other) noexcept
-    : name_(std::move(other.name_)),
+    : Element(std::move(other)),
+      name_(std::move(other.name_)),
       parent_message_(other.parent_message_),
       nested_messages_(std::move(other.nested_messages_)),
       file_(other.file_),

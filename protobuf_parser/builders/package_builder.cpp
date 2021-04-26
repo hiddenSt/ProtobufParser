@@ -19,16 +19,16 @@ const std::string& PackageBuilder::GetName() const {
   return package_.GetName();
 }
 
-bool PackageBuilder::IsParentOf(const std::string& package_name) {
-  if (package_name.find(package_.GetName() + ".") == 0) {
+bool PackageBuilder::IsChildOf(const std::string& package_name) {
+  if (package_.name_.find(package_name + ".") == 0) {
     std::size_t i = 0;
-    while (package_.GetName()[i] == package_name[i]) {
+    while (package_.name_[i] == package_name[i]) {
       ++i;
     }
     ++i;
-    while (i < package_name.size()) {
-      if (package_name[i] == '.') {
-        false;
+    while (i < package_.name_.size()) {
+      if (package_.name_[i] == '.') {
+        return false;
       }
       ++i;
     }
@@ -39,6 +39,11 @@ bool PackageBuilder::IsParentOf(const std::string& package_name) {
 
 PackageBuilder::PackageBuilder(PackageBuilder&& other) noexcept
     : package_(std::move(other.package_)) {
+}
+
+PackageBuilder& PackageBuilder::operator=(PackageBuilder&& other) noexcept {
+  package_ = std::move(other.package_);
+  return *this;
 }
 
 }  // namespace builders

@@ -21,7 +21,10 @@ const Package& File::GetPackage() const {
 }
 
 File::File(File&& other) noexcept
-    : path_(std::move(other.path_)), directory_(other.directory_), package_(other.package_) {
+    : Element(std::move(other)),
+      path_(std::move(other.path_)),
+      directory_(other.directory_),
+      package_(other.package_) {
   other.directory_ = nullptr;
   other.package_ = nullptr;
 }

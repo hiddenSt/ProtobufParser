@@ -88,24 +88,25 @@ TEST(PackageBuilderTests, MethodGetParentReturnsCorrectParent) {
   ASSERT_EQ(&child_package.GetParentPackage(), &parent_package);
 }
 
-TEST(PackageBuilderTests, MethodIsParentReturnsTrueIfArgumentIsChildPackageName) {
+TEST(PackageBuilderTests, MethodIsChildOfReturnsTrueIfArgumentIsParebtPackageName) {
   std::string parent_name{"parent_name"};
   std::string child_name{"parent_name.child_name"};
 
-  protobuf_parser::builders::PackageBuilder parent_builder{};
-  parent_builder.SetUpName(parent_name);
+  protobuf_parser::builders::PackageBuilder child_builder{};
+  child_builder.SetUpName(child_name);
 
-  ASSERT_TRUE(parent_builder.IsParentOf(child_name));
+  ASSERT_TRUE(child_builder.IsChildOf(parent_name));
 }
 
 TEST(PackageBuilderTests, MethodIsParentReturnsFalseIfArgumentIsNotChildPackageName) {
   std::string parent_name{"parent_name"};
-  std::string not_child_name{"not_child_name"};
+  std::string child_name{"parent_name.cool_name.child_name"};
 
-  protobuf_parser::builders::PackageBuilder parent_builder{};
-  parent_builder.SetUpName(parent_name);
+  protobuf_parser::builders::PackageBuilder child_builder{};
+  child_builder.SetUpName(child_name);
 
-  ASSERT_FALSE(parent_builder.IsParentOf(not_child_name));
+
+  ASSERT_FALSE(child_builder.IsChildOf(parent_name));
 }
 
 }  // namespace tests

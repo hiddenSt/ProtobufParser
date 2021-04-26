@@ -78,6 +78,7 @@ class View {
  private:
   void EmplaceElementChildren(const T* element, std::queue<const T*>& elements_queue);
   void AddElementsMessages(const T* element);
+  
   std::vector<const Message*> messages_;
   std::vector<const Package*> packages_;
   std::vector<const File*> files_;

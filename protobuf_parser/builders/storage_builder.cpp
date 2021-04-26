@@ -35,7 +35,7 @@ Storage& StorageBuilder::GetStorage() {
 void StorageBuilder::BuildDirectories() {
   std::sort(directory_builders_.begin(), directory_builders_.end(),
             [](const DirectoryBuilder* a, const DirectoryBuilder* b) {
-              return a->GetPath() > b->GetPath();
+              return a->GetPath() < b->GetPath();
             });
 
   for (auto& builder : directory_builders_) {
@@ -48,7 +48,7 @@ void StorageBuilder::BuildDirectories() {
 void StorageBuilder::BuildPackages() {
   std::sort(
       package_builders_.begin(), package_builders_.end(),
-      [](const PackageBuilder* a, const PackageBuilder* b) { return a->GetName() > b->GetName(); });
+      [](const PackageBuilder* a, const PackageBuilder* b) { return a->GetName() < b->GetName(); });
 
   for (auto& builder : package_builders_) {
     Package* parent = FindParentForPackage(builder);
@@ -59,7 +59,7 @@ void StorageBuilder::BuildPackages() {
 
 Package* StorageBuilder::FindParentForPackage(PackageBuilder* builder) {
   for (auto& package : storage_.packages_) {
-    if (builder->IsParentOf(package.GetName())) {
+    if (builder->IsChildOf(package.GetName())) {
       return &package;
     }
   }

@@ -8,11 +8,12 @@ namespace protobuf_parser {
 class Element {
  public:
   Element();
+  Element(Element&& other) noexcept;
 
   const std::size_t GetId() const noexcept;
 
  private:
-  const std::size_t id_;
+  std::size_t id_;
   static std::size_t elements_count_;
 };
 

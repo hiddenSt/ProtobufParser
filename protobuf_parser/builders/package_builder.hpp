@@ -12,6 +12,7 @@ class PackageBuilder {
  public:
   PackageBuilder() = default;
   PackageBuilder(PackageBuilder&& other) noexcept;
+  PackageBuilder& operator=(PackageBuilder&& other) noexcept;
 
   // Non-copyable
   PackageBuilder(const PackageBuilder&) = delete;
@@ -20,7 +21,7 @@ class PackageBuilder {
   void SetUpName(const std::string& name) noexcept;
   void SetUpParent(Package* parent) noexcept;
   const std::string& GetName() const;
-  bool IsParentOf(const std::string& package_name);
+  bool IsChildOf(const std::string& package_name);
   Package& GetPackage();
 
  private:

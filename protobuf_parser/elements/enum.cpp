@@ -23,7 +23,8 @@ const std::map<std::size_t, std::string>& Enum::GetValues() const {
 }
 
 Enum::Enum(Enum&& other) noexcept
-    : name_(std::move(other.name_)),
+    : Element(std::move(other)),
+      name_(std::move(other.name_)),
       values_(std::move(other.values_)),
       reserved_numbers_(std::move(other.reserved_numbers_)),
       file_(other.file_),
