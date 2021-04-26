@@ -17,8 +17,8 @@ class JsonSerializer : public Serializer {
   JsonSerializer(const View& view);
 
   void AddField(const std::string& name, const std::string& value) override;
-  void AddArray(const std::vector<std::pair<std::string, std::string>>& entries) override;
-  std::string Serialize() const;
+  void AddArray(const std::string& array_field_name, const std::vector<std::pair<std::string, std::string>>& entries) override;
+  std::string Serialize();
 
  private:
   nlohmann::json json_representation_;
@@ -30,15 +30,22 @@ void JsonSerializer<View>::AddField(const std::string& name, const std::string& 
 }
 
 template <typename View>
-std::string JsonSerializer<View>::Serialize() const {
-  for (Message& message : view_) {
-    message.Serialize(this);
+std::string JsonSerializer<View>::Serialize() {
+  for (auto& message : view_) {
+    message.Serialize(*this);
   }
-  return json_representation_;
+  return json_representation_.dump(4);
 }
 
 template <typename View>
 JsonSerializer<View>::JsonSerializer(const View& view) : view_(view) {
+}
+
+template <typename View>
+void JsonSerializer<View>::AddArray(
+    const std::string& array_field_name,
+    const std::vector<std::pair<std::string, std::string>>& entries) {
+
 }
 
 }  // namespace serializers

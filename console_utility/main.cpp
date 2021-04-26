@@ -26,23 +26,20 @@ int main(int argc, char* argv[]) {
   }
 
   std::filesystem::path root_path{program.get<std::string>("source_directory")};
-  protobuf_parser::Parser<protobuf_parser::serializer::JsonSerializer> parser(root_path);
+
+  protobuf_parser::Parser parser(root_path);
+  parser.Parse();
+  auto storage = std::move(parser.GetStorage());
+
   auto parse_source = program.get<std::string>("parse_source");
   if (program["--package"] == true) {
-    try {
-      std::cout << parser.SerializePackage(parse_source) << std::endl;
-    } catch (std::runtime_error& error) {
-      std::cerr << error.what() << std::endl;
-      return 1;
-    }
+    auto view = storage.GetPackageView(parse_source);
+    protobuf_parser::serializers::JsonSerializer serializer{view};
+    std::cout << serializer.Serialize();
   } else {
-    std::filesystem::path directory_path{parse_source};
-    try {
-      std::cout << parser.SerializeDirectory(directory_path) << std::endl;
-    } catch (std::runtime_error& error) {
-      std::cerr << error.what() << std::endl;
-      return 1;
-    }
+    auto view = storage.GetDirectoryView(parse_source);
+    protobuf_parser::serializers::JsonSerializer serializer{view};
+    std::cout << serializer.Serialize();
   }
   return 0;
 }
