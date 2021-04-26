@@ -79,14 +79,15 @@ void Parser::AddFiles() {
 
 void Parser::AddEnums() {
   decltype(auto) pool = importer_->pool();
-  for (auto& file_path: files_path_) {
+  for (auto& file_path : files_path_) {
     decltype(auto) file_descriptor = pool->FindFileByName(file_path.string());
     for (std::size_t i = 0; i < file_descriptor->enum_type_count(); ++i) {
       builders::EnumBuilder builder;
       builder.SetUpName(file_descriptor->enum_type(i)->name());
       builder.SetUpFilePath(file_path);
       for (std::size_t j = 0; j < file_descriptor->enum_type(i)->value_count(); ++j) {
-        builder.AddValue(file_descriptor->enum_type(i)->value(j)->name(), file_descriptor->enum_type(i)->value(j)->index());
+        builder.AddValue(file_descriptor->enum_type(i)->value(j)->name(),
+                         file_descriptor->enum_type(i)->value(j)->index());
       }
       enum_builders_.push_back(std::move(builder));
     }
@@ -137,36 +138,25 @@ void Parser::AddMessageFields(builders::MessageBuilder* builder,
   for (std::size_t i = 0; i < descriptor->field_count(); ++i) {
     auto field_descriptor = descriptor->field(i);
     if (field_descriptor->is_map()) {
-      auto* map_field = new MapField(
-          field_descriptor->name(),
-          field_descriptor->number(),
-          field_descriptor->is_optional(),
-          "Key",
-          "Value");
+      auto* map_field = new MapField(field_descriptor->name(), field_descriptor->number(),
+                                     field_descriptor->is_optional(), "Key", "Value");
       builder->AddFiled(map_field);
     } else if (field_descriptor->message_type() != nullptr) {
-      auto* message_field = new MessageField(
-          field_descriptor->message_type()->name(),
-          field_descriptor->name(),
-          field_descriptor->number(),
-          field_descriptor->is_optional(),
-          field_descriptor->is_repeated());
+      auto* message_field =
+          new MessageField(field_descriptor->message_type()->name(), field_descriptor->name(),
+                           field_descriptor->number(), field_descriptor->is_optional(),
+                           field_descriptor->is_repeated());
       builder->AddFiled(message_field);
     } else if (field_descriptor->enum_type() != nullptr) {
-      auto* enum_field = new EnumField(
-          field_descriptor->enum_type()->name(),
-          field_descriptor->name(),
-          field_descriptor->number(),
-          field_descriptor->is_optional(),
-          field_descriptor->is_repeated());
+      auto* enum_field =
+          new EnumField(field_descriptor->enum_type()->name(), field_descriptor->name(),
+                        field_descriptor->number(), field_descriptor->is_optional(),
+                        field_descriptor->is_repeated());
       builder->AddFiled(enum_field);
     } else {
       auto* builtin_field = new BuiltinField(
-          field_descriptor->type_name(),
-          field_descriptor->name(),
-          field_descriptor->number(),
-          field_descriptor->is_optional(),
-          field_descriptor->is_repeated());
+          field_descriptor->type_name(), field_descriptor->name(), field_descriptor->number(),
+          field_descriptor->is_optional(), field_descriptor->is_repeated());
       builder->AddFiled(builtin_field);
     }
   }

@@ -6,9 +6,12 @@
 #include <iterator>
 
 #include <protobuf_parser/elements/message.hpp>
-#include <protobuf_parser/storage.hpp>
+#include <protobuf_parser/elements/enum.hpp>
 
 namespace protobuf_parser {
+
+class Storage;
+
 namespace view {
 
 template <typename T>
@@ -76,12 +79,16 @@ class View {
   void EmplaceElementChildren(const T* element, std::queue<const T*>& elements_queue);
   void AddElementsMessages(const T* element);
   std::vector<const Message*> messages_;
+  std::vector<const Package*> packages_;
+  std::vector<const File*> files_;
+  std::vector<const Enum*> enums_;
+  std::vector<const Directory*> directories_;
   T* root_;
   const Storage* storage_;
 };
 
 template <typename T>
-View<T>::View(T* root, const Storage* storage) : storage_(storage) {
+View<T>::View(T* root, const Storage* storage) : root_(root), storage_(storage) {
   std::queue<const T*> elements_queue;
   elements_queue.emplace(root);
 

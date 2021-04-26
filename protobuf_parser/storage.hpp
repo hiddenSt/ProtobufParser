@@ -13,27 +13,27 @@
 #include <protobuf_parser/elements/package.hpp>
 #include <protobuf_parser/elements/file.hpp>
 #include <protobuf_parser/elements/enum.hpp>
+#include <protobuf_parser/view/view.hpp>
 
 namespace protobuf_parser {
 namespace builders {
 class StorageBuilder;
 }
 
-namespace view {
-template <typename T>
-class View;
-}
-
 class Storage {
  public:
   Storage() = default;
   ~Storage() = default;
+
   Storage(Storage&& other) noexcept;
   Storage& operator=(Storage&& other) noexcept;
 
   // Non-copyable
   Storage(const Storage&) = delete;
   Storage& operator=(const Storage&) = delete;
+
+  view::View<Directory> GetDirectoryView(std::filesystem::path& directory_path);
+  view::View<Package> GetPackageView(std::string& package_name);
 
  private:
   friend class builders::StorageBuilder;
