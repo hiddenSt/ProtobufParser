@@ -4,24 +4,46 @@
 
 #include <protobuf_parser/storage.hpp>
 
-#include <google/protobuf/compiler/importer.h>
 #include <protobuf_parser/parser.hpp>
 
 namespace tests {
 
-TEST(StorageTests, CanCreateStorage) {
+class StorageTests : public ::testing::Test {
+ protected:
+  StorageTests() :  parser_(std::filesystem::path("../../tests/protos")) {
+  }
 
+  void SetUp() override {
+    parser_.Parse();
+    storage_ = new protobuf_parser::Storage{std::move(parser_.GetStorage())};
+  }
+
+  void TearDown() override {
+    delete storage_;
+  }
+
+  protobuf_parser::Storage* storage_;
+  protobuf_parser::Parser parser_;
+};
+
+TEST_F(StorageTests, CanGetPackageView) {
+  ASSERT_NO_THROW(storage_->GetPackageView("test_package"));
 }
 
-TEST(StorageTests, CanGetPackageView) {
-  std::filesystem::path protos_path{"../../tests/protos"};
-  protobuf_parser::Parser parser{protos_path};
-  parser.Parse();
-  auto storage = std::move(parser.GetStorage());
-  ASSERT_NO_THROW(storage.GetPackageView("test_package"));
+TEST_F(StorageTests, CanGetDirectoryView) {
+  std::filesystem::path dir_path{"."};
+  storage_->GetDirectoryView(dir_path);
+  ASSERT_NO_THROW(storage_->GetDirectoryView("."));
 }
 
-TEST(StorageTests, CanGetDirectoryView) {
+TEST_F(StorageTests, MethodGetDirectroyViewThrowsExceptionIfGivenDirectoryPathIsInvalid) {
+  std::filesystem::path incorrect_path{"this/path/does/not/exist"};
+  ASSERT_THROW(storage_->GetDirectoryView(incorrect_path), std::runtime_error);
+}
+
+TEST_F(StorageTests, MethodGetPackageViewThrowsExceptionIfGivenPackageNameDoesNotExist) {
+  std::string package_name{"invalid_package_name"};
+  ASSERT_THROW(storage_->GetPackageView(package_name), std::runtime_error);
 }
 
 }  // namespace tests

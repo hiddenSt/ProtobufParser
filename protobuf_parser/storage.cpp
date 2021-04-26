@@ -25,7 +25,7 @@ view::View<Directory> Storage::GetDirectoryView(const std::filesystem::path& dir
     }
   }
   if (root_dir == nullptr) {
-    throw std::runtime_error{"No such directory"};
+    throw std::runtime_error{"No such directory."};
   }
   return view::View<Directory>(root_dir, this);
 }
@@ -36,6 +36,9 @@ view::View<Package> Storage::GetPackageView(const std::string& package_name) {
     if (package.GetName() == package_name) {
       root_package = &package;
     }
+  }
+  if (root_package == nullptr) {
+    throw std::runtime_error{"Given package does not exist."};
   }
   return view::View<Package>(root_package, this);
 }

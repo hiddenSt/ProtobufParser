@@ -11,6 +11,9 @@ const Directory& Directory::GetParentDirectory() const {
 }
 
 bool Directory::Contains(const std::filesystem::path& file_path) const {
+  if (path_.parent_path().empty() && file_path.parent_path().empty()) {
+    return true;
+  }
   return file_path.parent_path() == path_;
 }
 Directory::Directory(Directory&& directory)
