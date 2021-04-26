@@ -18,7 +18,6 @@ TEST(StorageTests, CanGetPackageView) {
   protobuf_parser::Parser parser{protos_path};
   parser.Parse();
   auto storage = std::move(parser.GetStorage());
-  auto view = storage.GetPackageView("test_package");
   ASSERT_NO_THROW(storage.GetPackageView("test_package"));
 }
 

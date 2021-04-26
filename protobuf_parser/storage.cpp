@@ -24,6 +24,9 @@ view::View<Directory> Storage::GetDirectoryView(const std::filesystem::path& dir
       root_dir = &dir;
     }
   }
+  if (root_dir == nullptr) {
+    throw std::runtime_error{"No such directory"};
+  }
   return view::View<Directory>(root_dir, this);
 }
 

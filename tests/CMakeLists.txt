@@ -26,7 +26,7 @@ set(TESTS_SOURCES
   builders/directory_builder_tests.cpp
   builders/file_builder_tests.cpp
   builders/storage_builder_tests.cpp
-  builders/enum_builder_tests.cpp)
+  builders/enum_builder_tests.cpp view_tests.cpp)
 
 add_executable(run_protobuf_parser_tests "${TESTS_SOURCES}")
 
