@@ -2,6 +2,10 @@
 
 namespace protobuf_parser {
 
+Directory::Directory() : parent_directory_(nullptr {
+}
+
+
 const std::filesystem::path& Directory::GetPath() const {
   return path_;
 }

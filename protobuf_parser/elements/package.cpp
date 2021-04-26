@@ -2,6 +2,10 @@
 
 namespace protobuf_parser {
 
+Package::Package() : parent_package_(nullptr) {
+}
+
+
 const Package& Package::GetParentPackage() const noexcept {
   return *parent_package_;
 }
@@ -37,5 +41,4 @@ void Package::Serialize(serializers::Serializer& serializer) const {
     serializer.AddField("parent_package_id", std::to_string(parent_package_->GetId()));
   }
 }
-
 }  // namespace protobuf_parser

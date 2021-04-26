@@ -2,6 +2,9 @@
 
 namespace protobuf_parser {
 
+Enum::Enum() : file_(nullptr), parent_message_(nullptr) {
+}
+
 bool Enum::HasParentMessage() const noexcept {
   return parent_message_ != nullptr;
 }

@@ -18,7 +18,7 @@ class EnumBuilder;
 
 class Enum : public Element {
  public:
-  Enum() = default;
+  Enum();
   Enum(Enum&& other) noexcept;
 
   Enum& operator=(Enum&& other) noexcept;

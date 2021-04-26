@@ -13,7 +13,7 @@ class DirectoryBuilder;
 
 class Directory : public Element {
  public:
-  Directory() = default;
+  Directory();
   Directory(Directory&& directory);
   ~Directory() = default;
 

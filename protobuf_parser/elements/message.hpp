@@ -17,7 +17,7 @@ class MessageBuilder;
 
 class Message : public Element {
  public:
-  Message() = default;
+  Message();
   ~Message() = default;
 
   Message(Message&& other) noexcept;

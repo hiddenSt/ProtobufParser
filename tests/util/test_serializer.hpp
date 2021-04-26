@@ -13,7 +13,7 @@ class TestSerializer : public protobuf_parser::serializers::Serializer {
     this->field_value = field_value;
   }
 
-  void AddArray(const std::vector<std::pair<std::string, std::string>>& entries) override {
+  void AddArray(const std::string& name, const std::vector<std::pair<std::string, std::string>>& entries) override {
 
   }
 

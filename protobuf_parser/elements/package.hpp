@@ -12,7 +12,7 @@ class PackageBuilder;
 
 class Package : public Element {
  public:
-  Package() = default;
+  Package();
   ~Package() = default;
 
   Package(Package&& other) noexcept;

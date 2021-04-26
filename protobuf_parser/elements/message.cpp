@@ -2,6 +2,9 @@
 
 namespace protobuf_parser {
 
+Message::Message() : parent_message_(nullptr), file_(nullptr) {
+}
+
 const Package& Message::GetPackage() const noexcept {
   return file_->GetPackage();
 }

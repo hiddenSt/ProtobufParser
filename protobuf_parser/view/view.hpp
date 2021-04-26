@@ -35,6 +35,7 @@ class View {
 
     Iterator& operator++() {
       ++iterator_;
+      return *this;
     }
 
     Iterator& operator++(int) {

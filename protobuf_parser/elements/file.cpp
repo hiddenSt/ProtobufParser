@@ -4,6 +4,9 @@
 
 namespace protobuf_parser {
 
+File::File() : directory_(nullptr), package_(nullptr) {
+}
+
 const std::string File::GetName() const noexcept {
   return path_.filename().string();
 }

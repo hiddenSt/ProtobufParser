@@ -14,7 +14,7 @@ class FileBuilder;
 
 class File : public Element {
  public:
-  File() = default;
+  File();
   ~File() = default;
 
   // Movable
