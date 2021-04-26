@@ -53,7 +53,8 @@ void StorageBuilder::BuildPackages() {
   for (auto& builder : package_builders_) {
     Package* parent = FindParentForPackage(builder);
     builder->SetUpParent(parent);
-    storage_.packages_.emplace_back(std::move(builder->GetPackage()));
+    auto package = std::move(builder->GetPackage());
+    storage_.packages_.emplace_back(std::move(package));
   }
 }
 

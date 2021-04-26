@@ -31,4 +31,11 @@ Package& Package::operator=(Package&& other) noexcept {
   return *this;
 }
 
+void Package::Serialize(serializers::Serializer& serializer) const {
+  serializer.AddField("name", name_);
+  if (parent_package_ != nullptr) {
+    serializer.AddField("parent_package_id", std::to_string(parent_package_->GetId()));
+  }
+}
+
 }  // namespace protobuf_parser

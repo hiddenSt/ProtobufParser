@@ -2,6 +2,7 @@
 #define PROTOBUF_PARSER_PROTOBUF_PARSER_ELEMENT_HPP_
 
 #include <cstdint>
+#include <protobuf_parser/serializers/serializer.hpp>
 
 namespace protobuf_parser {
 
@@ -11,6 +12,7 @@ class Element {
   Element(Element&& other) noexcept;
 
   const std::size_t GetId() const noexcept;
+  virtual void Serialize(serializers::Serializer& serializer) const = 0;
 
  private:
   std::size_t id_;

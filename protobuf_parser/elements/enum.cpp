@@ -44,4 +44,12 @@ Enum& Enum::operator=(Enum&& other) noexcept {
   return *this;
 }
 
+void Enum::Serialize(serializers::Serializer& serializer) const {
+  serializer.AddField("name", name_);
+  serializer.AddField("file_id", std::to_string(file_->GetId()));
+  if (parent_message_ != nullptr) {
+    serializer.AddField("message_id", std::to_string(parent_message_->GetId()));
+  }
+}
+
 }  // namespace protobuf_parser

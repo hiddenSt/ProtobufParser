@@ -30,6 +30,8 @@ class File : public Element {
   const Directory& GetDirectory() const;
   const Package& GetPackage() const;
 
+  void Serialize(serializers::Serializer& serializer) const override;
+
  private:
   friend class builders::FileBuilder;
 

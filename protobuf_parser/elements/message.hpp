@@ -36,6 +36,8 @@ class Message : public Element {
   const std::vector<std::string>& GetReservedNames() const;
   const std::vector<std::size_t>& GetReservedNumbers() const;
 
+  void Serialize(serializers::Serializer& serializer) const override;
+
  private:
   friend class builders::MessageBuilder;
 

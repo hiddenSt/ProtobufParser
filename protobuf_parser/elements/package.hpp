@@ -22,6 +22,8 @@ class Package : public Element {
   const Package& GetParentPackage() const noexcept;
   const std::string& GetName() const;
 
+  void Serialize(serializers::Serializer& serializer) const override;
+
  private:
   friend class builders::PackageBuilder;
 

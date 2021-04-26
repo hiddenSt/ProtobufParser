@@ -38,4 +38,12 @@ File& File::operator=(File&& other) noexcept {
   return *this;
 }
 
+void File::Serialize(serializers::Serializer& serializer) const {
+  serializer.AddField("path", path_.string());
+  serializer.AddField("parent_dir_id", std::to_string(directory_->GetId()));
+  if (package_ != nullptr) {
+    serializer.AddField("package_id", std::to_string(package_->GetId()));
+  }
+}
+
 }  // namespace protobuf_parser

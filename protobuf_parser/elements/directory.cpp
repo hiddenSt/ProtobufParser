@@ -34,4 +34,11 @@ Directory& Directory::operator=(Directory&& other) {
   return *this;
 }
 
+void Directory::Serialize(serializers::Serializer& serializer) const {
+  serializer.AddField("path", path_.string());
+  if (parent_directory_ != nullptr) {
+    serializer.AddField("parent_dir_id", std::to_string(parent_directory_->GetId()));
+  }
+}
+
 }  // namespace protobuf_parser

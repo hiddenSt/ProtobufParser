@@ -33,6 +33,8 @@ class Enum : public Element {
   const std::string& GetName() const;
   const std::map<std::size_t, std::string>& GetValues() const;
 
+  void Serialize(serializers::Serializer& serializer) const override;
+
  private:
   friend class builders::EnumBuilder;
 
