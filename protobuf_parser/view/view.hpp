@@ -19,66 +19,114 @@ class View {
  public:
   class Iterator {
    public:
-    using value_type = Message;
-    using iterator_category = std::forward_iterator_tag;
+    using value_type = const Message;
+    using iterator_category = std::bidirectional_iterator_tag;
+    using difference_type = std::vector<const Message*>::iterator::difference_type;
 
-    Iterator(const View<T>& view, std::size_t index) : view_(view), current_message_index_(index) {
+    Iterator(const std::vector<const Message*>::iterator& iterator) : iterator_(iterator) {
     }
 
     const value_type& operator*() const {
-      return *view_.messages_[current_message_index_];
+      return **iterator_;
     }
     const value_type* operator->() {
-      return view_.messages_[current_message_index_];
+      return *iterator_;
     }
 
     Iterator& operator++() {
-      ++current_message_index_;
+      ++iterator_;
     }
+
     Iterator& operator++(int) {
-      auto iterator = *this;
-      current_message_index_++;
+      auto iterator = iterator_;
+      iterator_++;
       return iterator;
     }
 
     friend bool operator==(const Iterator& a, const Iterator& b) {
-      if (a.current_message_index_ >= a.view_.messages_.size() &&
-          b.current_message_index_ >= b.view_.messages_.size()) {
-        return true;
-      }
-      if (a.view_ == b.view_ && a.current_message_index_ == b.current_message_index_) {
+      if (a.iterator_ == b.iterator_) {
         return true;
       }
       return false;
     }
+
     friend bool operator!=(const Iterator& a, const Iterator& b) {
       return !(a == b);
     }
 
    private:
-    std::size_t current_message_index_;
-    const View<T>& view_;
+    std::vector<const Message*>::iterator iterator_;
+  };
+
+  class ConstIterator {
+    using value_type = const Message;
+    using iterator_category = std::bidirectional_iterator_tag;
+    using difference_type = std::vector<const Message*>::const_iterator::difference_type;
+
+    ConstIterator(const std::vector<const Message*>::const_iterator& iterator)
+        : const_iterator_(iterator) {
+    }
+
+    const value_type& operator*() const {
+      return **const_iterator_;
+    }
+    const value_type* operator->() {
+      return *const_iterator_;
+    }
+
+    const Iterator& operator++() {
+      ++const_iterator_;
+    }
+
+    Iterator& operator++(int) {
+      auto iterator = const_iterator_;
+      const_iterator_++;
+      return iterator;
+    }
+
+    friend bool operator==(const ConstIterator& a, const ConstIterator& b) {
+      if (a.const_iterator_ == b.const_iterator_) {
+        return true;
+      }
+      return false;
+    }
+
+    friend bool operator!=(const ConstIterator& a, const ConstIterator& b) {
+      return !(a == b);
+    }
+
+   private:
+    std::vector<const Message*>::const_iterator const_iterator_;
   };
 
   explicit View(T* root, const Storage* storage);
 
-  Iterator cbegin() {
-    return Iterator(*this, 0);
+  ConstIterator cbegin() {
+    return ConstIterator{messages_.cbegin()};
   }
-  Iterator cend() {
-    return Iterator(*this, messages_.size());
+  ConstIterator cend() {
+    return ConstIterator{messages_.cend()};
   }
-  Iterator begin();
-  Iterator end();
-  Iterator rbegin();
-  Iterator rend();
-  Iterator crbegin();
-  Iterator crend();
+  Iterator begin() {
+    return Iterator(messages_.begin());
+  }
+  Iterator end() {
+    return Iterator(messages_.end());
+  }
+
+  Iterator rbegin() {
+  }
+  Iterator rend() {
+  }
+  Iterator crbegin() {
+  }
+  Iterator crend() {
+  }
 
  private:
   void EmplaceChildElements(const T* element, std::queue<const T*>& elements_queue);
   void AddElementsMessages(const T* element);
-  
+
   std::vector<const Message*> messages_;
   std::vector<const Package*> packages_;
   std::vector<const File*> files_;
@@ -100,7 +148,6 @@ View<T>::View(T* root, const Storage* storage) : root_(root), storage_(storage) 
     AddElementsMessages(element);
   }
 }
-
 
 }  // namespace view
 }  // namespace protobuf_parser

@@ -30,5 +30,4 @@ TEST(ParserTests, ThrowsExceptionIfGivenProtoFileHasSyntaxErrors) {
   ASSERT_THROW(protobuf_parser::Parser parser{protos_path}, protobuf_parser::ParseException);
 }
 
-
 }  // namespace tests

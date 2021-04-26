@@ -10,7 +10,7 @@ namespace tests {
 
 class StorageTests : public ::testing::Test {
  protected:
-  StorageTests() :  parser_(std::filesystem::path("../../tests/protos")) {
+  StorageTests() : parser_(std::filesystem::path("../../tests/protos")) {
   }
 
   void SetUp() override {

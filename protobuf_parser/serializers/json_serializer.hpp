@@ -31,7 +31,7 @@ void JsonSerializer<View>::AddField(const std::string& name, const std::string& 
 
 template <typename View>
 std::string JsonSerializer<View>::Serialize() const {
-  for (Message& message: view_) {
+  for (Message& message : view_) {
     message.Serialize(this);
   }
   return json_representation_;
@@ -41,7 +41,7 @@ template <typename View>
 JsonSerializer<View>::JsonSerializer(const View& view) : view_(view) {
 }
 
-}  // namespace serializer
+}  // namespace serializers
 }  // namespace protobuf_parser
 
 #endif  // PROTOBUF_PARSER_PROTOBUF_PARSER_SERIALIZERS_JSON_SERIALIZER_HPP_

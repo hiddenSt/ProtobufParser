@@ -105,7 +105,6 @@ TEST(PackageBuilderTests, MethodIsParentReturnsFalseIfArgumentIsNotChildPackageN
   protobuf_parser::builders::PackageBuilder child_builder{};
   child_builder.SetUpName(child_name);
 
-
   ASSERT_FALSE(child_builder.IsChildOf(parent_name));
 }
 
