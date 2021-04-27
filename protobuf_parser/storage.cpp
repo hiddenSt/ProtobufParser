@@ -14,6 +14,7 @@ Storage& Storage::operator=(Storage&& other) noexcept {
   packages_ = std::move(other.packages_);
   directories_ = std::move(other.directories_);
   files_ = std::move(other.files_);
+  enums_ = std::move(other.enums_);
   return *this;
 }
 
