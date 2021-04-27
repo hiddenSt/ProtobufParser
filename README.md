@@ -7,6 +7,7 @@ Before you begin, ensure you have met the following requirements:
 * cmake
 * [protobuf-cpp-3.15.8](https://github.com/protocolbuffers/protobuf/)
 * compiler supporting ``C++17``
+To build for msvc you additionaly need `vcpkg`
 
 ### Third-party
 * [nlohmann/json](https://github.com/nlohmann/json)
@@ -17,22 +18,27 @@ Before you begin, ensure you have met the following requirements:
 
 To install Parser, follow these steps:
 In your build directory run<br><br>
-Linux
+* Linux
 ```shell script
 cmake --build path_to_sources -DPROTOBUF_PARSER_CONSOLE_UTILITY=ON
 ```
-
 After build go to ``console_utility`` dir inside your build directory<br><br>
-Linux
 ```shell script
 cd console_utility
 ```
-
 Execute binary to see available options and usage pattern<br><br>
-Linux
 ```shell script
 ./protobuf_parser_utility -h
 ```
+* Widnows
+```shell script
+vcpkg install protobuf protobuf:x64-windows
+```
+Run cmake
+```shell script
+cmake -DPROTOBUF_PARSER_CONSOLE_UTILITY=On -DCMAKE_TOOLCHAIN_FILE=`path to vcpkg.cmake` -- build ..
+```
+After that open solution in build directory using Visual Studio and build.
 
 ## Running tests
 ``WARNING`` For correct tests run ensure that build directory is placed inside the root source directory<br>
