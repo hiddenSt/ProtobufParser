@@ -40,6 +40,8 @@ set(PROTOBUF_PARSER_CXX_SOURCES
   builders/package_builder.cpp
   builders/storage_builder.cpp
   builders/enum_builder.cpp
+  builders/enum_field_type_builder.cpp
+  builders/message_field_type_builder.cpp
   view/view.cpp
   )
 
@@ -65,6 +67,8 @@ set(PROTOBUF_PARSER_HEADERS
   builders/package_builder.hpp
   builders/storage_builder.hpp
   builders/enum_builder.hpp
+  builders/enum_field_type_builder.hpp
+  builders/message_field_type_builder.hpp
   serializers/json_serializer.hpp
   view/view.hpp
   )

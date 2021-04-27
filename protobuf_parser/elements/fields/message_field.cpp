@@ -15,6 +15,7 @@ std::map<std::string, std::string> MessageField::Serialize() const {
   std::map<std::string, std::string> serialized_field;
   serialized_field["name"] = name_;
   serialized_field["type_name"] = type_name_;
+  serialized_field["message_type_id"] = std::to_string(message_type_id_);
   serialized_field["number"] = std::to_string(number_);
   if (this->IsOptional()) {
     serialized_field["is_optional"] = "true";

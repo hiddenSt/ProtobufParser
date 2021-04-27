@@ -4,6 +4,9 @@
 #include <protobuf_parser/elements/fields/field.hpp>
 
 namespace protobuf_parser {
+namespace builders {
+class EnumFieldTypeBuilder;
+}
 
 class EnumField : public Field {
  public:
@@ -13,6 +16,11 @@ class EnumField : public Field {
   bool IsEnumType() const noexcept override;
 
   std::map<std::string, std::string> Serialize() const override;
+
+ private:
+  friend class builders::EnumFieldTypeBuilder;
+
+  std::size_t enum_type_id_;
 };
 
 }  // namespace protobuf_parser

@@ -4,6 +4,9 @@
 #include <protobuf_parser/elements/fields/field.hpp>
 
 namespace protobuf_parser {
+namespace builders {
+class MessageFieldTypeBuilder;
+}
 
 class MessageField : public Field {
  public:
@@ -14,6 +17,11 @@ class MessageField : public Field {
   bool IsMessageType() const noexcept override;
 
   std::map<std::string, std::string> Serialize() const override;
+
+ private:
+  friend class builders::MessageFieldTypeBuilder;
+
+  std::size_t message_type_id_;
 };
 
 }  // namespace protobuf_parser
