@@ -5,4 +5,8 @@ message TestMessage_3 {
   string names = 1;
   int32 building_number = 2;
   int32 result_per_page = 3;
+  enum CoolEnumName {
+    VALUE_1 = 0;
+    VALUE_2= 1;
+  }
 }

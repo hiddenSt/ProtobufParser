@@ -95,11 +95,16 @@ void Parser::AddEnums() {
       }
       enum_builders_.push_back(std::move(builder));
     }
+
+    for (std::size_t i = 0; i < file_descriptor->message_type_count(); ++i) {
+      AddEnumsFromMessages(file_descriptor->message_type(i), file_path);
+    }
   }
 
   for (auto& enum_builder : enum_builders_) {
     storage_builder_.AddEnumBuilder(&enum_builder);
   }
+
 }
 
 void Parser::AddMessages() {
@@ -179,6 +184,19 @@ void Parser::AddMessageReservedFieldsAndNumbers(builders::MessageBuilder* builde
       builder->AddReservedNumber(reserved_number);
     }
   }
+}
+
+void Parser::AddEnumsFromMessages(const google::protobuf::Descriptor* message_descriptor, const std::filesystem::path& file_path) {
+    for (std::size_t i = 0; i < message_descriptor->enum_type_count(); ++i) {
+      builders::EnumBuilder builder;
+      builder.SetUpName(message_descriptor->enum_type(i)->name());
+      builder.SetUpFilePath(file_path);
+      for (std::size_t j = 0; j < message_descriptor->enum_type(i)->value_count(); ++j) {
+        builder.AddValue(message_descriptor->enum_type(i)->value(j)->name(),
+                         message_descriptor->enum_type(i)->value(j)->index());
+      }
+      enum_builders_.push_back(std::move(builder));
+    }
 }
 
 }  // namespace protobuf_parser

@@ -37,7 +37,7 @@ Enum& Enum::operator=(Enum&& other) noexcept {
 
 std::map<std::string, std::string> Enum::Serialize() const {
   std::map<std::string, std::string> serialized_enum;
-  serialized_enum["id"] = this->GetId();
+  serialized_enum["id"] = std::to_string(this->GetId());
   serialized_enum["name"] = name_;
   serialized_enum["file_id"] = std::to_string(file_->GetId());
   return serialized_enum;
