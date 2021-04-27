@@ -141,7 +141,7 @@ std::string JsonSerializer<View>::SerializeDirectories() {
   for (auto& directory : view_.GetDirectories()) {
     auto serialized_directory = directory->Serialize();
     auto directory_json_object = nlohmann::json{};
-    for (auto& field: serialized_directory) {
+    for (auto& field : serialized_directory) {
       directory_json_object[field.first] = field.second;
     }
     directories_json_array.push_back(directory_json_object);
@@ -153,7 +153,26 @@ std::string JsonSerializer<View>::SerializeDirectories() {
 
 template <typename View>
 std::string JsonSerializer<View>::SerializeEnums() {
-  return std::string();
+  auto enums_json_array = nlohmann::json::array();
+  for (auto& view_enum : view_.GetEnums()) {
+    auto serialized_enum = view_enum->Serialize();
+    auto enum_json_object = nlohmann::json{};
+    for (auto& field : serialized_enum) {
+      enum_json_object[field.first] = field.second;
+    }
+    auto values_json_array = nlohmann::json::array();
+    for (auto& enum_value : view_enum->GetValues()) {
+      auto value_element = nlohmann::json{};
+      value_element["number"] = enum_value.first;
+      value_element["value_name"] = enum_value.second;
+      values_json_array.push_back(value_element);
+    }
+    enum_json_object["values"] = values_json_array;
+    enums_json_array.push_back(enum_json_object);
+  }
+
+  enums_json_representation_["enums"] = enums_json_array;
+  return enums_json_representation_.dump(4);
 }
 
 }  // namespace serializers

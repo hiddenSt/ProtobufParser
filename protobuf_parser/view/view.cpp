@@ -42,5 +42,23 @@ void View<Package>::AddElementsMessages(const Package* package) {
   }
 }
 
+template <>
+void View<Package>::EmplaceEnums() {
+  for (auto& storage_enum : storage_->enums_) {
+    if (BelongsToViewFiles(storage_enum.GetFile())) {
+      enums_.insert(&storage_enum);
+    }
+  }
+}
+
+template <>
+void View<Directory>::EmplaceEnums() {
+  for (auto& storage_enum : storage_->enums_) {
+    if (BelongsToViewFiles(storage_enum.GetFile())) {
+      enums_.insert(&storage_enum);
+    }
+  }
+}
+
 }  // namespace view
 }  // namespace protobuf_parser

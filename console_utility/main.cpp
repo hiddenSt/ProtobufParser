@@ -44,6 +44,7 @@ int main(int argc, char* argv[]) {
     std::cout << serializer.SerializeDirectories() << "\n";
     std::cout << serializer.SerializeFiles() << "\n";
     std::cout << serializer.SerializePackages() << "\n";
+    std::cout << serializer.SerializeEnums() << "\n";
   } else {
     auto view = storage.GetDirectoryView(parse_source);
     protobuf_parser::serializers::JsonSerializer serializer{view};
@@ -51,6 +52,7 @@ int main(int argc, char* argv[]) {
     std::cout << serializer.SerializeDirectories() << "\n";
     std::cout << serializer.SerializeFiles() << "\n";
     std::cout << serializer.SerializePackages() << "\n";
+    std::cout << serializer.SerializeEnums() << "\n";
   }
   return 0;
 }

@@ -116,14 +116,18 @@ class View {
     return Iterator(messages_.end());
   }
 
-  std::set<const Package*> GetPackages() const;
-  std::set<const File*> GetFiles() const;
-  std::set<const Directory*> GetDirectories() const;
+  const std::set<const Package*>& GetPackages() const;
+  const std::set<const File*>& GetFiles() const;
+  const std::set<const Directory*>& GetDirectories() const;
+  const std::set<const Enum*>& GetEnums() const;
 
  private:
   void EmplaceChildElements(const T* element, std::queue<const T*>& elements_queue);
   void AddElementsMessages(const T* element);
   void AddElementsEnums(const T* element);
+
+  void EmplaceEnums();
+  bool BelongsToViewFiles(const File& file) const;
 
   std::vector<const Message*> messages_;
   std::set<const Package*> packages_;
@@ -146,25 +150,43 @@ View<T>::View(T* root, const Storage* storage) : root_(root), storage_(storage) 
     AddElementsMessages(element);
   }
 
-  for (auto& message: messages_) {
+  for (auto& message : messages_) {
     files_.insert(&message->GetFile());
     directories_.insert(&message->GetFile().GetDirectory());
     packages_.insert(&message->GetFile().GetPackage());
   }
+
+  EmplaceEnums();
 }
 
 template <typename T>
-std::set<const Package*> View<T>::GetPackages() const {
+const std::set<const Package*>& View<T>::GetPackages() const {
   return packages_;
 }
 
 template <typename T>
-std::set<const File*> View<T>::GetFiles() const {
+const std::set<const File*>& View<T>::GetFiles() const {
   return files_;
 }
+
 template <typename T>
-std::set<const Directory*> View<T>::GetDirectories() const {
+const std::set<const Directory*>& View<T>::GetDirectories() const {
   return directories_;
+}
+
+template <typename T>
+bool View<T>::BelongsToViewFiles(const File& file) const {
+  for (auto& view_file : files_) {
+    if (view_file->GetPath() == file.GetPath()) {
+      return true;
+    }
+  }
+  return false;
+}
+
+template <typename T>
+const std::set<const Enum*>& View<T>::GetEnums() const {
+  return enums_;
 }
 
 }  // namespace view
