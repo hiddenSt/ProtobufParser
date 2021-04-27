@@ -41,12 +41,15 @@ File& File::operator=(File&& other) noexcept {
   return *this;
 }
 
-void File::Serialize(serializers::Serializer& serializer) const {
-  serializer.AddField("path", path_.string());
-  serializer.AddField("parent_dir_id", std::to_string(directory_->GetId()));
+std::map<std::string, std::string> File::Serialize() const {
+  std::map<std::string, std::string> serialized_file;
+  serialized_file["id"] = this->GetId();
+  serialized_file["path"] = path_.string();
+  serialized_file["dir_id"] = std::to_string(directory_->GetId());
   if (package_ != nullptr) {
-    serializer.AddField("package_id", std::to_string(package_->GetId()));
+    serialized_file["package_id"] = std::to_string(package_->GetId());
   }
+  return serialized_file;
 }
 
 }  // namespace protobuf_parser

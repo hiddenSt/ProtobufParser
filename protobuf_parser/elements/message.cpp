@@ -57,13 +57,15 @@ Message::Message(Message&& other) noexcept
   }
 }
 
-void Message::Serialize(serializers::Serializer& serializer) const {
-  serializer.AddField("name", name_);
-  serializer.AddField("id", std::to_string(this->GetId()));
-  serializer.AddField("file_id", std::to_string(file_->GetId()));
+std::map<std::string, std::string> Message::Serialize() const {
+  std::map<std::string, std::string> serialized_message;
+  serialized_message["id"] = std::to_string(this->GetId());
+  serialized_message["name"] = name_;
+  serialized_message["file_id"] = std::to_string(file_->GetId());
   if (parent_message_ != nullptr) {
-    serializer.AddField("parent_message_id", std::to_string(parent_message_->GetId()));
+    serialized_message["parent_message_id"] = std::to_string(parent_message_->GetId());
   }
+  return serialized_message;
 }
 
 }  // namespace protobuf_parser

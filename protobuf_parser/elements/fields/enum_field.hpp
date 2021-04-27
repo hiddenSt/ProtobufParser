@@ -12,7 +12,7 @@ class EnumField : public Field {
 
   bool IsEnumType() const noexcept override;
 
-  void Serialize(serializers::Serializer& serializer) const override;
+  std::map<std::string, std::string> Serialize() const override;
 };
 
 }  // namespace protobuf_parser

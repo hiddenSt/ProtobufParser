@@ -28,7 +28,7 @@ class Directory : public Element {
   const Directory& GetParentDirectory() const;
   bool Contains(const std::filesystem::path& file_path) const;
 
-  void Serialize(serializers::Serializer& serializer) const override;
+  std::map<std::string, std::string> Serialize() const override;
 
  private:
   friend class builders::DirectoryBuilder;

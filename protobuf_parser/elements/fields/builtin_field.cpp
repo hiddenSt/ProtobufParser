@@ -11,12 +11,16 @@ bool BuiltinField::IsBuiltinType() const noexcept {
   return true;
 }
 
-void BuiltinField::Serialize(serializers::Serializer& serializer) const {
-  serializer.AddField("type_name", this->GetType());
-  serializer.AddField("name", this->GetName());
-  serializer.AddField("number", std::to_string(this->GetNumber()));
-  serializer.AddField("is_optional", std::to_string(this->IsOptional()));
-  serializer.AddField("is_repeated", std::to_string(this->IsRepeated()));
+std::map<std::string, std::string> BuiltinField::Serialize() const {
+  std::map<std::string, std::string> serialized_field;
+  serialized_field["name"] = name_;
+  serialized_field["type_name"] = type_name_;
+  serialized_field["number"] = number_;
+  serialized_field["is_optional"] = this->IsOptional();
+  serialized_field["is_repeated"] = this->IsRepeated();
+  serialized_field["field_type"] = "Builtin";
+  return serialized_field;
 }
+
 
 }  // namespace protobuf_parser

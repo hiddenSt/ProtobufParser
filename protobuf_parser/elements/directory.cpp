@@ -40,11 +40,14 @@ Directory& Directory::operator=(Directory&& other) {
   return *this;
 }
 
-void Directory::Serialize(serializers::Serializer& serializer) const {
-  serializer.AddField("path", path_.string());
+std::map<std::string, std::string> Directory::Serialize() const {
+  std::map<std::string, std::string> serialized_dir;
+  serialized_dir["id"] = std::to_string(this->GetId());
+  serialized_dir["path"] = path_.string();
   if (parent_directory_ != nullptr) {
-    serializer.AddField("parent_dir_id", std::to_string(parent_directory_->GetId()));
+    serialized_dir["parent_dir_id"] = std::to_string(parent_directory_->GetId());
   }
+  return serialized_dir;
 }
 
 }  // namespace protobuf_parser

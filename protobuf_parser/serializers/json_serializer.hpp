@@ -5,51 +5,47 @@
 
 #include <nlohmann/json.hpp>
 
-#include <protobuf_parser/serializers/serializer.hpp>
 #include <protobuf_parser/elements/message.hpp>
 
 namespace protobuf_parser {
 namespace serializers {
 
 template <typename View>
-class JsonSerializer : public Serializer {
+class JsonSerializer {
  public:
   JsonSerializer(const View& view);
-
-  void AddField(const std::string& name, const std::string& value) override;
-  void AddArray(const std::string& array_field_name, const std::vector<std::pair<std::string, std::string>>& entries) override;
   std::string Serialize();
 
  private:
   nlohmann::json json_representation_;
   View view_;
+  std::map<std::size_t, nlohmann::json> json_objects_;
 };
-template <typename View>
-void JsonSerializer<View>::AddField(const std::string& name, const std::string& value) {
-  json_representation_[name] = value;
-}
+
 
 template <typename View>
 std::string JsonSerializer<View>::Serialize() {
-  for (auto& message : view_) {
-    message.Serialize(*this);
-    for (auto& nested_message: message.GetNestedMessages()) {
-      nested_message.Serialize(*this);
+  for (auto& message: view_) {
+    for (auto& data : message.Serialize()) {
+      json_objects_[message.GetId()][data.first] = data.second;
     }
+    nlohmann::json fields = nlohmann::json::array();
+    for (auto& field : message.GetFields()) {
+     fields.push_back(field->Serialize());
+    }
+    json_objects_[message.GetId()]["fields"] = fields;
+  }
+  for (auto& object: json_objects_) {
+    json_representation_.push_back(object.second);
   }
   return json_representation_.dump(4);
 }
 
 template <typename View>
 JsonSerializer<View>::JsonSerializer(const View& view) : view_(view) {
-}
-
-template <typename View>
-void JsonSerializer<View>::AddArray(
-    const std::string& array_field_name,
-    const std::vector<std::pair<std::string, std::string>>& entries) {
 
 }
+
 
 }  // namespace serializers
 }  // namespace protobuf_parser

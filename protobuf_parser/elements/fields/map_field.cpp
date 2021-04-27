@@ -19,13 +19,17 @@ const std::string& MapField::GetValueTypeName() const {
   return value_type_;
 }
 
-void MapField::Serialize(serializers::Serializer& serializer) const {
-  serializer.AddField("type_name", this->GetType());
-  serializer.AddField("key_type", key_type_);
-  serializer.AddField("value_type", value_type_);
-  serializer.AddField("name", this->GetName());
-  serializer.AddField("number", std::to_string(this->GetNumber()));
-  serializer.AddField("is_optional", std::to_string(this->IsOptional()));
+std::map<std::string, std::string> MapField::Serialize() const {
+  std::map<std::string, std::string> serialized_field;
+  serialized_field["name"] = name_;
+  serialized_field["type_name"] = type_name_;
+  serialized_field["number"] = number_;
+  serialized_field["is_optional"] = this->IsOptional();
+  serialized_field["field_type"] = "Map";
+  serialized_field["key_type"] = key_type_;
+  serialized_field["value_type"] = value_type_;
+  return serialized_field;
 }
+
 
 }  // namespace protobuf_parser

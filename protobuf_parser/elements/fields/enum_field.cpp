@@ -10,6 +10,15 @@ bool EnumField::IsEnumType() const noexcept {
   return true;
 }
 
-void EnumField::Serialize(serializers::Serializer& serializer) const {
+std::map<std::string, std::string> EnumField::Serialize() const {
+  std::map<std::string, std::string> serialized_field;
+  serialized_field["name"] = name_;
+  serialized_field["type_name"] = type_name_;
+  serialized_field["number"] = number_;
+  serialized_field["is_optional"] = this->IsOptional();
+  serialized_field["is_repeated"] = this->IsRepeated();
+  serialized_field["field_type"] = "Enum";
+  return serialized_field;
 }
+
 }  // namespace protobuf_parser

@@ -22,7 +22,7 @@ class Package : public Element {
   const Package& GetParentPackage() const noexcept;
   const std::string& GetName() const;
 
-  void Serialize(serializers::Serializer& serializer) const override;
+  std::map<std::string, std::string> Serialize() const override;
 
  private:
   friend class builders::PackageBuilder;
