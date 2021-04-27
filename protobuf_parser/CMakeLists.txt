@@ -22,6 +22,7 @@ set(PROTOBUF_PARSER_CXX_SOURCES
   storage.cpp
   parser.cpp
   stub_multiple_error_collector.cpp
+  parse_exception.cpp
   elements/element.cpp
   elements/enum.cpp
   elements/message.cpp
@@ -40,12 +41,13 @@ set(PROTOBUF_PARSER_CXX_SOURCES
   builders/storage_builder.cpp
   builders/enum_builder.cpp
   view/view.cpp
-  parse_exception.cpp )
+  )
 
 set(PROTOBUF_PARSER_HEADERS
   storage.hpp
   parser.hpp
   stub_multiple_error_collector.hpp
+  parse_exception.hpp
   elements/element.hpp
   elements/message.hpp
   elements/file.hpp
@@ -65,7 +67,7 @@ set(PROTOBUF_PARSER_HEADERS
   builders/enum_builder.hpp
   serializers/json_serializer.hpp
   view/view.hpp
-  parse_exception.hpp)
+  )
 
 add_library(protobuf_parser STATIC "${PROTOBUF_PARSER_HEADERS}" "${PROTOBUF_PARSER_CXX_SOURCES}")
 target_include_directories(protobuf_parser PRIVATE "${LIB_INCLUDE_PATH}" "${Protobuf_INCLUDE_DIRS}")

@@ -28,9 +28,7 @@ set(TESTS_SOURCES
   builders/storage_builder_tests.cpp
   builders/enum_builder_tests.cpp view_tests.cpp)
 
-set(TEST_UTIL util/test_serializer.hpp)
-
-add_executable(run_protobuf_parser_tests "${TESTS_SOURCES}" "${TEST_UTIL}")
+add_executable(run_protobuf_parser_tests "${TESTS_SOURCES}")
 
 target_include_directories(run_protobuf_parser_tests
   PRIVATE
