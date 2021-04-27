@@ -24,6 +24,8 @@ class JsonSerializer {
  private:
   nlohmann::json SerializeFields(const Message& message);
   nlohmann::json SerializeNestedMessages(const Message& message);
+  nlohmann::json SerializeMessageReservedNames(const Message& message);
+  nlohmann::json SerializeMessageReservedNumbers(const Message& message);
 
   nlohmann::json messages_json_representation_;
   nlohmann::json files_json_representation_;
@@ -44,6 +46,8 @@ std::string JsonSerializer<View>::SerializeMessages() {
 
     message_json_object["fields"] = SerializeFields(message);
     message_json_object["nested_messages"] = SerializeNestedMessages(message);
+    message_json_object["reserved_names"] = SerializeMessageReservedNames(message);
+    message_json_object["reserved_numbers"] = SerializeMessageReservedNumbers(message);
     messages_json_array.push_back(message_json_object);
   }
   messages_json_representation_["messages"] = messages_json_array;
@@ -78,6 +82,25 @@ nlohmann::json JsonSerializer<View>::SerializeNestedMessages(const Message& mess
     nested_messages.push_back(nested_message_object);
   }
   return nested_messages;
+}
+
+template <typename View>
+nlohmann::json JsonSerializer<View>::SerializeMessageReservedNames(const Message& message) {
+  auto reserved_names_json_array = nlohmann::json::array();
+  for (auto& reserved_name : message.GetReservedNames()) {
+    reserved_names_json_array.push_back(reserved_name);
+  }
+  return reserved_names_json_array;
+}
+
+template <typename View>
+nlohmann::json JsonSerializer<View>::SerializeMessageReservedNumbers(const Message& message) {
+  auto reserved_numbers_json_array = nlohmann::json::array();
+  for (auto& reserved_number : message.GetReservedNumbers()) {
+    reserved_numbers_json_array.push_back(reserved_number);
+  }
+
+  return reserved_numbers_json_array;
 }
 
 template <typename View>
