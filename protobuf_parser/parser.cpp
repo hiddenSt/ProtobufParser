@@ -36,7 +36,7 @@ void Parser::ParseFromImporter() {
   for (auto& dir_entry : recursive_directory_iterator) {
     if (dir_entry.is_regular_file() && dir_entry.path().extension() == ".proto") {
       auto current_path = dir_entry.path().lexically_proximate(root_path_);
-      auto* file_descriptor = importer_->Import(current_path.string());
+      auto* file_descriptor = importer_->Import(current_path.make_preferred().string());
       directories_path_.insert(dir_entry.path().parent_path().lexically_proximate(root_path_));
       packages_names_.insert(file_descriptor->package());
       files_path_.insert(current_path);
@@ -197,6 +197,7 @@ void Parser::AddEnumsFromMessages(const google::protobuf::Descriptor* message_de
     }
     enum_builders_.push_back(std::move(builder));
   }
+
 }
 
 }  // namespace protobuf_parser
