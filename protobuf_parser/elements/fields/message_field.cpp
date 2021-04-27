@@ -16,8 +16,18 @@ std::map<std::string, std::string> MessageField::Serialize() const {
   serialized_field["name"] = name_;
   serialized_field["type_name"] = type_name_;
   serialized_field["number"] = std::to_string(number_);
-  serialized_field["is_optional"] = std::to_string(this->IsOptional());
-  serialized_field["is_repeated"] = std::to_string(this->IsRepeated());
+  if (this->IsOptional()) {
+    serialized_field["is_optional"] = "true";
+  } else {
+    serialized_field["is_optional"] = "false";
+  }
+
+  if (this->IsRepeated()) {
+    serialized_field["is_repeated"] = "true";
+  } else {
+    serialized_field["is_repeated"] = "false";
+  }
+
   serialized_field["field_type"] = "Message";
   return serialized_field;
 }

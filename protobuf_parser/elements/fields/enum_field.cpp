@@ -14,9 +14,18 @@ std::map<std::string, std::string> EnumField::Serialize() const {
   std::map<std::string, std::string> serialized_field;
   serialized_field["name"] = name_;
   serialized_field["type_name"] = type_name_;
-  serialized_field["number"] = number_;
-  serialized_field["is_optional"] = this->IsOptional();
-  serialized_field["is_repeated"] = this->IsRepeated();
+  serialized_field["number"] = std::to_string(number_);
+  if (this->IsOptional()) {
+    serialized_field["is_optional"] = "true";
+  } else {
+    serialized_field["is_optional"] = "false";
+  }
+
+  if (this->IsRepeated()) {
+    serialized_field["is_repeated"] = "true";
+  } else {
+    serialized_field["is_repeated"] = "false";
+  }
   serialized_field["field_type"] = "Enum";
   return serialized_field;
 }
