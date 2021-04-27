@@ -31,5 +31,4 @@ std::map<std::string, std::string> MapField::Serialize() const {
   return serialized_field;
 }
 
-
 }  // namespace protobuf_parser

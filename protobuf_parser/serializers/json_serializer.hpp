@@ -25,10 +25,9 @@ class JsonSerializer {
   std::map<std::size_t, nlohmann::json> json_objects_;
 };
 
-
 template <typename View>
 std::string JsonSerializer<View>::Serialize() {
-  for (auto& message: view_) {
+  for (auto& message : view_) {
     for (auto& data : message.Serialize()) {
       json_objects_[message.GetId()][data.first] = data.second;
     }
@@ -36,7 +35,7 @@ std::string JsonSerializer<View>::Serialize() {
     json_objects_[message.GetId()]["fields"] = SerializeFields(message);
     json_objects_[message.GetId()]["nested_messages"] = SerializeNestedMessages(message);
   }
-  for (auto& object: json_objects_) {
+  for (auto& object : json_objects_) {
     json_representation_.push_back(object.second);
   }
   return json_representation_.dump(4);
@@ -44,7 +43,6 @@ std::string JsonSerializer<View>::Serialize() {
 
 template <typename View>
 JsonSerializer<View>::JsonSerializer(const View& view) : view_(view) {
-
 }
 template <typename View>
 nlohmann::json JsonSerializer<View>::SerializeFields(const Message& message) {

@@ -22,5 +22,4 @@ std::map<std::string, std::string> BuiltinField::Serialize() const {
   return serialized_field;
 }
 
-
 }  // namespace protobuf_parser
