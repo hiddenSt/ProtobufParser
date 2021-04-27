@@ -27,10 +27,12 @@ class JsonSerializer {
   nlohmann::json messages_json_representation_;
   nlohmann::json files_json_representation_;
   nlohmann::json packages_json_representation_;
+  nlohmann::json directories_json_representation_;
   View view_;
   std::map<std::size_t, nlohmann::json> messages_json_objects_;
   std::map<std::size_t, nlohmann::json> files_json_objects_;
   std::map<std::size_t, nlohmann::json> packages_json_objects_;
+  std::map<std::size_t, nlohmann::json> directories_json_objects_;
 
 };
 
@@ -105,6 +107,20 @@ std::string JsonSerializer<View>::SerializePackages() {
     packages_json_representation_.push_back(object.second);
   }
   return packages_json_representation_.dump(4);
+}
+
+template <typename View>
+std::string JsonSerializer<View>::SerializeDirectories() {
+  for (auto& message: view_) {
+    auto serialized_data = message.GetFile().GetDirectory().Serialize();
+    for (auto& field: serialized_data) {
+      directories_json_objects_[message.GetFile().GetDirectory().GetId()][field.first] = field.second;
+    }
+  }
+  for (auto& object : directories_json_objects_) {
+    directories_json_representation_.push_back(object.second);
+  }
+  return directories_json_representation_.dump(4);
 }
 
 }  // namespace serializers
