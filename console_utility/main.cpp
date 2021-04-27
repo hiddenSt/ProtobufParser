@@ -40,11 +40,15 @@ int main(int argc, char* argv[]) {
   if (program["--package"] == true) {
     auto view = storage.GetPackageView(parse_source);
     protobuf_parser::serializers::JsonSerializer serializer{view};
-    std::cout << serializer.Serialize() << "\n";
+    std::cout << "Messages\n" << serializer.SerializeMessages() << "\n";
+    std::cout << "Files\n" << serializer.SerializeFiles() << "\n";
+    std::cout << "Packages\n" << serializer.SerializePackages() << "\n";
   } else {
     auto view = storage.GetDirectoryView(parse_source);
     protobuf_parser::serializers::JsonSerializer serializer{view};
-    std::cout << serializer.Serialize() << "\n";
+    std::cout << "Messages\n" << serializer.SerializeMessages() << "\n";
+    std::cout << "Files\n" << serializer.SerializeFiles() << "\n";
+    std::cout << "Packages\n" << serializer.SerializePackages() << "\n";
   }
   return 0;
 }

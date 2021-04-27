@@ -14,31 +14,40 @@ template <typename View>
 class JsonSerializer {
  public:
   JsonSerializer(const View& view);
-  std::string Serialize();
+  std::string SerializeMessages();
+
+  std::string SerializeFiles();
+  std::string SerializePackages();
+  std::string SerializeDirectories();
 
  private:
   nlohmann::json SerializeFields(const Message& message);
   nlohmann::json SerializeNestedMessages(const Message& message);
 
-  nlohmann::json json_representation_;
+  nlohmann::json messages_json_representation_;
+  nlohmann::json files_json_representation_;
+  nlohmann::json packages_json_representation_;
   View view_;
-  std::map<std::size_t, nlohmann::json> json_objects_;
+  std::map<std::size_t, nlohmann::json> messages_json_objects_;
+  std::map<std::size_t, nlohmann::json> files_json_objects_;
+  std::map<std::size_t, nlohmann::json> packages_json_objects_;
+
 };
 
 template <typename View>
-std::string JsonSerializer<View>::Serialize() {
+std::string JsonSerializer<View>::SerializeMessages() {
   for (auto& message : view_) {
     for (auto& data : message.Serialize()) {
-      json_objects_[message.GetId()][data.first] = data.second;
+      messages_json_objects_[message.GetId()][data.first] = data.second;
     }
 
-    json_objects_[message.GetId()]["fields"] = SerializeFields(message);
-    json_objects_[message.GetId()]["nested_messages"] = SerializeNestedMessages(message);
+    messages_json_objects_[message.GetId()]["fields"] = SerializeFields(message);
+    messages_json_objects_[message.GetId()]["nested_messages"] = SerializeNestedMessages(message);
   }
-  for (auto& object : json_objects_) {
-    json_representation_.push_back(object.second);
+  for (auto& object : messages_json_objects_) {
+    messages_json_representation_.push_back(object.second);
   }
-  return json_representation_.dump(4);
+  return messages_json_representation_.dump(4);
 }
 
 template <typename View>
@@ -68,6 +77,34 @@ nlohmann::json JsonSerializer<View>::SerializeNestedMessages(const Message& mess
     nested_messages.push_back(nested_message_object);
   }
   return nested_messages;
+}
+
+template <typename View>
+std::string JsonSerializer<View>::SerializeFiles() {
+  for (auto& message: view_) {
+    auto serialized_data = message.GetFile().Serialize();
+    for (auto& field: serialized_data) {
+      files_json_objects_[message.GetFile().GetId()][field.first] = field.second;
+    }
+  }
+  for (auto& object : files_json_objects_) {
+    files_json_representation_.push_back(object.second);
+  }
+  return files_json_representation_.dump(4);
+}
+
+template <typename View>
+std::string JsonSerializer<View>::SerializePackages() {
+  for (auto& message: view_) {
+    auto serialized_data = message.GetFile().GetPackage().Serialize();
+    for (auto& field: serialized_data) {
+      packages_json_objects_[message.GetFile().GetPackage().GetId()][field.first] = field.second;
+    }
+  }
+  for (auto& object : packages_json_objects_) {
+    packages_json_representation_.push_back(object.second);
+  }
+  return packages_json_representation_.dump(4);
 }
 
 }  // namespace serializers
