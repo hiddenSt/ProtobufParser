@@ -115,18 +115,10 @@ class View {
     return Iterator(messages_.end());
   }
 
-  Iterator rbegin() {
-  }
-  Iterator rend() {
-  }
-  Iterator crbegin() {
-  }
-  Iterator crend() {
-  }
-
  private:
   void EmplaceChildElements(const T* element, std::queue<const T*>& elements_queue);
   void AddElementsMessages(const T* element);
+  void AddElementsEnums(const T* element);
 
   std::vector<const Message*> messages_;
   std::vector<const Package*> packages_;
