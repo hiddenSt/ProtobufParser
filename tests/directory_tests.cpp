@@ -1,7 +1,5 @@
 #include <gtest/gtest.h>
 
-#include <tests/util/test_serializer.hpp>
-
 #include <protobuf_parser/elements/directory.hpp>
 #include <protobuf_parser/builders/directory_builder.hpp>
 
@@ -66,13 +64,6 @@ TEST_F(DirectoryTests, CanGetParentDirectory) {
 TEST_F(DirectoryTests, MethodGetParentDirectoryReturnsCorrectDirectory) {
   ASSERT_EQ(dir_.GetParentDirectory().GetId(), parent_dir_.GetId());
   ASSERT_EQ(dir_.GetParentDirectory().GetPath(), parent_dir_.GetPath());
-}
-
-TEST_F(DirectoryTests, CanSerializeDirectory) {
-  util::TestSerializer serializer;
-  dir_.Serialize(serializer);
-  ASSERT_EQ(serializer.field_name, "path");
-  ASSERT_EQ(serializer.field_value, dir_.GetPath().string());
 }
 
 }  // namespace tests
