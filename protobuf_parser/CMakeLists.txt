@@ -16,7 +16,12 @@ endif()
 get_filename_component(LIB_INCLUDE_PATH ".." ABSOLUTE)
 get_filename_component(LIB_PATH "." ABSOLUTE)
 
-find_package(Protobuf REQUIRED)
+if (MSVC) 
+  find_package(protobuf CONFIG REQUIRED)
+else()
+  find_package(Protobuf REQUIRED)
+endif()
+
 
 set(PROTOBUF_PARSER_CXX_SOURCES
   storage.cpp
@@ -74,8 +79,15 @@ set(PROTOBUF_PARSER_HEADERS
   )
 
 add_library(protobuf_parser STATIC "${PROTOBUF_PARSER_HEADERS}" "${PROTOBUF_PARSER_CXX_SOURCES}")
-target_include_directories(protobuf_parser PRIVATE "${LIB_INCLUDE_PATH}" "${Protobuf_INCLUDE_DIRS}")
-target_link_libraries(protobuf_parser PUBLIC nlohmann_json::nlohmann_json "${Protobuf_LIBRARIES}")
+target_include_directories(protobuf_parser PRIVATE "${LIB_INCLUDE_PATH}")
+target_link_libraries(protobuf_parser PUBLIC nlohmann_json::nlohmann_json)
+
+if (MSVC)
+  target_link_libraries(protobuf_parser PRIVATE protobuf::libprotoc protobuf::libprotobuf protobuf::libprotobuf-lite)
+else()
+  target_link_libraries(protobuf_parser PUBLIC "${Protobuf_LIBRARIES}")
+  target_include_directories(protobuf_parser PRIVATE "${Protobuf_INCLUDE_DIRS}")
+endif()
 
 # Linters
 
