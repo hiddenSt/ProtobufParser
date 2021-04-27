@@ -43,7 +43,7 @@ File& File::operator=(File&& other) noexcept {
 
 std::map<std::string, std::string> File::Serialize() const {
   std::map<std::string, std::string> serialized_file;
-  serialized_file["id"] = this->GetId();
+  serialized_file["id"] = std::to_string(this->GetId());
   serialized_file["path"] = path_.string();
   serialized_file["dir_id"] = std::to_string(directory_->GetId());
   if (package_ != nullptr) {

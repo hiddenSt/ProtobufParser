@@ -15,9 +15,9 @@ std::map<std::string, std::string> BuiltinField::Serialize() const {
   std::map<std::string, std::string> serialized_field;
   serialized_field["name"] = name_;
   serialized_field["type_name"] = type_name_;
-  serialized_field["number"] = number_;
-  serialized_field["is_optional"] = this->IsOptional();
-  serialized_field["is_repeated"] = this->IsRepeated();
+  serialized_field["number"] = std::to_string(number_);
+  serialized_field["is_optional"] = std::to_string(this->IsOptional());
+  serialized_field["is_repeated"] = std::to_string(this->IsRepeated());
   serialized_field["field_type"] = "Builtin";
   return serialized_field;
 }

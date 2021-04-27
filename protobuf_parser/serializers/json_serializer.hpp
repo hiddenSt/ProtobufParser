@@ -19,6 +19,7 @@ class JsonSerializer {
   std::string SerializeFiles();
   std::string SerializePackages();
   std::string SerializeDirectories();
+  std::string SerializeEnums();
 
  private:
   nlohmann::json SerializeFields(const Message& message);
@@ -28,11 +29,13 @@ class JsonSerializer {
   nlohmann::json files_json_representation_;
   nlohmann::json packages_json_representation_;
   nlohmann::json directories_json_representation_;
+  nlohmann::json enums_json_representation_;
   View view_;
   std::map<std::size_t, nlohmann::json> messages_json_objects_;
   std::map<std::size_t, nlohmann::json> files_json_objects_;
   std::map<std::size_t, nlohmann::json> packages_json_objects_;
   std::map<std::size_t, nlohmann::json> directories_json_objects_;
+  std::map<std::size_t, nlohmann::json> enums_json_objects_;
 
 };
 
@@ -55,6 +58,7 @@ std::string JsonSerializer<View>::SerializeMessages() {
 template <typename View>
 JsonSerializer<View>::JsonSerializer(const View& view) : view_(view) {
 }
+
 template <typename View>
 nlohmann::json JsonSerializer<View>::SerializeFields(const Message& message) {
   nlohmann::json fields = nlohmann::json::array();
@@ -121,6 +125,11 @@ std::string JsonSerializer<View>::SerializeDirectories() {
     directories_json_representation_.push_back(object.second);
   }
   return directories_json_representation_.dump(4);
+}
+
+template <typename View>
+std::string JsonSerializer<View>::SerializeEnums() {
+  return std::string();
 }
 
 }  // namespace serializers

@@ -23,8 +23,8 @@ std::map<std::string, std::string> MapField::Serialize() const {
   std::map<std::string, std::string> serialized_field;
   serialized_field["name"] = name_;
   serialized_field["type_name"] = type_name_;
-  serialized_field["number"] = number_;
-  serialized_field["is_optional"] = this->IsOptional();
+  serialized_field["number"] = std::to_string(number_);
+  serialized_field["is_optional"] = std::to_string(this->IsOptional());
   serialized_field["field_type"] = "Map";
   serialized_field["key_type"] = key_type_;
   serialized_field["value_type"] = value_type_;
