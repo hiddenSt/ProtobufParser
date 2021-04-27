@@ -22,24 +22,24 @@ class JsonSerializer {
   std::string SerializeEnums();
 
  private:
-  nlohmann::json SerializeFields(const Message& message);
-  nlohmann::json SerializeNestedMessages(const Message& message);
-  nlohmann::json SerializeMessageReservedNames(const Message& message);
-  nlohmann::json SerializeMessageReservedNumbers(const Message& message);
+  nlohmann::ordered_json SerializeFields(const Message& message);
+  nlohmann::ordered_json SerializeNestedMessages(const Message& message);
+  nlohmann::ordered_json SerializeMessageReservedNames(const Message& message);
+  nlohmann::ordered_json SerializeMessageReservedNumbers(const Message& message);
 
-  nlohmann::json messages_json_representation_;
-  nlohmann::json files_json_representation_;
-  nlohmann::json packages_json_representation_;
-  nlohmann::json directories_json_representation_;
-  nlohmann::json enums_json_representation_;
+  nlohmann::ordered_json messages_json_representation_;
+  nlohmann::ordered_json files_json_representation_;
+  nlohmann::ordered_json packages_json_representation_;
+  nlohmann::ordered_json directories_json_representation_;
+  nlohmann::ordered_json enums_json_representation_;
   View view_;
 };
 
 template <typename View>
 std::string JsonSerializer<View>::SerializeMessages() {
-  auto messages_json_array = nlohmann::json::array();
+  auto messages_json_array = nlohmann::ordered_json::array();
   for (auto& message : view_) {
-    auto message_json_object = nlohmann::json{};
+    auto message_json_object = nlohmann::ordered_json{};
     for (auto& data : message.Serialize()) {
       message_json_object[data.first] = data.second;
     }
@@ -59,8 +59,8 @@ JsonSerializer<View>::JsonSerializer(const View& view) : view_(view) {
 }
 
 template <typename View>
-nlohmann::json JsonSerializer<View>::SerializeFields(const Message& message) {
-  nlohmann::json fields = nlohmann::json::array();
+nlohmann::ordered_json JsonSerializer<View>::SerializeFields(const Message& message) {
+  auto fields = nlohmann::ordered_json::array();
   for (auto& field : message.GetFields()) {
     fields.push_back(field->Serialize());
   }
@@ -68,11 +68,11 @@ nlohmann::json JsonSerializer<View>::SerializeFields(const Message& message) {
 }
 
 template <typename View>
-nlohmann::json JsonSerializer<View>::SerializeNestedMessages(const Message& message) {
-  nlohmann::json nested_messages = nlohmann::json::array();
+nlohmann::ordered_json JsonSerializer<View>::SerializeNestedMessages(const Message& message) {
+  auto nested_messages = nlohmann::ordered_json::array();
 
   for (auto& nested_message : message.GetNestedMessages()) {
-    nlohmann::json nested_message_object;
+    nlohmann::ordered_json nested_message_object;
     for (auto& data : nested_message.Serialize()) {
       nested_message_object[data.first] = data.second;
     }
@@ -85,8 +85,8 @@ nlohmann::json JsonSerializer<View>::SerializeNestedMessages(const Message& mess
 }
 
 template <typename View>
-nlohmann::json JsonSerializer<View>::SerializeMessageReservedNames(const Message& message) {
-  auto reserved_names_json_array = nlohmann::json::array();
+nlohmann::ordered_json JsonSerializer<View>::SerializeMessageReservedNames(const Message& message) {
+  auto reserved_names_json_array = nlohmann::ordered_json::array();
   for (auto& reserved_name : message.GetReservedNames()) {
     reserved_names_json_array.push_back(reserved_name);
   }
@@ -94,8 +94,8 @@ nlohmann::json JsonSerializer<View>::SerializeMessageReservedNames(const Message
 }
 
 template <typename View>
-nlohmann::json JsonSerializer<View>::SerializeMessageReservedNumbers(const Message& message) {
-  auto reserved_numbers_json_array = nlohmann::json::array();
+nlohmann::ordered_json JsonSerializer<View>::SerializeMessageReservedNumbers(const Message& message) {
+  auto reserved_numbers_json_array = nlohmann::ordered_json::array();
   for (auto& reserved_number : message.GetReservedNumbers()) {
     reserved_numbers_json_array.push_back(reserved_number);
   }
@@ -105,10 +105,10 @@ nlohmann::json JsonSerializer<View>::SerializeMessageReservedNumbers(const Messa
 
 template <typename View>
 std::string JsonSerializer<View>::SerializeFiles() {
-  auto files_json_array = nlohmann::json::array();
+  auto files_json_array = nlohmann::ordered_json::array();
   for (auto& file : view_.GetFiles()) {
     auto serialized_file = file->Serialize();
-    auto file_json_object = nlohmann::json{};
+    auto file_json_object = nlohmann::ordered_json{};
     for (auto& field : serialized_file) {
       file_json_object[field.first] = field.second;
     }
@@ -121,10 +121,10 @@ std::string JsonSerializer<View>::SerializeFiles() {
 
 template <typename View>
 std::string JsonSerializer<View>::SerializePackages() {
-  auto packages_json_array = nlohmann::json::array();
+  auto packages_json_array = nlohmann::ordered_json::array();
   for (auto& package: view_.GetPackages()) {
     auto serialized_package = package->Serialize();
-    auto package_json_object = nlohmann::json{};
+    auto package_json_object = nlohmann::ordered_json{};
     for (auto& field : serialized_package) {
       package_json_object[field.first] = field.second;
     }
@@ -137,10 +137,10 @@ std::string JsonSerializer<View>::SerializePackages() {
 
 template <typename View>
 std::string JsonSerializer<View>::SerializeDirectories() {
-  auto directories_json_array = nlohmann::json::array();
+  auto directories_json_array = nlohmann::ordered_json::array();
   for (auto& directory : view_.GetDirectories()) {
     auto serialized_directory = directory->Serialize();
-    auto directory_json_object = nlohmann::json{};
+    auto directory_json_object = nlohmann::ordered_json{};
     for (auto& field : serialized_directory) {
       directory_json_object[field.first] = field.second;
     }
@@ -153,16 +153,16 @@ std::string JsonSerializer<View>::SerializeDirectories() {
 
 template <typename View>
 std::string JsonSerializer<View>::SerializeEnums() {
-  auto enums_json_array = nlohmann::json::array();
+  auto enums_json_array = nlohmann::ordered_json::array();
   for (auto& view_enum : view_.GetEnums()) {
     auto serialized_enum = view_enum->Serialize();
-    auto enum_json_object = nlohmann::json{};
+    auto enum_json_object = nlohmann::ordered_json{};
     for (auto& field : serialized_enum) {
       enum_json_object[field.first] = field.second;
     }
-    auto values_json_array = nlohmann::json::array();
+    auto values_json_array= nlohmann::ordered_json::array();
     for (auto& enum_value : view_enum->GetValues()) {
-      auto value_element = nlohmann::json{};
+      auto value_element = nlohmann::ordered_json{};
       value_element["number"] = enum_value.first;
       value_element["value_name"] = enum_value.second;
       values_json_array.push_back(value_element);
