@@ -51,7 +51,7 @@ void MessageBuilder::SetUpFile(File* file) noexcept {
   for (auto& message : message_.nested_messages_) {
     messages_queue.emplace(&message);
   }
-  
+
   while (!messages_queue.empty()) {
     auto* message = messages_queue.front();
     messages_queue.pop();

@@ -94,7 +94,8 @@ nlohmann::ordered_json JsonSerializer<View>::SerializeMessageReservedNames(const
 }
 
 template <typename View>
-nlohmann::ordered_json JsonSerializer<View>::SerializeMessageReservedNumbers(const Message& message) {
+nlohmann::ordered_json JsonSerializer<View>::SerializeMessageReservedNumbers(
+    const Message& message) {
   auto reserved_numbers_json_array = nlohmann::ordered_json::array();
   for (auto& reserved_number : message.GetReservedNumbers()) {
     reserved_numbers_json_array.push_back(reserved_number);
@@ -122,7 +123,7 @@ std::string JsonSerializer<View>::SerializeFiles() {
 template <typename View>
 std::string JsonSerializer<View>::SerializePackages() {
   auto packages_json_array = nlohmann::ordered_json::array();
-  for (auto& package: view_.GetPackages()) {
+  for (auto& package : view_.GetPackages()) {
     auto serialized_package = package->Serialize();
     auto package_json_object = nlohmann::ordered_json{};
     for (auto& field : serialized_package) {
@@ -160,7 +161,7 @@ std::string JsonSerializer<View>::SerializeEnums() {
     for (auto& field : serialized_enum) {
       enum_json_object[field.first] = field.second;
     }
-    auto values_json_array= nlohmann::ordered_json::array();
+    auto values_json_array = nlohmann::ordered_json::array();
     for (auto& enum_value : view_enum->GetValues()) {
       auto value_element = nlohmann::ordered_json{};
       value_element["number"] = enum_value.first;
