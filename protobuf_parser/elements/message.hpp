@@ -8,6 +8,7 @@
 #include <protobuf_parser/elements/file.hpp>
 #include <protobuf_parser/elements/package.hpp>
 #include <protobuf_parser/elements/fields/field.hpp>
+#include <protobuf_parser/elements/enum.hpp>
 
 namespace protobuf_parser {
 
@@ -33,6 +34,7 @@ class Message : public Element {
   const std::string& GetName() const;
   const std::vector<Field*>& GetFields() const;
   const std::vector<Message>& GetNestedMessages() const;
+  const std::vector<Enum>& GetEnums() const;
   const std::vector<std::string>& GetReservedNames() const;
   const std::vector<std::size_t>& GetReservedNumbers() const;
 
@@ -45,6 +47,7 @@ class Message : public Element {
   Message* parent_message_;
   File* file_;
   std::vector<Message> nested_messages_;
+  std::vector<Enum> enums_;
   std::vector<Field*> fields_;
   std::vector<std::string> reserved_names_;
   std::vector<std::size_t> reserved_numbers_;

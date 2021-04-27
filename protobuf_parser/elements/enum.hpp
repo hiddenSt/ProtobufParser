@@ -7,7 +7,6 @@
 
 #include <protobuf_parser/elements/element.hpp>
 #include <protobuf_parser/elements/file.hpp>
-#include <protobuf_parser/elements/message.hpp>
 
 namespace protobuf_parser {
 namespace builders {
@@ -27,8 +26,6 @@ class Enum : public Element {
   Enum(const Enum&) = delete;
   Enum& operator=(const Enum&) = delete;
 
-  bool HasParentMessage() const noexcept;
-  const Message& GetParentMessage() const;
   const File& GetFile() const;
   const std::string& GetName() const;
   const std::map<std::size_t, std::string>& GetValues() const;
@@ -42,7 +39,6 @@ class Enum : public Element {
   std::map<std::size_t, std::string> values_;
   std::vector<std::size_t> reserved_numbers_;
   File* file_;
-  Message* parent_message_;
 };
 
 }  // namespace protobuf_parser

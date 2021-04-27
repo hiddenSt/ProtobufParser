@@ -68,4 +68,8 @@ std::map<std::string, std::string> Message::Serialize() const {
   return serialized_message;
 }
 
+const std::vector<Enum>& Message::GetEnums() const {
+  return enums_;
+}
+
 }  // namespace protobuf_parser

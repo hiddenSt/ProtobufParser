@@ -31,27 +31,22 @@ class JsonSerializer {
   nlohmann::json directories_json_representation_;
   nlohmann::json enums_json_representation_;
   View view_;
-  std::map<std::size_t, nlohmann::json> messages_json_objects_;
-  std::map<std::size_t, nlohmann::json> files_json_objects_;
-  std::map<std::size_t, nlohmann::json> packages_json_objects_;
-  std::map<std::size_t, nlohmann::json> directories_json_objects_;
-  std::map<std::size_t, nlohmann::json> enums_json_objects_;
-
 };
 
 template <typename View>
 std::string JsonSerializer<View>::SerializeMessages() {
+  auto messages_json_array = nlohmann::json::array();
   for (auto& message : view_) {
+    auto message_json_object = nlohmann::json{};
     for (auto& data : message.Serialize()) {
-      messages_json_objects_[message.GetId()][data.first] = data.second;
+      message_json_object[data.first] = data.second;
     }
 
-    messages_json_objects_[message.GetId()]["fields"] = SerializeFields(message);
-    messages_json_objects_[message.GetId()]["nested_messages"] = SerializeNestedMessages(message);
+    message_json_object["fields"] = SerializeFields(message);
+    message_json_object["nested_messages"] = SerializeNestedMessages(message);
+    messages_json_array.push_back(message_json_object);
   }
-  for (auto& object : messages_json_objects_) {
-    messages_json_representation_.push_back(object.second);
-  }
+  messages_json_representation_["messages"] = messages_json_array;
   return messages_json_representation_.dump(4);
 }
 
@@ -87,43 +82,49 @@ nlohmann::json JsonSerializer<View>::SerializeNestedMessages(const Message& mess
 
 template <typename View>
 std::string JsonSerializer<View>::SerializeFiles() {
-  for (auto& message: view_) {
-    auto serialized_data = message.GetFile().Serialize();
-    for (auto& field: serialized_data) {
-      files_json_objects_[message.GetFile().GetId()][field.first] = field.second;
+  auto files_json_array = nlohmann::json::array();
+  for (auto& file : view_.GetFiles()) {
+    auto serialized_file = file->Serialize();
+    auto file_json_object = nlohmann::json{};
+    for (auto& field : serialized_file) {
+      file_json_object[field.first] = field.second;
     }
+    files_json_array.push_back(file_json_object);
   }
-  for (auto& object : files_json_objects_) {
-    files_json_representation_.push_back(object.second);
-  }
+
+  files_json_representation_["files"] = files_json_array;
   return files_json_representation_.dump(4);
 }
 
 template <typename View>
 std::string JsonSerializer<View>::SerializePackages() {
-  for (auto& message: view_) {
-    auto serialized_data = message.GetFile().GetPackage().Serialize();
-    for (auto& field: serialized_data) {
-      packages_json_objects_[message.GetFile().GetPackage().GetId()][field.first] = field.second;
+  auto packages_json_array = nlohmann::json::array();
+  for (auto& package: view_.GetPackages()) {
+    auto serialized_package = package->Serialize();
+    auto package_json_object = nlohmann::json{};
+    for (auto& field : serialized_package) {
+      package_json_object[field.first] = field.second;
     }
+    packages_json_array.push_back(package_json_object);
   }
-  for (auto& object : packages_json_objects_) {
-    packages_json_representation_.push_back(object.second);
-  }
+
+  packages_json_representation_["packages"] = packages_json_array;
   return packages_json_representation_.dump(4);
 }
 
 template <typename View>
 std::string JsonSerializer<View>::SerializeDirectories() {
-  for (auto& message: view_) {
-    auto serialized_data = message.GetFile().GetDirectory().Serialize();
-    for (auto& field: serialized_data) {
-      directories_json_objects_[message.GetFile().GetDirectory().GetId()][field.first] = field.second;
+  auto directories_json_array = nlohmann::json::array();
+  for (auto& directory : view_.GetDirectories()) {
+    auto serialized_directory = directory->Serialize();
+    auto directory_json_object = nlohmann::json{};
+    for (auto& field: serialized_directory) {
+      directory_json_object[field.first] = field.second;
     }
+    directories_json_array.push_back(directory_json_object);
   }
-  for (auto& object : directories_json_objects_) {
-    directories_json_representation_.push_back(object.second);
-  }
+
+  directories_json_representation_["directories"] = directories_json_array;
   return directories_json_representation_.dump(4);
 }
 

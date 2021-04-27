@@ -7,10 +7,6 @@ void EnumBuilder::SetUpName(const std::string& name) {
   enum_.name_ = name;
 }
 
-void EnumBuilder::SetUpParentMessage(Message* message) {
-  enum_.parent_message_ = message;
-}
-
 void EnumBuilder::SetUpFile(File* file) {
   enum_.file_ = file;
 }

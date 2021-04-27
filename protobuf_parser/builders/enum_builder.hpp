@@ -18,7 +18,6 @@ class EnumBuilder {
   EnumBuilder& operator=(const EnumBuilder&) = delete;
 
   void SetUpName(const std::string& name);
-  void SetUpParentMessage(Message* message);
   void SetUpFile(File* file);
   void AddValue(const std::string& name, std::size_t number);
   void SetUpFilePath(const std::filesystem::path& path);

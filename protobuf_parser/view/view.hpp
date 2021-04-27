@@ -4,6 +4,7 @@
 #include <string>
 #include <queue>
 #include <iterator>
+#include <set>
 
 #include <protobuf_parser/elements/message.hpp>
 #include <protobuf_parser/elements/enum.hpp>
@@ -115,16 +116,20 @@ class View {
     return Iterator(messages_.end());
   }
 
+  std::set<const Package*> GetPackages() const;
+  std::set<const File*> GetFiles() const;
+  std::set<const Directory*> GetDirectories() const;
+
  private:
   void EmplaceChildElements(const T* element, std::queue<const T*>& elements_queue);
   void AddElementsMessages(const T* element);
   void AddElementsEnums(const T* element);
 
   std::vector<const Message*> messages_;
-  std::vector<const Package*> packages_;
-  std::vector<const File*> files_;
-  std::vector<const Enum*> enums_;
-  std::vector<const Directory*> directories_;
+  std::set<const Package*> packages_;
+  std::set<const Enum*> enums_;
+  std::set<const File*> files_;
+  std::set<const Directory*> directories_;
   T* root_;
   const Storage* storage_;
 };
@@ -140,6 +145,26 @@ View<T>::View(T* root, const Storage* storage) : root_(root), storage_(storage) 
     EmplaceChildElements(element, elements_queue);
     AddElementsMessages(element);
   }
+
+  for (auto& message: messages_) {
+    files_.insert(&message->GetFile());
+    directories_.insert(&message->GetFile().GetDirectory());
+    packages_.insert(&message->GetFile().GetPackage());
+  }
+}
+
+template <typename T>
+std::set<const Package*> View<T>::GetPackages() const {
+  return packages_;
+}
+
+template <typename T>
+std::set<const File*> View<T>::GetFiles() const {
+  return files_;
+}
+template <typename T>
+std::set<const Directory*> View<T>::GetDirectories() const {
+  return directories_;
 }
 
 }  // namespace view
