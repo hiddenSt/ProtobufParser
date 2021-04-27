@@ -1,6 +1,9 @@
 #ifndef PROTOBUF_PARSER_PROTOBUF_PARSER_BUILDERS_ENUM_BUILDER_HPP_
 #define PROTOBUF_PARSER_PROTOBUF_PARSER_BUILDERS_ENUM_BUILDER_HPP_
 
+#include <string>
+#include <filesystem>
+
 #include <protobuf_parser/elements/enum.hpp>
 
 namespace protobuf_parser {

@@ -1,6 +1,8 @@
 #ifndef PROTOBUF_PARSER_PROTOBUF_PARSER_BUILDERS_ENUM_FIELD_TYPE_BUILDER_HPP_
 #define PROTOBUF_PARSER_PROTOBUF_PARSER_BUILDERS_ENUM_FIELD_TYPE_BUILDER_HPP_
 
+#include <string>
+
 #include <protobuf_parser/elements/fields/enum_field.hpp>
 
 namespace protobuf_parser {

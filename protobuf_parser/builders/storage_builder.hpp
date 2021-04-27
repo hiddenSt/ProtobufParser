@@ -1,6 +1,7 @@
 #ifndef PROTOBUF_PARSER_PROTOBUF_PARSER_BUILDERS_STORAGE_BUILDER_HPP_
 #define PROTOBUF_PARSER_PROTOBUF_PARSER_BUILDERS_STORAGE_BUILDER_HPP_
 
+#include <filesystem>
 #include <string>
 #include <vector>
 #include <queue>

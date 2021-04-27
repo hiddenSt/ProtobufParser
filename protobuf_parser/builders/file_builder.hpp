@@ -2,6 +2,7 @@
 #define PROTOBUF_PARSER_PROTOBUF_PARSER_BUILDERS_FILE_BUILDER_HPP_
 
 #include <string>
+#include <filesystem>
 
 #include <protobuf_parser/elements/file.hpp>
 

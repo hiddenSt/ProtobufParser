@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <map>
+#include <string>
 
 namespace protobuf_parser {
 

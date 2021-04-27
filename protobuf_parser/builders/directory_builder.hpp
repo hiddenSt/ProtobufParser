@@ -1,6 +1,8 @@
 #ifndef PROTOBUF_PARSER_PROTOBUF_PARSER_BUILDERS_DIRECTORY_BUILDER_HPP_
 #define PROTOBUF_PARSER_PROTOBUF_PARSER_BUILDERS_DIRECTORY_BUILDER_HPP_
 
+#include <filesystem>
+#include <string>
 #include <protobuf_parser/elements/directory.hpp>
 
 namespace protobuf_parser {

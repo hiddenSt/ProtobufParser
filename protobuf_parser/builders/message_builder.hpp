@@ -1,6 +1,9 @@
 #ifndef PROTOBUF_PARSER_PROTOBUF_PARSER_BUILDER_MESSAGE_BUILDER_HPP_
 #define PROTOBUF_PARSER_PROTOBUF_PARSER_BUILDER_MESSAGE_BUILDER_HPP_
 
+#include <filesystem>
+#include <string>
+
 #include <protobuf_parser/elements/message.hpp>
 
 namespace protobuf_parser {
