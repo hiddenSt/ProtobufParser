@@ -7,7 +7,7 @@ Before you begin, ensure you have met the following requirements:
 * cmake
 * [protobuf-cpp-3.15.8](https://github.com/protocolbuffers/protobuf/)
 * compiler supporting ``C++17``
-* To build for msvc you additionaly need `vcpkg`
+* To build for msvc you additionaly need [vcpkg](https://github.com/microsoft/vcpkg)
 
 ### Third-party
 * [nlohmann/json](https://github.com/nlohmann/json)
