@@ -44,6 +44,7 @@ class Parser {
                                           const google::protobuf::Descriptor* descriptor);
   void AddEnumsFromMessages(const google::protobuf::Descriptor* message_descriptor,
                             const std::filesystem::path& file_path);
+  std::string ChangeBackwardSlashes(const std::string& path);
 
   google::protobuf::compiler::DiskSourceTree disk_source_tree_;
   StubMultipleErrorCollector error_collector_;

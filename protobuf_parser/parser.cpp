@@ -36,13 +36,24 @@ void Parser::ParseFromImporter() {
   for (auto& dir_entry : recursive_directory_iterator) {
     if (dir_entry.is_regular_file() && dir_entry.path().extension() == ".proto") {
       auto current_path = dir_entry.path().lexically_proximate(root_path_);
-      auto* file_descriptor = importer_->Import(current_path.make_preferred().string());
+      auto* file_descriptor = importer_->Import(ChangeBackwardSlashes(current_path.make_preferred().string()));
       directories_path_.insert(dir_entry.path().parent_path().lexically_proximate(root_path_));
       packages_names_.insert(file_descriptor->package());
       files_path_.insert(current_path);
     }
   }
 }
+
+std::string Parser::ChangeBackwardSlashes(const std::string& path) {
+  std::string converted_path{path};
+  for (std::size_t i = 0; i < path.size(); ++i) {
+    if (path[i] == '\\') {
+      converted_path[i] = '/';
+    }
+  }
+  return converted_path;
+}
+
 
 void Parser::AddDirectories() {
   for (auto& directory_name : directories_path_) {
@@ -72,7 +83,7 @@ void Parser::AddFiles() {
   for (auto& file_name : files_path_) {
     builders::FileBuilder builder;
     builder.SetUpPath(file_name);
-    builder.SetUpPackageName(importer_->pool()->FindFileByName(file_name.string())->package());
+    builder.SetUpPackageName(importer_->pool()->FindFileByName(ChangeBackwardSlashes(file_name.string()))->package());
     files_builders_.push_back(std::move(builder));
   }
 
@@ -84,7 +95,7 @@ void Parser::AddFiles() {
 void Parser::AddEnums() {
   decltype(auto) pool = importer_->pool();
   for (auto& file_path : files_path_) {
-    decltype(auto) file_descriptor = pool->FindFileByName(file_path.string());
+    decltype(auto) file_descriptor = pool->FindFileByName(ChangeBackwardSlashes(file_path.string()));
     for (std::size_t i = 0; i < file_descriptor->enum_type_count(); ++i) {
       builders::EnumBuilder builder;
       builder.SetUpName(file_descriptor->enum_type(i)->name());
@@ -109,7 +120,7 @@ void Parser::AddEnums() {
 void Parser::AddMessages() {
   const google::protobuf::DescriptorPool* pool = importer_->pool();
   for (auto& file_path : files_path_) {
-    auto* file_descriptor = pool->FindFileByName(file_path.string());
+    auto* file_descriptor = pool->FindFileByName(ChangeBackwardSlashes(file_path.string()));
     for (std::size_t i = 0; i < file_descriptor->message_type_count(); ++i) {
       builders::MessageBuilder builder;
       builder.SetUpName(file_descriptor->message_type(i)->name());
