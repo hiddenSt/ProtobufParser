@@ -38,6 +38,7 @@ Run cmake
 ```shell script
 cmake -DPROTOBUF_PARSER_CONSOLE_UTILITY=On -DCMAKE_TOOLCHAIN_FILE=`path to vcpkg.cmake` -- build ..
 ```
+Run your Visual Studio and build targer protobuf_parser_console_utility.
 After that open solution in build directory using Visual Studio and build.
 
 ## Running tests
