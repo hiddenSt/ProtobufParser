@@ -84,7 +84,6 @@ target_link_libraries(protobuf_parser PUBLIC nlohmann_json::nlohmann_json)
 
 if (MSVC)
   target_link_libraries(protobuf_parser PUBLIC protobuf::libprotoc protobuf::libprotobuf protobuf::libprotobuf-lite)
- # target_include_directories(protobuf_parser PUBLIC "${protobuf_INCLUDE_DIRS}")
 else()
   target_link_libraries(protobuf_parser PUBLIC "${Protobuf_LIBRARIES}")
   target_include_directories(protobuf_parser PRIVATE "${Protobuf_INCLUDE_DIRS}")
