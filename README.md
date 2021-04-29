@@ -1,4 +1,4 @@
-# Protobufparser to json
+# Protobuf parser to json
 
 This is a wrapper around google protobuf runtime library
 
