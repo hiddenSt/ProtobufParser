@@ -1,16 +1,21 @@
 cmake_minimum_required(VERSION 3.14)
-project(ProtoBuffParser VERSION 1.0)
+project(protobuf_parser VERSION 1.0)
+
+set(CMAKE_CXX_STANDARD 17)
 
 include(cmake/ClangFormat.cmake)
 include(cmake/ClangTidy.cmake)
 
-option(PROTO_BUFF_PARSER_DEVELOPER "ProtoBuffParser development mode" OFF)
-option(PROTO_BUFF_PARSER_TESTS "Enable ProtoBuffParser tests" OFF)
+option(PROTOBUF_PARSER_DEVELOPER "ProtobufParser development mode" OFF)
+option(PROTOBUF_PARSER_TESTS "Enable ProtobufParser tests" OFF)
+option(PROTOBUF_PARSER_CONSOLE_UTILITY "Build console utility tool" OFF)
 
-add_subdirectory(third-party)
+add_subdirectory(protobuf_parser)
 
-add_subdirectory(proto_buff_parser)
+if (PROTOBUF_PARSER_CONSOLE_UTILITY)
+  add_subdirectory(console_utility)
+endif()
 
-if (PROTO_BUFF_PARSER_TESTS OR PROTO_BUFF_PARSER_DEVELOPER)
+if (PROTOBUF_PARSER_TESTS OR PROTOBUF_PARSER_DEVELOPER)
   add_subdirectory(tests)
 endif ()
